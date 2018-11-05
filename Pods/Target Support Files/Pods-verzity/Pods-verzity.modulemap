@@ -1,0 +1,6 @@
+framework module Pods_verzity {
+  umbrella header "Pods-verzity-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "SecondFormViewController.set_data():SecondFormViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Defaults[.add_uni_desDireccion]">
+            </PersistentString>
+            <PersistentString
+               value = "Defaults[.add_uni_dcLatitud]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.methodOfReceivedNotification(notification:):MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userInfo![&quot;data&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginViewController.login_universidad(type:):LoginViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Defaults[.cvFirebase]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PackagesViewController.GetPaquetesDisponibles(status:response:):PackagesViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "items">
+            </PersistentString>
+            <PersistentString
+               value = "list_items.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ProfileUniversityViewController.RegistrarUniversidad(status:response:):ProfileUniversityViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&quot;Data&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ProfileUniversityViewController.save_data():ProfileUniversityViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "name_image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
