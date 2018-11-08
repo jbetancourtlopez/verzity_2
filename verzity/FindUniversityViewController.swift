@@ -13,14 +13,16 @@ import SwiftyUserDefaults
 
 
 class FindUniversityViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource  {
-
+    
+    // Inputs
     @IBOutlet var page_control: UIPageControl!
     @IBOutlet var image: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var container_image: UIView!
     @IBOutlet var contrains_height: NSLayoutConstraint!
     
-     var webServiceController = WebServiceController()
+    // Variables
+    var webServiceController = WebServiceController()
     let menu_main = Menus.menu_find_university
     var type: String = ""
     var list_data: AnyObject!
@@ -32,21 +34,10 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.title = "Buscar universidades"
-        updateCounter = 0
-        self.navigationItem.backBarButtonItem?.title = ""
+        setup_ux()
+        load_banners()
         
-        
-        // Cargamos los Banners
-         showGifIndicator(view: self.view)
-        let array_parameter = ["": ""]
-        let parameter_json = JSON(array_parameter)
-        let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetBannersVigentes(parameters: parameter_json_string!, doneFunction: getBanners)
-        
-        //Evento a la imagen del Banner
+        //Evento Imagen Banner
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         image.isUserInteractionEnabled = true
         image.addGestureRecognizer(tapGestureRecognizer)
@@ -99,6 +90,14 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         }
     }
     
+    func load_banners(){
+        showGifIndicator(view: self.view)
+        let array_parameter = ["": ""]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.GetBannersVigentes(parameters: parameter_json_string!, doneFunction: getBanners)
+    }
+    
     func getBanners(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
@@ -115,6 +114,14 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             contrains_height.constant = 0
         }
         hiddenGifIndicator(view: self.view)
+    }
+    
+    func setup_ux(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.title = "Buscar universidades"
+        updateCounter = 0
+        self.navigationItem.backBarButtonItem?.title = ""
     }
     
     // Timer de los Banners de Universidades
@@ -186,9 +193,16 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             self.show(vc, sender: nil)
             break
         case "find_academics":
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ListAcademicsViewControllerID") as! ListAcademicsViewController
-            //vc.type = menu_selected!
+            // let vc = storyboard?.instantiateViewController(withIdentifier: "ListAcademicsViewControllerID") as! ListAcademicsViewController
+            // //vc.type = menu_selected!
+            // self.show(vc, sender: nil)
+
+            print("Academicos")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ListViewControllerID") as! ListViewController
+            vc.idUniversidad = 0
+            vc.type = "academics"
             self.show(vc, sender: nil)
+
             break
         case "find_next_to_me": //comunicados
             print("find_next_to_me")

@@ -14,6 +14,7 @@ import SwiftyUserDefaults
 
 class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FloatableTextFieldDelegate{
     
+    // Inputs
     @IBOutlet var countryConstraintHeight: NSLayoutConstraint!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var topContraintDescription: NSLayoutConstraint!
@@ -29,30 +30,77 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     @IBOutlet var municipio_profile: FloatableTextField!
     @IBOutlet var email_profile: FloatableTextField!
     @IBOutlet var state_profile: FloatableTextField!
-    
     @IBOutlet var button_save: UIButton!
+    
+    // Variables
     var webServiceController = WebServiceController()
     var countries: NSArray = []
     var is_mexico = 1;
     var name_country = ""
     var type = ""
     var is_postulate = 0
-
     var name_image = ""
+
+    // Datos obtenidos de facebook
+    var facebook_url: String = ""
+    var facebook_name: String = ""
+    var facebook_email: String = ""
+    var facebook_id: String = ""
+    var is_facebook:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.type = type as String
         setup_ux()
         setup_textfield()
-        get_data_profile()
+        //get_data_profile()
         load_countries()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
-        
         registerForKeyboardNotifications(scrollView: scrollView)
         setGestureRecognizerHiddenKeyboard()
+
+        // Valido si es por Facebook
+        if is_facebook == 1 {
+            setdata_facebook()
+        }
+        //
+    }
+
+    func setdata_facebook(){
+        self.facebook_url = facebook_url as String
+        self.facebook_name = facebook_name as String
+        self.facebook_email = facebook_email as String
+        self.is_facebook = Int(is_facebook)
+        self.facebook_id = facebook_id as String
+        
+        name_profile.text = self.facebook_name
+        email_profile.text = self.facebook_email
+        //confirm_password.text = self.facebook_id
+        //password.text = String(describing: self.facebook_id)
+
+        // Foto Profile
+        let url = self.facebook_url
+        let URL = Foundation.URL(string: url)
+        let image_default = UIImage(named: "ic_user_profile.png")
+        img_profile.kf.setImage(with: URL, placeholder: image_default)
+        
+        // Email 
+        email_profile.isEnabled = false
+        if  (self.facebook_email.isEmpty){
+           email_profile.isEnabled = true
+        }
+
+        /*
+        password.isHidden = true
+        confirm_password.isHidden = true
+        topContrainstLabelTerminos.constant = -100
+        topConstrainsSwich.constant = -100
+        topConstrainsButtonRegister.constant = -70
+        */
+
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.upload_photo), userInfo: nil, repeats: false)
     }
     
     @objc func cpDidChange(_ textField: UITextField) {
@@ -204,18 +252,29 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 
     }
 
-    func upload_photo(){
-        print("Subiendo Foto")
+    @objc func upload_photo(){
+        
+        self.view.isUserInteractionEnabled = false
+        let when = DispatchTime.now()
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            self.view.isUserInteractionEnabled = false
+        }
         let data = UIImageJPEGRepresentation(img_profile.image!, 0.5)
         webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
     }
     
     func upload_file(status: Int, response: AnyObject){
-         print("Imagen cargada con exito")
-         print(response)
-         let json = JSON(response)
-         self.name_image = json["data"].stringValue
+        let json = JSON(response)
+        self.name_image = json["data"].stringValue
         
+        let when = DispatchTime.now()+5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            print("Disabled")
+            self.view.isUserInteractionEnabled = true
+        }
+
         if status == 1{
             toast(title:StringsLabel.upload_image)
         }else{

@@ -80,6 +80,9 @@ class PackageTableViewCell: UITableViewCell {
     @IBOutlet var image_becas: UIImageView!
     @IBOutlet var image_postulacion: UIImageView!
     
+    // Prospectus
+    @IBOutlet var label_prospectus: UILabel!
+    @IBOutlet var image_prospectus: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
     }

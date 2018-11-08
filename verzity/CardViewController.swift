@@ -44,6 +44,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             tableView.addSubview(refreshControl)
         }
         self.refreshControl = refreshControl
+       
     }
     
     @objc func handleRefresh() {
@@ -61,6 +62,14 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func setup_ux(){
         if type == "coupons" {
            searchBar.placeholder = "Buscar cupones"
+            navigationController?.navigationBar.barTintColor = Colors.Color_cupones
+            searchBar.barTintColor = Colors.Color_cupones
+        }else if type == "financing" {
+            navigationController?.navigationBar.barTintColor = Colors.color_financiamiento
+            searchBar.barTintColor = Colors.color_financiamiento
+        } else if type == "becas" {
+            navigationController?.navigationBar.barTintColor = Colors.Color_becas
+            searchBar.barTintColor = Colors.Color_becas
         }
     }
     
@@ -90,11 +99,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetCuponesVigentes(parameters: parameter_json_string!, doneFunction: GetCardGeneral)
-            break
-        case "travel":
-            self.title = "Viajes"
-            
-            print("travel")
             break
         default:
             break
@@ -203,7 +207,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CardTableViewCell
-       
+        
+        
         var item:JSON
         if (searchBar.text != ""){
             item = JSON(filtered_array[indexPath.section])
@@ -226,6 +231,9 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
         // Becas
         if type == "becas" {
+            
+            cell.backgroundColor = Colors.Color_becas
+            
             title = item["nbBeca"].stringValue
             name = "Universidad que ofrece la beca"
             var universidad = JSON(item["Universidades"])
@@ -243,6 +251,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         // Financiamiento
         if type == "financing" {
+            cell.backgroundColor = Colors.color_financiamiento
+            
             title = item["nbFinanciamiento"].stringValue
             name = "Universidad que ofrece el financiamiento"
             
@@ -260,6 +270,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         //Cupones
         if type == "coupons" {
+            cell.backgroundColor = Colors.Color_cupones
+            
             title = item["nbCupon"].stringValue
             
             

@@ -12,46 +12,62 @@ import Kingfisher
 import SwiftyUserDefaults
 
 
-class DetailUniversityViewController: BaseViewController {
+class DetailUniversity2ViewController: BaseViewController {
 
-    @IBOutlet var contentBottomView: UIView!
     @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var description_university: UILabel!
+    
+    // Slider
+    @IBOutlet var page_control: UIPageControl!
+    @IBOutlet var image_slider: UIImageView!
+    
+    //Nombre
     @IBOutlet var name_universitity: UILabel!
     
     // Favorito
     @IBOutlet var button_favorit: UIButton!
+    
     // Direccion
     @IBOutlet var image_address: UIImageView!
-    @IBOutlet var label_address: UITextView!
+    @IBOutlet var label_address: UILabel!
     @IBOutlet var button_address: UIButton!
+    
     // Telefono
     @IBOutlet var image_phone: UIImageView!
-    @IBOutlet var label_phone: UITextView!
+    @IBOutlet var label_phone: UILabel!
+    
     // Web
     @IBOutlet var image_web: UIImageView!
-    @IBOutlet var label_web: UITextView!
+    @IBOutlet var label_web: UILabel!
+    
     // Email
     @IBOutlet var image_email: UIImageView!
-    @IBOutlet var label_email: UITextView!
-    // Video
-    @IBOutlet var image_video: UIImageView!
-    @IBOutlet var label_video: UITextView!
-    @IBOutlet var button_video: UIButton!
+    @IBOutlet var label_email: UILabel!
+    
+    // Prospetus
+    @IBOutlet var image_prospectus: UIImageView!
+    @IBOutlet var label_prospectus: UILabel!
+    @IBOutlet var button_prospectus: UIButton!
+    
     // Beca
     @IBOutlet var image_beca: UIImageView!
-    @IBOutlet var label_beca: UITextView!
+    @IBOutlet var label_beca: UILabel!
     @IBOutlet var button_beca: UIButton!
+    
     // Financiamiento
     @IBOutlet var image_financing: UIImageView!
-    @IBOutlet var label_financing: UITextView!
+    @IBOutlet var label_financing: UILabel!
     @IBOutlet var button_financing: UIButton!
     
     @IBOutlet var image_financing_top_contrain: NSLayoutConstraint!
     @IBOutlet var button_financing_top_contrains: NSLayoutConstraint!
     @IBOutlet var label_financing_top_constrains: NSLayoutConstraint!
     
-    var swipeGesture  = UISwipeGestureRecognizer()
+    // Descripcion
+    @IBOutlet var description_university: UITextView!
+    
+    
+    // Variables
+    var swipeGesture = UISwipeGestureRecognizer()
     var webServiceController = WebServiceController()
     var list_images: NSArray = []
     var list_licenciaturas: NSArray = []
@@ -59,43 +75,50 @@ class DetailUniversityViewController: BaseViewController {
     var idUniversidad: Int!
     var detail_data: AnyObject!
     var selected_postulate: String = ""
-    
     var actionButton : ActionButton!
 
-    
-    @IBOutlet var page_control: UIPageControl!
-    @IBOutlet var image_slider: UIImageView!
-    @IBOutlet var button_postulate: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        idUniversidad = idUniversidad as Int
+        // idUniversidad = idUniversidad as Int
         setup_ux()
         load_data()
+        set_favorito()
         
-        //Gestos
-        count_current = 0
-        let directions: [UISwipeGestureRecognizerDirection] = [.up, .down, .right, .left]
+        // //Gestos
+        // count_current = 0
+        // let directions: [UISwipeGestureRecognizerDirection] = [.up, .down, .right, .left]
         
-        for direction in directions {
-            swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.swipwView(_:)))
-            image_slider.addGestureRecognizer(swipeGesture)
-            swipeGesture.direction = direction
-            image_slider.isUserInteractionEnabled = true
-            image_slider.isMultipleTouchEnabled = true
-        }
+        // for direction in directions {
+        //     swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.on_gesture_photos(_:)))
+        //     image_slider.addGestureRecognizer(swipeGesture)
+        //     swipeGesture.direction = direction
+        //     image_slider.isUserInteractionEnabled = true
+        //     image_slider.isMultipleTouchEnabled = true
+        // }
     }
     
+    func set_favorito(){
+        // Set Favorito
+        let array_parameter = [
+            "idUniversidad": idUniversidad!,
+            "idPersona": Defaults[.academic_idPersona]!
+        ]  as [String : Any]
+        
+        debugPrint(array_parameter)
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: VerificarFavorito)
+    }
+
     func load_data(){
-        // Cargamos los datos
         showGifIndicator(view: self.view)
         let array_parameter = ["idUniversidad": idUniversidad]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetDetallesUniversidad(parameters: parameter_json_string!, doneFunction: GetDetallesUniversidad)
+        webServiceController.GetDetallesUniversidad(parameters: parameter_json_string!, doneFunction: callback_load_data)
     }
    
-    func GetDetallesUniversidad(status: Int, response: AnyObject){
+    func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
         hiddenGifIndicator(view: self.view)
         if status == 1{
@@ -103,16 +126,13 @@ class DetailUniversityViewController: BaseViewController {
             let data = JSON(json["Data"])
             self.list_images = data["FotosUniversidades"].arrayValue as NSArray
             self.list_licenciaturas = data["Licenciaturas"].arrayValue as NSArray
-            self.page_control.numberOfPages = self.list_images.count
+            //self.page_control.numberOfPages = self.list_images.count
             set_image_slider()
             set_data()
-        }else{
-            // Mensaje de Error
         }
     }
     
-    // FotosUniversidades
-    @objc func swipwView(_ sender : UISwipeGestureRecognizer){
+    @objc func on_gesture_photos(_ sender : UISwipeGestureRecognizer){
         UIView.animate(withDuration: 1.0) {
             
             if sender.direction == .left {
@@ -129,7 +149,7 @@ class DetailUniversityViewController: BaseViewController {
                 }
             }
             
-            self.page_control.currentPage = self.count_current
+            //self.page_control.currentPage = self.count_current
             self.set_image_slider()
             self.image_slider.layoutIfNeeded()
             self.image_slider.setNeedsDisplay()
@@ -140,7 +160,6 @@ class DetailUniversityViewController: BaseViewController {
         if self.list_images.count > 0 {
             let image_item = self.list_images[self.count_current]
             var image = JSON(image_item)
-            
             var pathImage = image["desRutaFoto"].stringValue
             pathImage = pathImage.replacingOccurrences(of: "~", with: "")
             pathImage = pathImage.replacingOccurrences(of: "\\", with: "")
@@ -161,6 +180,15 @@ class DetailUniversityViewController: BaseViewController {
         self.show(vc, sender: nil)
     }
     
+    @IBAction func on_click_prospectus(_ sender: Any) {
+        print("Prospectus")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ListViewControllerID") as! ListViewController
+        vc.idUniversidad = idUniversidad
+        vc.type = "prospectus"
+        self.show(vc, sender: nil)
+    }
+    
+    
     @IBAction func on_click_beca(_ sender: Any) {
         print("beca")
         let vc = storyboard?.instantiateViewController(withIdentifier: "CardViewControllerID") as! CardViewController
@@ -169,13 +197,7 @@ class DetailUniversityViewController: BaseViewController {
         self.show(vc, sender: nil)
     }
     
-    @IBAction func on_click_video(_ sender: Any) {
-        print("video")
-        var university_json = JSON(self.detail_data)
-        let vc = storyboard?.instantiateViewController(withIdentifier: "VideoViewControllerID") as! VideoViewController
-        vc.idUniversidad = university_json["idUniversidad"].intValue
-        self.show(vc, sender: nil)
-    }
+    
     
     @IBAction func on_click_map(_ sender: Any) {
         print("mapa")
@@ -187,9 +209,6 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_postulate(_ sender: Any) {
         print("Postulado")
-        
-       
-        
         
         let alert = UIAlertController(title: "Seleccione programa académico de interés.", message: nil, preferredStyle: .actionSheet)
 
@@ -307,7 +326,7 @@ class DetailUniversityViewController: BaseViewController {
         button_favorit.setImage(image, for: .normal)
         button_favorit.tintColor = hexStringToUIColor(hex: "#F7BF25")
         
-        // DIreccion
+        // Direccion
         image_address.image = image_address.image?.withRenderingMode(.alwaysTemplate)
         image_address.tintColor = hexStringToUIColor(hex: "#ff0106")
         
@@ -329,13 +348,13 @@ class DetailUniversityViewController: BaseViewController {
         image_email.image = image_email.image?.withRenderingMode(.alwaysTemplate)
         image_email.tintColor = hexStringToUIColor(hex: "#1d47f1")
         
-        //Video
-        image_video.image = image_video.image?.withRenderingMode(.alwaysTemplate)
-        image_video.tintColor = hexStringToUIColor(hex: "#ff0106")
-        button_video.setImage(image_visitar_web, for: .normal)
-        button_video.tintColor = Colors.gray
+        //Prospectus
+        image_prospectus.image = image_prospectus.image?.withRenderingMode(.alwaysTemplate)
+        image_prospectus.tintColor = hexStringToUIColor(hex: "#ff0106")
+        button_prospectus.setImage(image_visitar_web, for: .normal)
+        button_prospectus.tintColor = Colors.gray
         
-        // FInancimaineto
+        // Financimaineto
         image_financing.image = image_financing.image?.withRenderingMode(.alwaysTemplate)
         image_financing.tintColor = hexStringToUIColor(hex: "#ff7b25")
         button_financing.setImage(image_visitar_web, for: .normal)
@@ -356,12 +375,13 @@ class DetailUniversityViewController: BaseViewController {
     }
     
     func set_data(){
+        self.title = "Univ"
       
         var university_json = JSON(self.detail_data)
         var address = JSON(university_json["Direcciones"])
         
+        // Paquetes
         var paquete_array = university_json["VentasPaquetes"].arrayValue
-        
         var fgAplicaBecas = false
         var fgAplicaFinanciamiento = false
         var fgAplicaPostulacion = false
@@ -377,14 +397,15 @@ class DetailUniversityViewController: BaseViewController {
             fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
         }
        
-        
+        // Nombre Universidad
         var name_uniersity_text = university_json["nbUniversidad"].stringValue
         if  name_uniersity_text.isEmpty{
             name_uniersity_text = StringsLabel.no_university_name
         }
+        name_universitity.text = name_uniersity_text
         
+        // Direccion
         var label_address_text = ""
-        
         if !(address["desDireccion"].stringValue).isEmpty {
             label_address_text += address["desDireccion"].stringValue
         }
@@ -401,48 +422,47 @@ class DetailUniversityViewController: BaseViewController {
             label_address_text += ", " + address["nbPais"].stringValue
         }
         
+        label_address.text = label_address_text
+        
+        // Sitio Web
         var label_web_text = university_json["desSitioWeb"].stringValue
         if  label_web_text.isEmpty{
             label_web_text = StringsLabel.no_website
         }
+        label_web.text = label_web_text
         
+        // Correo
         var label_email_text =  university_json["desCorreo"].stringValue
         if  label_email_text.isEmpty{
             label_email_text = StringsLabel.no_email
         }
+        label_email.text = label_email_text
         
+        // Telefono
         var label_phone_text = university_json["desTelefono"].stringValue
         if  label_phone_text.isEmpty{
             label_phone_text = StringsLabel.no_phone
         }
+        label_phone.text = label_phone_text
         
-        self.title = "Univ"//name_uniersity_text
-        name_universitity.text = name_uniersity_text
+        
+        
         
         description_university.text = university_json["desUniversidad"].stringValue
-    description_university.translatesAutoresizingMaskIntoConstraints = true
-        description_university.sizeToFit()
-        let height = description_university.frame.height
+//        description_university.translatesAutoresizingMaskIntoConstraints = true
+//        description_university.sizeToFit()
+//        let height = description_university.frame.height
+//
+//        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 700 + height)
+//
+//        let h = scrollView.frame.height
+//        
+//        contentBottomView.sizeToFit()
+//        contentBottomView.autoresizesSubviews = true
+//        contentBottomView.layoutIfNeeded()
+//        contentBottomView.frame = CGRect(x:0, y:232, width:self.view.frame.width, height:5000)
         
-        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 700 + height)
-        
-        let h = scrollView.frame.height
-        print(height)
-        print(h)
-        
-        contentBottomView.sizeToFit()
-        contentBottomView.autoresizesSubviews = true
-        contentBottomView.layoutIfNeeded()
-        contentBottomView.frame = CGRect(x:0, y:232, width:self.view.frame.width, height:5000)
-        
-        
-        label_address.text = label_address_text
-        label_web.text = label_web_text
-        label_email.text = label_email_text
-        label_phone.text = label_phone_text
-        label_video.text = "Ver videos"
-        label_beca.text = "Ver becas"
-        label_financing.text = "Ver financiamientos"
+     
         
         // Establecemos permisos
         if !fgAplicaBecas{
@@ -458,7 +478,7 @@ class DetailUniversityViewController: BaseViewController {
         }
         
         if !fgAplicaPostulacion{
-            button_postulate.isHidden = true
+            //button_postulate.isHidden = true
         }
         
         if !fgAplicaBecas && fgAplicaFinanciamiento{
@@ -468,21 +488,12 @@ class DetailUniversityViewController: BaseViewController {
             label_beca.frame = CGRect(x: 0, y: 0, width: 50, height: 0)
              */
             
-            image_financing_top_contrain.constant = -35
-            button_financing_top_contrains.constant = -35
-            label_financing_top_constrains.constant = -35
+            // image_financing_top_contrain.constant = -35
+            // button_financing_top_contrains.constant = -35
+            // label_financing_top_constrains.constant = -35
         }
         
-        // Set Favorito
-        let array_parameter = [
-            "idUniversidad": idUniversidad!,
-            "idPersona": Defaults[.academic_idPersona]!
-        ]  as [String : Any]
         
-        debugPrint(array_parameter)
-        let parameter_json = JSON(array_parameter)
-        let parameter_json_string = parameter_json.rawString()
-        webServiceController.VerificarFavorito(parameters: parameter_json_string!, doneFunction: VerificarFavorito)
     }
 
 

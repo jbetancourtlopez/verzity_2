@@ -220,7 +220,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let university = items[indexPath.section]
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversity2ViewControllerID") as! DetailUniversity2ViewController
         let university_json = JSON(university)
         vc.idUniversidad = university_json["idUniversidad"].intValue
         self.show(vc, sender: nil)

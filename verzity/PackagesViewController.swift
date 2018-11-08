@@ -309,9 +309,15 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             cell.image_postulacion.image = UIImage(named: "ic_action_close_check")
         }
         
-        print("D: \(Defaults[.package_idPaquete]!)")
+        // Aplica Prospectus
+        cell.label_prospectus.text = "Aplica prospectus"
+        let is_prospectus = false //item["fgAplicaProspectus"].boolValue
+        if (is_prospectus) {
+            cell.image_prospectus.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.image_prospectus.image = UIImage(named: "ic_action_close_check")
+        }
         
-         print("I: \(item["idPaquete"].intValue)")
         
         if item["idPaquete"].intValue == Defaults[.package_idPaquete]!{
             cell.button_buy.setTitle("PAQUETE ACTUAL", for: .normal)

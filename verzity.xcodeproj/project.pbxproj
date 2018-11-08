@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9205102420E1FA9C00234F16 /* Menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9205102320E1FA9C00234F16 /* Menus.swift */; };
+		92180EFF2192A6CF00AEAA5A /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180EFD2192A6CE00AEAA5A /* ActionButton.swift */; };
+		92180F002192A6CF00AEAA5A /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180EFE2192A6CE00AEAA5A /* ActionButtonItem.swift */; };
+		92180F0221934B1100AEAA5A /* DetailUniversity2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */; };
 		92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */; };
 		92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */; };
 		92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD920F4371300ED30E0 /* ic_school_gray.png */; };
@@ -24,6 +27,7 @@
 		922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */; };
 		922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922ABFB820F6BA0300C5A56C /* DetailMapView.xib */; };
 		922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922ABFB920F6BA0300C5A56C /* DetailMapView.swift */; };
+		922B9B4C2193723000790678 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B9B4B2193723000790678 /* ListViewController.swift */; };
 		922E647C210A6776005B1699 /* DetailPdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E647B210A6776005B1699 /* DetailPdfViewController.swift */; };
 		922E647E210A6D23005B1699 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E647D210A6D23005B1699 /* Downloader.swift */; };
 		924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */; };
@@ -38,6 +42,7 @@
 		924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F720E42E4F00CEBC81 /* Reachability.swift */; };
 		924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */; };
 		924924E4211ABFD200E86740 /* RetryAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924924E3211ABFD200E86740 /* RetryAccountViewController.swift */; };
+		926264E72191636500CA0DFD /* MainStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926264E62191636500CA0DFD /* MainStudentViewController.swift */; };
 		9267011720D8462400E638A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011620D8462400E638A1 /* AppDelegate.swift */; };
 		9267011920D8462400E638A1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011820D8462400E638A1 /* LoginViewController.swift */; };
 		9267011C20D8462400E638A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9267011A20D8462400E638A1 /* Main.storyboard */; };
@@ -110,6 +115,9 @@
 
 /* Begin PBXFileReference section */
 		9205102320E1FA9C00234F16 /* Menus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
+		92180EFD2192A6CE00AEAA5A /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		92180EFE2192A6CE00AEAA5A /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
+		92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUniversity2ViewController.swift; sourceTree = "<group>"; };
 		92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_estado_gray.png; sourceTree = "<group>"; };
 		92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_ciudad_gray.png; sourceTree = "<group>"; };
 		92226FD920F4371300ED30E0 /* ic_school_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_school_gray.png; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 		922ABFB720F6BA0200C5A56C /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		922ABFB820F6BA0300C5A56C /* DetailMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailMapView.xib; sourceTree = "<group>"; };
 		922ABFB920F6BA0300C5A56C /* DetailMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
+		922B9B4B2193723000790678 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = ../ListViewController.swift; sourceTree = "<group>"; };
 		922E647B210A6776005B1699 /* DetailPdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfViewController.swift; sourceTree = "<group>"; };
 		922E647D210A6D23005B1699 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUniversityViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +149,7 @@
 		924132F720E42E4F00CEBC81 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAcademicsViewController.swift; sourceTree = "<group>"; };
 		924924E3211ABFD200E86740 /* RetryAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryAccountViewController.swift; sourceTree = "<group>"; };
+		926264E62191636500CA0DFD /* MainStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStudentViewController.swift; sourceTree = "<group>"; };
 		9267011320D8462400E638A1 /* verzity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = verzity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9267011620D8462400E638A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9267011820D8462400E638A1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -292,6 +302,8 @@
 			children = (
 				924132F420E4296C00CEBC81 /* iOSImageGif.swift */,
 				92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */,
+				92180EFD2192A6CE00AEAA5A /* ActionButton.swift */,
+				92180EFE2192A6CE00AEAA5A /* ActionButtonItem.swift */,
 				92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */,
 				924132F720E42E4F00CEBC81 /* Reachability.swift */,
 				9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */,
@@ -361,8 +373,11 @@
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
 				92B0F6152100ED490003F58F /* DetailBuyViewController.swift */,
 				92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */,
+				922B9B4B2193723000790678 /* ListViewController.swift */,
 				92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */,
+				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
 				924132EE20E2F7AD00CEBC81 /* DetailUniversityViewController.swift */,
+				92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */,
 				92E698C420EB291000F69FCD /* DetailViewController.swift */,
 				92A64B7F20EFF33700E96152 /* ExampleViewController.swift */,
 				924132E420E2881300CEBC81 /* FindMapViewController.swift */,
@@ -372,8 +387,9 @@
 				924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */,
 				924132EC20E2F10900CEBC81 /* ListUniversitiesViewController.swift */,
 				9267011820D8462400E638A1 /* LoginViewController.swift */,
-				92682D1D20DB21A000E6C4A8 /* MainViewController.swift */,
+				926264E62191636500CA0DFD /* MainStudentViewController.swift */,
 				92F9D19A21124F3900FD60EF /* MainTableViewController.swift */,
+				92682D1D20DB21A000E6C4A8 /* MainViewController.swift */,
 				922ABFB520F6B8EF00C5A56C /* Map */,
 				92E698C220EB146400F69FCD /* NotificationsViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
@@ -383,13 +399,12 @@
 				92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */,
 				92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */,
 				9267014E20D9E4DA00E638A1 /* RegisterViewController.swift */,
+				924924E3211ABFD200E86740 /* RetryAccountViewController.swift */,
 				9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */,
 				92682D1F20DB4E4600E6C4A8 /* SidebarView.swift */,
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
-				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
-				924924E3211ABFD200E86740 /* RetryAccountViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -642,6 +657,7 @@
 				92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */,
 				922E647C210A6776005B1699 /* DetailPdfViewController.swift in Sources */,
 				92682D2420DB749A00E6C4A8 /* BaseViewCell.swift in Sources */,
+				92180F0221934B1100AEAA5A /* DetailUniversity2ViewController.swift in Sources */,
 				9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */,
 				92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */,
 				92682D1E20DB21A000E6C4A8 /* MainViewController.swift in Sources */,
@@ -651,6 +667,7 @@
 				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
 				9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */,
+				92180F002192A6CF00AEAA5A /* ActionButtonItem.swift in Sources */,
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
 				92B0F6162100ED490003F58F /* DetailBuyViewController.swift in Sources */,
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
@@ -658,6 +675,7 @@
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
 				92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */,
 				92226FE320F5517000ED30E0 /* ContainerViewController.swift in Sources */,
+				926264E72191636500CA0DFD /* MainStudentViewController.swift in Sources */,
 				92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */,
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,
@@ -666,6 +684,7 @@
 				92DD410820EC11560035EF4E /* Dates.swift in Sources */,
 				924132ED20E2F10900CEBC81 /* ListUniversitiesViewController.swift in Sources */,
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
+				92180EFF2192A6CF00AEAA5A /* ActionButton.swift in Sources */,
 				922E647E210A6D23005B1699 /* Downloader.swift in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
@@ -695,6 +714,7 @@
 				92226FDE20F465C600ED30E0 /* ProfileUniversityViewController.swift in Sources */,
 				92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */,
 				92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */,
+				922B9B4C2193723000790678 /* ListViewController.swift in Sources */,
 				92682D3420DC22FC00E6C4A8 /* AlamofireWebServiceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

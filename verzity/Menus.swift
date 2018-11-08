@@ -26,6 +26,21 @@ struct Menus{
        
         
     ]
+
+    static let list_prospectus = [
+        [
+            "name":"Videos",
+            "image":"ic_comprar_paquete",
+            "type": "videos",
+             "color": "#ff7b25"
+        ],
+        [
+            "name":"Folletos digitales",
+            "image":"ic_mortarboard",
+            "type": "digital",
+            "color": "#1d47f1"
+        ]
+    ]
     
     static let menu_main_academic = [
         [
@@ -53,17 +68,12 @@ struct Menus{
             "type": "becas",
             "color": "#32cb00"
         ],
-
         
-    ]
+        
+        ]
     
     static let menu_find_university = [
-        [
-            "name":"Universidad",
-            "image":"ic_action_ic_school.png",
-            "type": "find_university",
-            "color": "#388E3C"
-        ],
+        
         [
             "name":"Programas académicos",
             "image":"ic_mortarboard.png",
@@ -71,16 +81,22 @@ struct Menus{
             "color": "#1d47f1"
         ],
         [
-            "name":"Cerca de mi",
+            "name":"Ubicación",
+            "image":"ic_action_aeroplane.png",
+            "type": "find_euu",
+            "color": "#b47102"
+        ],
+        [
+            "name":"Geolocalización",
             "image":"ic_gps.png",
             "type": "find_next_to_me",
             "color": "#ff0106"
         ],
         [
-            "name":"En EE. UU.",
-            "image":"ic_action_aeroplane.png",
-            "type": "find_euu",
-            "color": "#b47102"
+            "name":"Universidad",
+            "image":"ic_action_ic_school.png",
+            "type": "find_university",
+            "color": "#388E3C"
         ],
         [
             "name":"Favoritos",
@@ -104,7 +120,17 @@ struct Menus{
             "type": "profile_academic"
         ],
         [
-            "name":"Salir",
+            "name":"Ver mis Asesores",
+            "image":"ic_action_ic_school.png",
+            "type": "profile_asesor"
+        ],
+        [
+            "name":"Notificaciones",
+            "image":"ic_action_notifications.png",
+            "type": "profile_notify"
+        ],
+        [
+            "name":"Cerrar sesión",
             "image":"ic_action_close.png",
             "type": "sigout_academic"
         ]

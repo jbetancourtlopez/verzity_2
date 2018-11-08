@@ -152,12 +152,9 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     }
     
     func upload_file(status: Int, response: AnyObject){
-         print("Imagen cargada con exito")
         let json = JSON(response)
         self.name_image = json["data"].stringValue
         
-        print(response)
-       //
         let when = DispatchTime.now()+5
         DispatchQueue.main.asyncAfter(deadline: when){
             // your code with delay
@@ -165,8 +162,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             self.view.isUserInteractionEnabled = true
         }
      
-        self.name_image = json["data"].stringValue
-        print("Toast")
         if status == 1{
             toast(title:StringsLabel.upload_image)
         }else{

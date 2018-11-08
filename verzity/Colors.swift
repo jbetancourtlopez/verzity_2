@@ -23,8 +23,6 @@ struct Colors{
 
     static let Color_buscarUniversidad = UIColor(red: 56.0/255.0, green: 142.0/255.0, blue: 60.0/255.0, alpha: 1.0) // #388E3C
     static let Color_financiamientos = UIColor(red: 255.0/255.0, green: 123.0/255.0, blue: 37.0/255.0, alpha: 1.0) // #ff7b25
-    static let Color_becas = UIColor(red: 50.0/255.0, green: 203.0/255.0, blue: 0.0/255.0, alpha: 1.0) // #32cb00
-    static let Color_cupones = UIColor(red: 247.0/255.0, green: 191.0/255.0, blue: 37.0/255.0, alpha: 1.0) // #F7BF25
     static let Color_favoritos = UIColor(red: 191.0/255.0, green: 191.0/255.0, blue: 37.0/255.0, alpha: 1.0) // #F7BF25
     static let Color_videos = UIColor(red: 255.0/255.0, green: 1.0/255.0, blue: 6.0/255.0, alpha: 1.0) // #ff0106
     static let Color_location = UIColor(red: 255.0/255.0, green: 1.0/255.0, blue: 6.0/255.0, alpha: 1.0) // #ff0106
@@ -35,5 +33,15 @@ struct Colors{
     
     static let Color_postulados = UIColor(red: 29.0/255.0, green: 71.0/255.0, blue: 241.0/255.0, alpha: 1.0) // #1d47f1
     static let Color_paquetes = UIColor(red: 255.0/255.0, green: 123.0/255.0, blue: 37.0/255.0, alpha: 1.0) // #ff7b25
+
+    // Nuevo Colores
+
+    static let color_financiamiento = UIColor(red: 8.0/255.0, green: 68.0/255.0, blue: 224.0/255, alpha: 1.0)
+    static let Color_cupones = UIColor(red: 127.0/255.0, green: 3.0/255.0, blue: 5.0/255, alpha: 1.0)
+    static let Color_becas = UIColor(red: 50.0/255.0, green: 203.0/255.0, blue: 0.0/255.0, alpha: 1.0) 
+    static let Color_universidades = UIColor(red: 56.0/255.0, green: 142.0/255.0, blue: 6.0/255.0, alpha: 1.0) 
+    static let Color_examen = UIColor(red: 252.0/255.0, green: 122.0/255.0, blue: 36.0/255.0, alpha: 1.0) 
+    static let Color_extranjero = UIColor(red: 246.0/255.0, green: 189.0/255.0, blue: 36.0/255.0, alpha: 1.0) 
+
  
 }

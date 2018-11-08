@@ -150,43 +150,7 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
-    //Table View. -------
-    
-    /*
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return self.menu_main.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }*/
-    
-    /*
-    // Set the spacing between sections
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
-    }
-    
-    // Make the background color show through
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor.clear
-        return headerView
-    }*/
-    /*
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        let name = menu_main[indexPath.section]["name"]
-        let image = menu_main[indexPath.section]["image"]
-        
-        cell.name.text = name
-        cell.icon.image = UIImage(named: image!)
-        
-        cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
-        cell.icon.tintColor = Colors.green_dark
-        return cell
-    }*/
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      

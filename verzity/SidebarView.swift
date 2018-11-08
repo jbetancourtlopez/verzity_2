@@ -35,12 +35,13 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
         // Recupero el Tipo de Menu a mostrar
         profile_menu = getSettings_sidebar(key: "profile_menu")
 
-        if profile_menu == "profile_academic" {
-            side_menu = Menus.side_menu_university as [AnyObject]
-        }else if profile_menu == "profile_university" {
-            side_menu = Menus.side_menu_representative as [AnyObject]
-        }
-        
+//        if profile_menu == "profile_academic" {
+//            side_menu = Menus.side_menu_university as [AnyObject]
+//        }else if profile_menu == "profile_university" {
+//            side_menu = Menus.side_menu_representative as [AnyObject]
+//        }
+//
+        side_menu = Menus.side_menu_university as [AnyObject]
         setupViews()
         
         myTableView.delegate=self
