@@ -554,6 +554,8 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 }
 
 extension ProfileAcademicViewController: RetryAccountViewControllerDelegate {
+  
+    
     func okButtonTapped() {
         print("OK BUtton")
         showGifIndicator(view: self.view)
@@ -569,10 +571,10 @@ extension ProfileAcademicViewController: RetryAccountViewControllerDelegate {
         
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.ActualizarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: actualizarCuentaUniversitario)
+        webServiceController.ActualizarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: actualizarCuentaUniversitario_)
     }
     
-    func actualizarCuentaUniversitario(status: Int, response: AnyObject){
+    func actualizarCuentaUniversitario_(status: Int, response: AnyObject){
         hiddenGifIndicator(view: self.view)
         print("Guardo Datos")
         var json = JSON(response)

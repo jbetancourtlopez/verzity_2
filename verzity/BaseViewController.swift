@@ -1,15 +1,9 @@
-//
-//  BaseViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 18/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SystemConfiguration
 import SwiftyUserDefaults
 import Kingfisher
+import SwiftyJSON
+import RealmSwift
 
 class BaseViewController: UIViewController, UITextFieldDelegate{
     var alert = UIAlertController()
@@ -19,11 +13,11 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     var indicator : UIActivityIndicatorView!
     var viewLoading : UIView!
     
+    let realm = try! Realm()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       // let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
-        // self.view.addGestureRecognizer(tap)
+        print(Realm.Configuration.defaultConfiguration.fileURL)
     }
     
     func adjustUITextViewHeight(arg : UITextView){
@@ -32,13 +26,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         arg.translatesAutoresizingMaskIntoConstraints = true
         arg.sizeToFit()
         arg.isScrollEnabled = false
-        
-
-        /*
-        let fixedWidth = arg.frame.size.width
-        let newSize = arg.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        arg.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)*/
-    }
+     }
 
     func set_photo_profile(url:String, image: UIImageView){
         // Formateo la Imagen
@@ -320,55 +308,178 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         return randomString
     }
     
+    
+    // Base de Datos
+    func save_profile(data: JSON){
+        
+        let personas_json = JSON(data["Personas"])
+        let dispositivos_json = JSON(personas_json["Dispositivos"])
+        let direccion_json = JSON(personas_json["Direcciones"])
+        let vestasPaquetesAsesores_json = JSON(personas_json["VentasPaquetesAsesores"])
+        let universidades_json = JSON(personas_json["Universidades"]).arrayValue
+      
+     
+        let direccion = Direcciones()
+        direccion.idDireccion = direccion_json["idDireccion"].intValue
+        direccion.desDireccion = direccion_json["nbMunicipio"].stringValue
+        direccion.numCodigoPostal = direccion_json["numCodigoPostal"].stringValue
+        direccion.nbPais = direccion_json["nbPais"].stringValue
+        direccion.nbEstado = direccion_json["nbEstado"].stringValue
+        direccion.nbMunicipio = direccion_json[].stringValue
+        direccion.nbCiudad = direccion_json["nbCiudad"].stringValue
+        direccion.dcLatitud = direccion_json["dcLatitud"].stringValue
+        direccion.dcLongitud = direccion_json["dcLongitud"].stringValue
+
+        let dispositivo = Dispositivos()
+        dispositivo.idDispositivo = dispositivos_json["idDispositivo"].intValue
+        dispositivo.idPersona = dispositivos_json["idPersona"].intValue
+        dispositivo.cvDispositivo = Defaults[.cvDispositivo]!
+        dispositivo.cvFirebase = Defaults[.cvFirebase]!
+        
+        let vestasPaquetesAsesores = VestasPaquetesAsesores()
+        vestasPaquetesAsesores.idVentaPaqueteAsesor = vestasPaquetesAsesores_json[].intValue
+        vestasPaquetesAsesores.idPaqueteAsesor = vestasPaquetesAsesores_json[].intValue
+        vestasPaquetesAsesores.idPersona = vestasPaquetesAsesores_json[].intValue
+        vestasPaquetesAsesores.idPersonaAsesor = vestasPaquetesAsesores_json[].intValue
+        vestasPaquetesAsesores.feVenta = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.feVigencia = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.fgPaqueteActual = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.numReferenciaPaypal = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.numLiberados = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.numUsados = vestasPaquetesAsesores_json[].stringValue
+        
+        let universidades = Universidades()
+        if  personas_json["idTipoPersona"].intValue == 2 {
+            
+            let direccion_universidad_json = JSON(universidades_json[0]["Direcciones"])
+            let ventasPaquetes_json = JSON(universidades_json[0]["VentasPaquetes"]).arrayValue
+            let paquete_json = JSON(ventasPaquetes_json[0]["Paquete"])
+            
+            
+            let direccion_universidad = Direcciones()
+            direccion_universidad.idDireccion = direccion_universidad_json["idDireccion"].intValue
+            direccion_universidad.desDireccion = direccion_universidad_json["nbMunicipio"].stringValue
+            direccion_universidad.numCodigoPostal = direccion_universidad_json["numCodigoPostal"].stringValue
+            direccion_universidad.nbPais = direccion_universidad_json["nbPais"].stringValue
+            direccion_universidad.nbEstado = direccion_universidad_json["nbEstado"].stringValue
+            direccion_universidad.nbMunicipio = direccion_universidad_json[].stringValue
+            direccion_universidad.nbCiudad = direccion_universidad_json["nbCiudad"].stringValue
+            direccion_universidad.dcLatitud = direccion_universidad_json["dcLatitud"].stringValue
+            direccion_universidad.dcLongitud = direccion_universidad_json["dcLongitud"].stringValue
+            
+            let paquete = Paquete()
+            paquete.idPaquete = paquete_json["idPaquete"].intValue
+            paquete.idEstatus = paquete_json["idEstatus"].intValue
+            paquete.cvPaquete = paquete_json["cvPaquete"].stringValue
+            paquete.nbPaquete = paquete_json["nbPaquete"].stringValue
+            paquete.desPaquete = paquete_json["desPaquete"].stringValue
+            paquete.dcDiasVigencia = paquete_json["dcDiasVigencia"].stringValue
+            paquete.fgAplicaBecas = paquete_json["fgAplicaBecas"].stringValue
+            paquete.fgAplicaFinanciamiento = paquete_json["fgAplicaFinanciamiento"].stringValue
+            paquete.fgAplicaPostulacion = paquete_json["fgAplicaPostulacion"].stringValue
+            paquete.fgAplicaProspectus = paquete_json["fgProspectus"].stringValue
+            paquete.fgAplicaLogo = paquete_json["fgAplicaLogo"].stringValue
+            paquete.fgAplicaDireccion = paquete_json["fgAplicaDireccion"].stringValue
+            paquete.fgAplicaFavoritos = paquete_json["fgAplicaFavoritos"].stringValue
+            paquete.fgAplicaUbicacion = paquete_json["fgAplicaUbicacion"].stringValue
+            paquete.fgAplicaRedes = paquete_json["fgAplicaRedes"].stringValue
+            paquete.fgAplicaProspectusVideo = paquete_json["fgAplicaProspectusVideo"].stringValue
+            paquete.fgAplicaProspectusVideos = paquete_json["fgAplicaProspectusVideos"].stringValue
+            paquete.fgAplicaAplicaImagenes = paquete_json["fgAplicaImagenes"].stringValue
+            paquete.fgAplicaContacto = paquete_json["fgAplicaContacto"].stringValue
+            paquete.fgAplicaDescripcion = paquete_json["fgAplicaDescripcion"].stringValue
+            
+            let ventasPaquetes = VestasPaquetes()
+            ventasPaquetes.idVentasPaquetes = ventasPaquetes_json[0]["fgPaqueteActual"].intValue
+            ventasPaquetes.idUniversidad = ventasPaquetes_json[0]["idUniversidad"].intValue
+            ventasPaquetes.idPaquete = ventasPaquetes_json[0]["idPaquete"].intValue
+            ventasPaquetes.feVenta = ventasPaquetes_json[0]["feVenta"].stringValue
+            ventasPaquetes.feVigencia = ventasPaquetes_json[0]["feVigencia"].stringValue
+            ventasPaquetes.fgPaqueteActual = ventasPaquetes_json[0]["fgPaqueteActual"].stringValue
+            ventasPaquetes.fgRecurrente = ventasPaquetes_json[0]["fgRecurrente"].stringValue
+            ventasPaquetes.numReferenciaPaypal = ventasPaquetes_json[0]["numReferenciaPayPal"].stringValue
+            ventasPaquetes.Paquete = paquete
+            
+            
+            universidades.idUniversidad = universidades_json[0]["idUniversidad"].intValue
+            universidades.idEstatus = universidades_json[0]["idUniversidad"].intValue
+            universidades.idDireccion = universidades_json[0]["idDireccion"].intValue
+            universidades.idPersona = universidades_json[0]["idPersona"].intValue
+            universidades.pathLogo = universidades_json[0]["pathLogo"].stringValue
+            universidades.nbUniversidad = universidades_json[0]["nbUniversidad"].stringValue
+            universidades.nbReprecentante = universidades_json[0]["nbReprecentante"].stringValue
+            universidades.desUniversidad = universidades_json[0]["desUniversidad"].stringValue
+            universidades.desSitioWeb = universidades_json[0]["desSitioWeb"].stringValue
+            universidades.desTelefono = universidades_json[0]["desTelefono"].stringValue
+            universidades.desCorreo = universidades_json[0]["desCorreo"].stringValue
+            universidades.feRegistro = universidades_json[0]["feRegistro"].stringValue
+            universidades.urlFolletosDigitales = universidades_json[0]["urlFolletosDigitales"].stringValue
+            universidades.urlFaceBook = universidades_json[0]["urlFaceBook"].stringValue
+            universidades.urlTwitter = universidades_json[0]["urlTwitter"].stringValue
+            universidades.urlInstagram = universidades_json[0]["urlInstagram"].stringValue
+
+            universidades.Direcciones = direccion_universidad
+            universidades.VestasPaquetes = ventasPaquetes
+        }
+        
+        let persona = Persona()
+        persona.idPersona = personas_json["idPersona"].intValue
+        persona.idDireccion = personas_json["idDireccion"].intValue
+        persona.idTipoPersona = personas_json["idTipoPersona"].intValue
+        persona.nbCompleto = personas_json["nbCompleto"].stringValue
+        persona.desTelefono = personas_json["desTelefono"].stringValue
+        persona.desCorreo = personas_json["desCorreo"].stringValue
+        persona.pathFoto = personas_json["pathFoto"].stringValue
+        persona.desSkype = personas_json["desSkype"].stringValue
+        persona.desPersona = personas_json["desPersona"].stringValue
+
+        persona.VestasPaquetesAsesores = vestasPaquetesAsesores
+        persona.Direcciones = direccion
+        persona.Dispositivos = dispositivo
+        persona.Universidades = universidades
+
+        let usuario = Usuario()
+        usuario.idUsuario = data["idUsuario"].intValue
+        usuario.idPersona = data["idPersona"].intValue
+        usuario.idPerfil = data["idPerfil"].intValue
+
+        usuario.nbUsuario = data["nbUsuario"].stringValue
+        usuario.pwdContrasenia = data["pwdContrasenia"].stringValue
+        usuario.idEstatus = data["idEstatus"].stringValue
+        usuario.cvFacebook = data["cvFacebook"].stringValue
+        usuario.Persona = persona
+
+        try! realm.write {
+            realm.add(usuario)
+        }
+
+        let usuario_db = realm.objects(Usuario.self).first
+        print(usuario_db?.Persona?.desTelefono)
+        
+    }
+    
+    func get_user()-> Usuario{
+        let usuario_db = realm.objects(Usuario.self).first
+        return usuario_db ?? Usuario()        
+    }
+    
+    
     func delete_session(){
         print("Delete")
-        
-        // Borramos los datos de session
-        setSettings(key: "profile_menu", value: "")
-        Defaults[.type_user] = 0
-        Defaults[.academic_idPersona] = 0
-        Defaults[.academic_idDireccion] = 0
-        
-        Defaults[.academic_name] = ""
-        Defaults[.academic_email] = ""
-        Defaults[.academic_phone] = ""
-        Defaults[.academic_pathFoto] = ""
-        
-        Defaults[.academic_nbPais] = ""
-        Defaults[.academic_cp] = ""
-        Defaults[.academic_city] = ""
-        Defaults[.academic_municipio] = ""
-        Defaults[.academic_state] = ""
-        Defaults[.academic_description] = ""
-        
-        Defaults[.academic_dcLatitud] = ""
-        Defaults[.academic_dcLongitud] = ""
-        
-        //Paquete
-        Defaults[.package_idUniveridad] = 0
-        Defaults[.package_idPaquete] = 0
-        
-        //Universidad
-        Defaults[.university_idUniveridad] = 0
-        Defaults[.university_pathLogo] = ""
-        Defaults[.university_nbUniversidad] = ""
-        Defaults[.university_nbReprecentante] = ""
-        Defaults[.university_desUniversidad] = ""
-        Defaults[.university_desSitioWeb] = ""
-        Defaults[.university_desTelefono] = ""
-        Defaults[.university_desCorreo] = ""
-        Defaults[.university_idPersona] = 0
-        
-        // Direccion Universidad
-        Defaults[.add_uni_idDireccion] = 0
-        Defaults[.add_uni_desDireccion] = ""
-        Defaults[.add_uni_numCodigoPostal] = ""
-        Defaults[.add_uni_nbPais] = ""
-        Defaults[.add_uni_nbEstado] = ""
-        Defaults[.add_uni_nbMunicipio] = ""
-        Defaults[.add_uni_nbCiudad] = ""
-        Defaults[.add_uni_dcLatitud] = 0.0
-        Defaults[.add_uni_dcLongitud] = 0.0
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
+    
+    func save_configuration(data: JSON){
+        Defaults[.id_Configuraciones] = data["id_Configuraciones"].intValue
+        Defaults[.desRutaWebServices] = data["desRutaWebServices"].stringValue
+        Defaults[.desRutaMultimedia] = data["desRutaMultimedia"].stringValue
+        Defaults[.cvPaypal] = data["cvPaypal"].stringValue
+        Defaults[.desRutaFTP] = data["desRutaFTP"].stringValue
+        Defaults[.nbUsuarioFTP] = data["nbUsuarioFTP"].stringValue
+        Defaults[.pdwContraseniaFTP] = data["pdwContraseniaFTP"].stringValue
+        Defaults[.desCarpetaMultimediaFTP] = data["desCarpetaMultimediaFTP"].stringValue
     }
     
 }

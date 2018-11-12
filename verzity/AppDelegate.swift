@@ -15,6 +15,7 @@ import UserNotifications
 import Firebase
 import FirebaseMessaging
 
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -71,6 +72,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        // Realm DataBase
+        let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                migration.enumerateObjects(ofType: Usuario.className()) { oldObject, newObject in
+                    if oldSchemaVersion < 1 {
+                        // combine name fields into a single field
+                        //let owner = oldObject!["owner"] as! Persona
+                        newObject?["Persona"] as! Persona
+                        
+                    }
+                }
+            }
+            if oldSchemaVersion < 2 {
+                migration.enumerateObjects(ofType: Usuario.className()) { oldObject, newObject in
+                    // give JP a dog
+                    let owner = oldObject!["owner"] as! Persona
+                    newObject?["Persona"] = owner as Persona
+                    
+                }
+            }
+            print("Migration complete.")
+        }
+        
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: 1, migrationBlock: migrationBlock)
         
         // Facebook
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

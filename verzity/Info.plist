@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -27,7 +27,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-    <!-- Init Facebook-->
 	<key>FacebookAppID</key>
 	<string>1840745639558180</string>
 	<key>FacebookDisplayName</key>
@@ -39,32 +38,27 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-    <!-- End Facebook-->
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <!-- Init Permisos de seguridad en Red -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-            <key>youtube.com</key>
+			<key>youtube.com</key>
 			<dict>
-                <key>NSIncludesSubdomains</key>
-                <true/>
-                <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                <false/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
-				<!--<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.2</string> -->
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
 			</dict>
 		</dict>
 	</dict>
-    <!-- End Permisos de seguridad en Red -->
+	<key>NSCameraUsageDescription</key>
+	<string>Access camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This is required to get current location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -92,8 +86,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <!-- Permiso de Camara-->
-    <key>NSCameraUsageDescription</key>
-    <string>Access camera</string>
 </dict>
 </plist>

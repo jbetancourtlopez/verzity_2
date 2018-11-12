@@ -41,6 +41,7 @@
 		924132F520E4296C00CEBC81 /* iOSImageGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F420E4296C00CEBC81 /* iOSImageGif.swift */; };
 		924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F720E42E4F00CEBC81 /* Reachability.swift */; };
 		924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */; };
+		92454FF121954AB5009F27B7 /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92454FF021954AB5009F27B7 /* model.swift */; };
 		924924E4211ABFD200E86740 /* RetryAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924924E3211ABFD200E86740 /* RetryAccountViewController.swift */; };
 		926264E72191636500CA0DFD /* MainStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926264E62191636500CA0DFD /* MainStudentViewController.swift */; };
 		9267011720D8462400E638A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011620D8462400E638A1 /* AppDelegate.swift */; };
@@ -84,6 +85,7 @@
 		92A64B7E20EFE8AD00E96152 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */; };
 		92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7F20EFF33700E96152 /* ExampleViewController.swift */; };
 		92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */; };
+		92A78069219637B70024C049 /* FormStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78068219637B70024C049 /* FormStudentViewController.swift */; };
 		92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */; };
 		92B0F6142100CBEF0003F58F /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */; };
 		92B0F6162100ED490003F58F /* DetailBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F6152100ED490003F58F /* DetailBuyViewController.swift */; };
@@ -148,6 +150,7 @@
 		924132F420E4296C00CEBC81 /* iOSImageGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSImageGif.swift; sourceTree = "<group>"; };
 		924132F720E42E4F00CEBC81 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAcademicsViewController.swift; sourceTree = "<group>"; };
+		92454FF021954AB5009F27B7 /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
 		924924E3211ABFD200E86740 /* RetryAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryAccountViewController.swift; sourceTree = "<group>"; };
 		926264E62191636500CA0DFD /* MainStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStudentViewController.swift; sourceTree = "<group>"; };
 		9267011320D8462400E638A1 /* verzity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = verzity.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +198,7 @@
 		92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTPlayerView.h; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.h"; sourceTree = "<group>"; };
 		92A64B7F20EFF33700E96152 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFinanciamientoViewController.swift; sourceTree = "<group>"; };
+		92A78068219637B70024C049 /* FormStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStudentViewController.swift; sourceTree = "<group>"; };
 		92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapViewController.swift; sourceTree = "<group>"; };
 		92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_action_mail_gray.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Iconografia/ic_action_mail_gray.png"; sourceTree = "<group>"; };
 		92B0F6152100ED490003F58F /* DetailBuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuyViewController.swift; sourceTree = "<group>"; };
@@ -339,7 +343,7 @@
 				924132F620E42E1500CEBC81 /* system */,
 				9267013B20D84A5E00E638A1 /* assets */,
 				9267013820D84A1B00E638A1 /* core */,
-				9267013420D8478D00E638A1 /* dataaccess */,
+				9267013420D8478D00E638A1 /* model */,
 				9267012D20D8467700E638A1 /* webService */,
 				9267012E20D8468D00E638A1 /* viewControllers */,
 				9267011620D8462400E638A1 /* AppDelegate.swift */,
@@ -405,15 +409,17 @@
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
+				92A78068219637B70024C049 /* FormStudentViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
 		};
-		9267013420D8478D00E638A1 /* dataaccess */ = {
+		9267013420D8478D00E638A1 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				92454FF021954AB5009F27B7 /* model.swift */,
 			);
-			name = dataaccess;
+			name = model;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -664,6 +670,7 @@
 				92226FE720F59E6000ED30E0 /* SecondFormViewController.swift in Sources */,
 				924132E720E2B42F00CEBC81 /* CustomView.swift in Sources */,
 				922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */,
+				92454FF121954AB5009F27B7 /* model.swift in Sources */,
 				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,
 				9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */,
@@ -692,6 +699,7 @@
 				922892AB20F2B3260021DB32 /* CustomSwich.swift in Sources */,
 				922ABFBA20F6BA0300C5A56C /* CustomAnnotation.swift in Sources */,
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
+				92A78069219637B70024C049 /* FormStudentViewController.swift in Sources */,
 				92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
