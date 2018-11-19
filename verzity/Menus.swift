@@ -15,7 +15,7 @@ struct Menus{
             "name":"Paquetes",
             "image":"ic_comprar_paquete",
             "type": "package",
-             "color": "#ff7b25"
+             "color": "#1d47f1"
         ],
         [
             "name":"Postulados",
@@ -41,6 +41,30 @@ struct Menus{
             "color": "#1d47f1"
         ]
     ]
+
+    static let list_postulation = [
+        [
+            "name":"Becas",
+            "image":"ic_mortarboard",
+            "type": "becas",
+            "color": "#1d47f1"
+        ],
+        [
+            "name":"Financiamientos",
+            "image":"ic_mortarboard",
+            "type": "finan",
+            "color": "#1d47f1"
+        ],
+        [
+            "name":"Universidad",
+            "image":"ic_mortarboard",
+            "type": "universidad",
+            "color": "#1d47f1"
+        ]
+    ]
+
+
+    
     
     static let menu_main_academic = [
         [

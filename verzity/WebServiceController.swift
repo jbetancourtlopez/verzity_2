@@ -864,6 +864,29 @@ class WebServiceController: AlamofireWebServiceController{
         }
     }
 
+    func sendRequest_fix(parameters: String, type: Int, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
+        let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
+        print(url)
+
+        
+
+        sendRequest_fix(url:url, jsonObject: parameters, type:type ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+
     // 3.11
     //GetNivelesAcademicos
     //GetProgramasAcademicos

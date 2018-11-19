@@ -137,9 +137,6 @@ class DetailUniversity3ViewController: BaseViewController {
         image_finan.tintColor = hexStringToUIColor(hex: "#1d47f1")
         button_finan.setImage(image_visitar_web, for: .normal)
         button_finan.tintColor = Colors.gray
-        
-      
-        
     }
     
     func load_data(){
@@ -190,9 +187,6 @@ class DetailUniversity3ViewController: BaseViewController {
     // Paquete
     func setup_package(package: JSON){
         var paquete = JSON(package["Paquete"])
-        
-        
-        
         
         let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
         let fgAplicaDireccion = paquete["fgAplicaDireccion"].boolValue

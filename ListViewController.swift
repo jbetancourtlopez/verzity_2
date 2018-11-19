@@ -1,15 +1,7 @@
-//
-//  ListUniversitiesViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 26/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
-
 
 class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -21,6 +13,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var type: String = ""
     
     var list_prospectus = Menus.list_prospectus
+    var list_postulation = Menus.list_postulation
     var list_academics: NSArray = []
     var idUniversidad: Int!
 
@@ -38,20 +31,22 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
            self.title = "Prospectus"
         }else if type == "academics"{
             self.title = "Seleccionar nivel académico"
+        }else if type == "postulation" {
+            self.title = "Seleccionar tipo postulación"
         }
-        
     }
     
     func load_data(){
         if type == "prospectus"{
             list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
         }else if type == "academics"{
-            
             showGifIndicator(view: self.view)
             let array_parameter = ["": ""]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.get(parameters: parameter_json_string!, method: Singleton.GetNivelesAcademicos, doneFunction:callback_load_data)
+        }else if type == "postulation" {
+            list_postulation = Menus.list_postulation  as [AnyObject] as! [[String : String]]
         }
     }
     
@@ -63,11 +58,9 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
-        
     }
     
     //Table View. -------------------
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         var count = 0
         
@@ -75,6 +68,8 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             count = list_prospectus.count
         }else if type == "academics"{
            count = list_academics.count
+        }else if type == "postulation"{
+            count = list_postulation.count
         }
         
         if count == 0 {
@@ -126,7 +121,14 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             cell.icon.image = UIImage(named: "ic_mortarboard")
             cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
             //cell.icon.tintColor = hexStringToUIColor(hex: list_prospectus[indexPath.section]["color"]!)
-
+        }else if type == "postulation"{
+            // Name
+            cell.name.text  = list_postulation[indexPath.section]["name"]
+            
+            // Image
+            cell.icon.image = UIImage(named: list_postulation[indexPath.section]["image"]!)
+            cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
+            cell.icon.tintColor = hexStringToUIColor(hex: list_postulation[indexPath.section]["color"]!)
         }
         
         return cell
@@ -160,9 +162,35 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListAcademicsViewControllerID") as! ListAcademicsViewController
             vc.nbNivelEstudios = item["nbNivelEstudios"].stringValue
             vc.idCatNivelEstudios = item["idCatNivelEstudios"].intValue
-            
-            
             self.show(vc, sender: nil)
+        }else if type == "postulation"{
+            print("Postulados")
+            
+            let option = list_postulation[indexPath.section]["type"]
+            
+            switch String(option!) {
+            case "becas":
+                print("Becas")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
+                vc.tipo = 2
+                self.show(vc, sender: nil)
+                break
+            case "finan":
+                print("Financiamietos")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
+                vc.tipo = 3
+                self.show(vc, sender: nil)
+                break
+            case "universidad":
+                print("Universidad")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
+                vc.tipo = 1
+                self.show(vc, sender: nil)
+                
+                break
+            default:
+                break
+            }
         }
 
         

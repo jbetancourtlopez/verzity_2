@@ -205,13 +205,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         debugPrint(response)
         
         if status == 1{
-            
             var json = JSON(response)
             let data = JSON(json["Data"])
-            
             save_profile(data:data)
-            
-      
             performSegue(withIdentifier: "showSplash", sender: self)
         }else{
             if  is_click_facebook == 1{
@@ -228,8 +224,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                 updateAlert(title: "", message: response as! String, automatic: true)
             }
         }
- 
-        
     }
     
     

@@ -40,7 +40,6 @@ class DetailBuyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         animateView()
         set_data()
     }
@@ -56,23 +55,17 @@ class DetailBuyViewController: BaseViewController {
     
     func set_data(){
         debugPrint(info)
-        /*
-        feVenta
-        feVigencia
- */
-        
         
         if (is_summary == 1) {
+            
+            let usuario = get_user()
+            let paquete = usuario.Persona?.Universidades?.VestasPaquetes
             var data = JSON(info)
-            Defaults[.package_idPaquete] = data["idPaquete"].intValue
             
-            print(Defaults[.package_feVenta])
-            print(Defaults[.package_feVigencia])
+            date_top.text = get_date_complete(date_complete_string: (paquete?.feVenta)! )
+            vigency.text = get_date_complete(date_complete_string: (paquete?.feVigencia)!)
             
-            date_top.text = get_date_complete(date_complete_string: Defaults[.package_feVenta]!)
-            vigency.text = get_date_complete(date_complete_string: Defaults[.package_feVigencia]!)
-            
-            name.text = data["nbPaquete"].stringValue
+            name.text = paquete?.Paquete?.nbPaquete  //data["nbPaquete"].stringValue
             price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
           
         } else{
@@ -85,7 +78,6 @@ class DetailBuyViewController: BaseViewController {
             name.text = paquete["nbPaquete"].stringValue
             price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
         }
-        
     }
     
     func setupView() {
@@ -102,13 +94,8 @@ class DetailBuyViewController: BaseViewController {
         })
     }
 
-    
     @IBAction func on_click_ok(_ sender: Any) {
         delegate?.okButtonTapped(is_summary: is_summary)
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
-    
 }

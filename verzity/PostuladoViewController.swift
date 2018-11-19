@@ -1,11 +1,3 @@
-//
-//  PostuladoViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 03/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
@@ -24,7 +16,8 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     var list_financing: [Any] = []
     var list_postulate: [Any] = []
     var list_sections: [String] = []
-    
+    var usuario: Usuario = Usuario()
+    var tipo:Int = 0
      var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -32,6 +25,9 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        usuario = get_user()
+
         
         tableView.estimatedRowHeight = 60
         setup_ux()
@@ -55,10 +51,11 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     }
     
     func load_data(){
-        let array_parameter = ["idUniversidad": Defaults[.university_idUniveridad]]
+        let  idUniversidad = usuario.Persona?.Universidades?.idUniversidad
+        let array_parameter = ["idUniversidad":idUniversidad]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.GetPostulados(parameters: parameter_json_string!, doneFunction: GetList)
+        webServiceController.sendRequest_fix(parameters: parameter_json_string!, type:self.tipo, method:"GetPostulados", doneFunction: GetList)
     }
     
     func GetList(status: Int, response: AnyObject){
@@ -176,9 +173,6 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         let type = JSON(row_json["type"])
         let type_name = JSON(row_json["type_name"])
         
-        
-        
-        
         var postulate_date_array = fecha_postulacion.components(separatedBy: "T")
         
         cell.postulate_date.text = postulate_date_array[0]
@@ -203,10 +197,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
             postulate_name = type["nbFinanciamiento"].stringValue
         }
         
-        
         cell.postulate_university.text = postulate_name
-           
-        //https://stackoverflow.com/questions/44663217/swift-change-the-tableviewcell-border-color-according-to-data
         
         cell.clipsToBounds = true
         cell.layer.masksToBounds = true
@@ -216,9 +207,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         let borderColor: UIColor = Colors.green_dark
         cell.layer.borderColor = borderColor.cgColor
 
-        
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -232,9 +221,4 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         vc.detail = row as AnyObject
         self.show(vc, sender: nil)
     }
-    
-    
- 
-
-
 }

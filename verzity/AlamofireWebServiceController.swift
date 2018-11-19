@@ -21,6 +21,8 @@ class AlamofireWebServiceController {
     func sendRequest(url: String,  requestMethod: String,  jsonObject: String, completionHandler: @escaping (Any?, Error?) -> () ){
         
         let json_parameters: Parameters = ["json": jsonObject]
+        
+
         print("Alamore")
         debugPrint(json_parameters)
         if requestMethod == "GET" {
@@ -43,6 +45,34 @@ class AlamofireWebServiceController {
         }
     }
     
+    func sendRequest_fix(url: String, jsonObject: String, type:Int, completionHandler: @escaping (Any?, Error?) -> () ){
+        
+       
+        let json_parameters: Parameters = ["json": jsonObject, "tipo": type]
+
+        print("Alamore")
+        debugPrint(json_parameters)
+        Alamofire.request(url, method: .post, parameters: json_parameters)
+            .validate()
+            .responseJSON { response in
+                if let value = response.value {
+                    completionHandler(value, response.error)
+                }
+        }
+       
+    }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: String.Encoding.utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
     func load_data(){
         let url = "http://avicolasanjosemx.com.mx/webmin/login/login_auth"
         Alamofire.request(url,

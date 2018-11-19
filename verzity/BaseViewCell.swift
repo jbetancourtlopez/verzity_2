@@ -76,22 +76,35 @@ class PackageTableViewCell: UITableViewCell {
     @IBOutlet var content_package: UIView!
     @IBOutlet var title_top: UILabel!
     
-    @IBOutlet var label_financing: UILabel!
+   
     @IBOutlet var price: UILabel!
-    
     @IBOutlet var description_package: UITextView!
-    @IBOutlet var label_postulacion: UILabel!
     @IBOutlet var button_buy: UIButton!
-    @IBOutlet var label_beca: UILabel!
     @IBOutlet var vigency: UILabel!
-    
-    @IBOutlet var image_financing: UIImageView!
-    @IBOutlet var image_becas: UIImageView!
-    @IBOutlet var image_postulacion: UIImageView!
-    
-    // Prospectus
+
+    // Label
     @IBOutlet var label_prospectus: UILabel!
-    @IBOutlet var image_prospectus: UIImageView!
+    @IBOutlet var label_beca: UILabel!
+    @IBOutlet var label_postulacion: UILabel!
+     @IBOutlet var label_financing: UILabel!
+    
+    // Imagenes
+    @IBOutlet var fgProspectus: UIImageView!
+    @IBOutlet var fgAplicaImagenes: UIImageView!
+    @IBOutlet var fgAplicaContacto: UIImageView!
+    @IBOutlet var fgAplicaPostulacion: UIImageView!
+    @IBOutlet var fgAplicaLogo: UIImageView!
+    @IBOutlet var fgAplicaProspectusVideos: UIImageView!
+    @IBOutlet var fgAplicaDescripcion: UIImageView!
+    @IBOutlet var fgAplicaBecas: UIImageView!
+    @IBOutlet var fgAplicaUbicacion: UIImageView!
+    @IBOutlet var fgAplicaFavoritos: UIImageView!
+    @IBOutlet var fgAplicaDireccion: UIImageView!
+    @IBOutlet var fgAplicaFinanciamiento: UIImageView!
+    @IBOutlet var fgAplicaProspectusVideo: UIImageView!
+    @IBOutlet var fgAplicaRedes: UIImageView!
+    
+   
     override func awakeFromNib() {
         super.awakeFromNib()
     }

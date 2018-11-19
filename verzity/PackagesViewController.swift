@@ -10,6 +10,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     var items:NSMutableArray = []
     var selected_idPaquete = 0;
     var have_package = false
+    var usuario = Usuario()
+    var idPaquete: Int?
 
   
     // Init Paypal
@@ -47,6 +49,9 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         setup_paypal()
         setup_back_button()
     
+        self.usuario = get_user()
+        self.idPaquete = self.usuario.Persona?.Universidades?.VestasPaquetes?.idPaquete
+        print(usuario)
     
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -83,10 +88,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         button.setTitle("Inicio", for: .normal)
         button.sizeToFit()
         button.addTarget(self, action: #selector(on_click_back), for: .touchUpInside)
-
         
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(customView: button)
-        
         self.navigationItem.leftBarButtonItem = button_back
     }
     
@@ -98,51 +101,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 
                 // Borramos los datos de session
                 self.setSettings(key: "profile_menu", value: "")
-                Defaults[.type_user] = 0
-                Defaults[.academic_idPersona] = 0
-                Defaults[.academic_idDireccion] = 0
-                
-                Defaults[.academic_name] = ""
-                Defaults[.academic_email] = ""
-                Defaults[.academic_phone] = ""
-                Defaults[.academic_pathFoto] = ""
-                
-                Defaults[.academic_nbPais] = ""
-                Defaults[.academic_cp] = ""
-                Defaults[.academic_city] = ""
-                Defaults[.academic_municipio] = ""
-                Defaults[.academic_state] = ""
-                Defaults[.academic_description] = ""
-                
-                Defaults[.academic_dcLatitud] = ""
-                Defaults[.academic_dcLongitud] = ""
-                
-                //Paquete
-                Defaults[.package_idUniveridad] = 0
-                Defaults[.package_idPaquete] = 0
-                
-                //Universidad
-                Defaults[.university_idUniveridad] = 0
-                Defaults[.university_pathLogo] = ""
-                Defaults[.university_nbUniversidad] = ""
-                Defaults[.university_nbReprecentante] = ""
-                Defaults[.university_desUniversidad] = ""
-                Defaults[.university_desSitioWeb] = ""
-                Defaults[.university_desTelefono] = ""
-                Defaults[.university_desCorreo] = ""
-                Defaults[.university_idPersona] = 0
-                
-                // Direccion Universidad
-                Defaults[.add_uni_idDireccion] = 0
-                Defaults[.add_uni_desDireccion] = ""
-                Defaults[.add_uni_numCodigoPostal] = ""
-                Defaults[.add_uni_nbPais] = ""
-                Defaults[.add_uni_nbEstado] = ""
-                Defaults[.add_uni_nbMunicipio] = ""
-                Defaults[.add_uni_nbCiudad] = ""
-                Defaults[.add_uni_dcLatitud] = 0.0
-                Defaults[.add_uni_dcLongitud] = 0.0
-                
+                self.delete_session()
                 _ = self.navigationController?.popToRootViewController(animated: false)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
@@ -157,10 +116,9 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         }else{
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_UniversityViewController") as! UINavigationController
             UIApplication.shared.keyWindow?.rootViewController = vc
         }
-      
         
     }
     
@@ -179,8 +137,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             let list_items = json["Data"].arrayValue
             for i in 0..<list_items.count{
                 var item = JSON(list_items[i])
-                
-                if item["idPaquete"].intValue == Defaults[.package_idPaquete]{
+                if item["idPaquete"].intValue == self.idPaquete{
                     have_package = true
                     self.items.add(item)
                 }
@@ -189,7 +146,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             for i in 0..<list_items.count{
                 var item = JSON(list_items[i])
                 
-                if item["idPaquete"].intValue != Defaults[.package_idPaquete]{
+                if item["idPaquete"].intValue != self.idPaquete{
                     self.items.add(item)
                 }
             }
@@ -250,17 +207,13 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         cell.button_buy.tag = indexPath.section
         
         // Precio
-   
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
         
         let amount = item["dcCosto"].doubleValue
         let formattedString = formatter.string(for: amount)
-        //cell.price.text = formattedString! + " MXN"
-        
         cell.price.text = String(format: "$ %.02f MXN", item["dcCosto"].doubleValue)
-        
         
         cell.title_top.text = item["nbPaquete"].stringValue
         cell.vigency.text = "\(item["dcDiasVigencia"].stringValue) días de vigencia. "
@@ -274,44 +227,94 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
 
         cell.content_package.frame.size.height = 560
         
-        // Swich
-        cell.label_financing.text = "Aplica financiamiento"
-        let is_financing = item["fgAplicaFinanciamiento"].boolValue
-        if (is_financing) {
-            cell.image_financing.image = UIImage(named: "ic_action_ok_check")
+        // Aplica
+        if (item["fgProspectus"].boolValue) {
+            cell.fgProspectus.image = UIImage(named: "ic_action_ok_check")
         }else{
-            cell.image_financing.image = UIImage(named: "ic_action_close_check")
+            cell.fgProspectus.image = UIImage(named: "ic_action_close_check")
         }
         
-        cell.label_beca.text = "Aplica becas"
-        let is_beca = item["fgAplicaBecas"].boolValue
-        if (is_beca) {
-            cell.image_becas.image = UIImage(named: "ic_action_ok_check")
+        if (item["fgAplicaImagenes"].boolValue) {
+            cell.fgAplicaImagenes.image = UIImage(named: "ic_action_ok_check")
         }else{
-            cell.image_becas.image = UIImage(named: "ic_action_close_check")
+            cell.fgAplicaImagenes.image = UIImage(named: "ic_action_close_check")
         }
         
-        
-        cell.label_postulacion.text = "Aplica postulación"
-        let is_postulacion = item["fgAplicaPostulacion"].boolValue
-        if (is_postulacion) {
-            print("Postulacion true")
-            cell.image_postulacion.image = UIImage(named: "ic_action_ok_check")
+        if (item["fgAplicaContacto"].boolValue) {
+            cell.fgAplicaContacto.image = UIImage(named: "ic_action_ok_check")
         }else{
-            cell.image_postulacion.image = UIImage(named: "ic_action_close_check")
+            cell.fgAplicaContacto.image = UIImage(named: "ic_action_close_check")
         }
         
-        // Aplica Prospectus
-        cell.label_prospectus.text = "Aplica prospectus"
-        let is_prospectus = false //item["fgAplicaProspectus"].boolValue
-        if (is_prospectus) {
-            cell.image_prospectus.image = UIImage(named: "ic_action_ok_check")
+        if (item["fgAplicaPostulacion"].boolValue) {
+            cell.fgAplicaPostulacion.image = UIImage(named: "ic_action_ok_check")
         }else{
-            cell.image_prospectus.image = UIImage(named: "ic_action_close_check")
+            cell.fgAplicaPostulacion.image = UIImage(named: "ic_action_close_check")
         }
         
+        if (item["fgAplicaLogo"].boolValue) {
+            cell.fgAplicaLogo.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaLogo.image = UIImage(named: "ic_action_close_check")
+        }
         
-        if item["idPaquete"].intValue == Defaults[.package_idPaquete]!{
+        if (item["fgAplicaProspectusVideos"].boolValue) {
+            cell.fgAplicaProspectusVideos.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaProspectusVideos.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaBecas"].boolValue) {
+            cell.fgAplicaBecas.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaBecas.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaUbicacion"].boolValue) {
+            cell.fgAplicaUbicacion.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaUbicacion.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaDescripcion"].boolValue) {
+            cell.fgAplicaDescripcion.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaDescripcion.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaFavoritos"].boolValue) {
+            cell.fgAplicaFavoritos.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaFavoritos.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaDireccion"].boolValue) {
+            cell.fgAplicaDireccion.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaDireccion.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaFinanciamiento"].boolValue) {
+            cell.fgAplicaFinanciamiento.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaFinanciamiento.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaProspectusVideo"].boolValue) {
+            cell.fgAplicaProspectusVideo.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaProspectusVideo.image = UIImage(named: "ic_action_close_check")
+        }
+        
+        if (item["fgAplicaRedes"].boolValue) {
+            cell.fgAplicaRedes.image = UIImage(named: "ic_action_ok_check")
+        }else{
+            cell.fgAplicaRedes.image = UIImage(named: "ic_action_close_check")
+        }
+
+        //--
+        
+        if item["idPaquete"].intValue == self.idPaquete!{
             cell.button_buy.setTitle("PAQUETE ACTUAL", for: .normal)
             cell.button_buy.isEnabled = true
         }else{
@@ -402,7 +405,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     @objc func on_click_buy(sender: UIButton){
         let index = sender.tag
         var package = JSON(self.items[index])
-        if package["idPaquete"].intValue == Defaults[.package_idPaquete]!{
+        if package["idPaquete"].intValue == self.idPaquete!{
             
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = package as AnyObject
@@ -413,7 +416,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             customAlert.delegate = self
             self.present(customAlert, animated: true, completion: nil)
         }else{
-            if (Defaults[.package_idPaquete]! > 0){
+            if (self.idPaquete! > 0){
                 let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
                     self.payment(index: index)
                 }
