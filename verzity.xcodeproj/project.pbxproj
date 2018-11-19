@@ -11,6 +11,7 @@
 		92180EFF2192A6CF00AEAA5A /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180EFD2192A6CE00AEAA5A /* ActionButton.swift */; };
 		92180F002192A6CF00AEAA5A /* ActionButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180EFE2192A6CE00AEAA5A /* ActionButtonItem.swift */; };
 		92180F0221934B1100AEAA5A /* DetailUniversity2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */; };
+		921E87C1219D45BF006C54A4 /* DetailUniversity3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */; };
 		92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */; };
 		92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */; };
 		92226FDA20F4371600ED30E0 /* ic_school_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92226FD920F4371300ED30E0 /* ic_school_gray.png */; };
@@ -79,6 +80,9 @@
 		9286641B20FCD8D000876AC0 /* SelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */; };
 		928C1C0B21142D1100B1E131 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 928C1C0A21142D1100B1E131 /* logo_white.png */; };
 		928C1C0D21142D4300B1E131 /* logo_verde.png in Resources */ = {isa = PBXBuildFile; fileRef = 928C1C0C21142D4300B1E131 /* logo_verde.png */; };
+		92902188219A77C700C9BC57 /* ListAsesorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92902187219A77C700C9BC57 /* ListAsesorViewController.swift */; };
+		9290218A219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */; };
+		9290218C219A838300C9BC57 /* ListAsesorSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */; };
 		92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */; };
 		92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7520EE8A3B00E96152 /* StringsLabel.swift */; };
 		92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B7720EE8D8300E96152 /* FormValidate.swift */; };
@@ -120,6 +124,7 @@
 		92180EFD2192A6CE00AEAA5A /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		92180EFE2192A6CE00AEAA5A /* ActionButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonItem.swift; sourceTree = "<group>"; };
 		92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUniversity2ViewController.swift; sourceTree = "<group>"; };
+		921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUniversity3ViewController.swift; sourceTree = "<group>"; };
 		92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_estado_gray.png; sourceTree = "<group>"; };
 		92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_ciudad_gray.png; sourceTree = "<group>"; };
 		92226FD920F4371300ED30E0 /* ic_school_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_school_gray.png; sourceTree = "<group>"; };
@@ -190,6 +195,9 @@
 		9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
 		928C1C0A21142D1100B1E131 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_white/ios/AppIcon.appiconset/logo_white.png"; sourceTree = "<group>"; };
 		928C1C0C21142D4300B1E131 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_green/ios/AppIcon.appiconset/logo_verde.png"; sourceTree = "<group>"; };
+		92902187219A77C700C9BC57 /* ListAsesorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorViewController.swift; sourceTree = "<group>"; };
+		92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorPaqueteViewController.swift; sourceTree = "<group>"; };
+		9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorSelectedViewController.swift; sourceTree = "<group>"; };
 		92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_telefono_gray.png; sourceTree = "<group>"; };
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
@@ -410,6 +418,10 @@
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
 				92A78068219637B70024C049 /* FormStudentViewController.swift */,
+				92902187219A77C700C9BC57 /* ListAsesorViewController.swift */,
+				92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */,
+				9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */,
+				921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -663,6 +675,7 @@
 				92E544C720DAD10F0062A9CA /* CheckboxButton.swift in Sources */,
 				922E647C210A6776005B1699 /* DetailPdfViewController.swift in Sources */,
 				92682D2420DB749A00E6C4A8 /* BaseViewCell.swift in Sources */,
+				9290218A219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift in Sources */,
 				92180F0221934B1100AEAA5A /* DetailUniversity2ViewController.swift in Sources */,
 				9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */,
 				92E698C320EB146400F69FCD /* NotificationsViewController.swift in Sources */,
@@ -681,6 +694,7 @@
 				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
 				92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */,
+				921E87C1219D45BF006C54A4 /* DetailUniversity3ViewController.swift in Sources */,
 				92226FE320F5517000ED30E0 /* ContainerViewController.swift in Sources */,
 				926264E72191636500CA0DFD /* MainStudentViewController.swift in Sources */,
 				92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */,
@@ -702,6 +716,7 @@
 				92A78069219637B70024C049 /* FormStudentViewController.swift in Sources */,
 				92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
+				92902188219A77C700C9BC57 /* ListAsesorViewController.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
 				92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */,
 				92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */,
@@ -711,6 +726,7 @@
 				924132F520E4296C00CEBC81 /* iOSImageGif.swift in Sources */,
 				9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */,
 				9267013720D849C900E638A1 /* BaseViewController.swift in Sources */,
+				9290218C219A838300C9BC57 /* ListAsesorSelectedViewController.swift in Sources */,
 				9267013D20D84A8C00E638A1 /* Config.swift in Sources */,
 				9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */,
 				92682D3220DC038300E6C4A8 /* CardViewController.swift in Sources */,

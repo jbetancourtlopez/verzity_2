@@ -45,12 +45,21 @@ class NotificationsTableViewCell: UITableViewCell{
 }
 
 class PostuladosTableViewCell: UITableViewCell{
-    
-
     @IBOutlet var postulate_name_academic: UILabel!
     @IBOutlet var postulate_date: UILabel!
     @IBOutlet var postulate_day: UILabel!
     @IBOutlet var postulate_university: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class AsesorTableViewCell: UITableViewCell{
+    @IBOutlet var photo_asesor: UIImageView!
+    @IBOutlet var buton_select: UIButton!
+    @IBOutlet var description_asesor: UITextView!
+    @IBOutlet var title: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

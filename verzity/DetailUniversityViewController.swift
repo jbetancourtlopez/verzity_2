@@ -349,6 +349,7 @@ class DetailUniversityViewController: BaseViewController {
         actionButton.setTitle("+", forState: UIControlState())
         actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
         actionButton.action = { button in button.toggleMenu()}
+    
     }
     
     func on_click_postulate_(){

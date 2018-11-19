@@ -31,7 +31,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_table()
         setup_search_bar()
         setup_ux()
-        //load_data()
+        load_data()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)

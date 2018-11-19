@@ -1,11 +1,3 @@
-//
-//  PackagesViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 03/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
@@ -341,7 +333,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     func setup_paypal(){
         payPalConfig.acceptCreditCards = acceptCreditCards;
-        payPalConfig.merchantName = "Siva Ganesh Inc."
+        payPalConfig.merchantName = "Verzity"
         payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.google.com")! as URL
         payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.google.com")! as URL
         payPalConfig.languageOrLocale = NSLocale.preferredLanguages[0]

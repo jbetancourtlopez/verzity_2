@@ -50,6 +50,49 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
        image.kf.setImage(with: URL, placeholder: image_default)
     }
     
+    func set_photo(url:String, image: UIImageView){
+        // Formateo la Imagen
+        var url_image = url
+        url_image = url_image.replacingOccurrences(of: "~", with: "")
+        url_image = url_image.replacingOccurrences(of: "\\", with: "")
+        
+        let desRutaMultimedia = "http://verzity.dwmedios.com/SITE/"
+        
+  
+        let url =  "\(desRutaMultimedia)\(url_image)"
+        print("Image Url: \(url)")
+        let URL = Foundation.URL(string: url)
+        
+        
+        // Coloco la Imagen
+        let image_default = UIImage(named: "default.png")
+        image.kf.setImage(with: URL, placeholder: image_default)
+    }
+    
+    func generate_address(address:JSON)-> String{
+        
+        var label_address_text = ""
+        
+        if !(address["desDireccion"].stringValue).isEmpty {
+            label_address_text += address["desDireccion"].stringValue
+        }
+        
+        if label_address_text.count > 0 && !(address["nbCiudad"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbCiudad"].stringValue
+        }
+        
+        if label_address_text.count > 0 && !(address["nbEstado"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbEstado"].stringValue
+        }
+        
+        if label_address_text.count > 0 && !(address["nbPais"].stringValue).isEmpty {
+            label_address_text += ", " + address["nbPais"].stringValue
+        }
+        
+        return label_address_text
+        
+    }
+    
     // Abrir el navegador
     func openUrl(scheme: String) {
         if let url = URL(string: scheme) {
@@ -57,11 +100,22 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
                 UIApplication.shared.open(url, options: [:],
                                           completionHandler: {
                                             (success) in
-                                            //print("Open \(scheme): \(success)")
+                                            print("Open \(scheme): \(success)")
                 })
             } else {
-                //let success = UIApplication.shared.openURL(url)
-                //print("Open \(scheme): \(success)")
+                let success = UIApplication.shared.openURL(url)
+                print("Open \(scheme): \(success)")
+            }
+        }
+    }
+    
+    func open(scheme: String){
+        if let url = URL(string: scheme) {
+            print(url)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
             }
         }
     }
@@ -331,8 +385,8 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         direccion.dcLongitud = direccion_json["dcLongitud"].stringValue
 
         let dispositivo = Dispositivos()
-        dispositivo.idDispositivo = dispositivos_json["idDispositivo"].intValue
-        dispositivo.idPersona = dispositivos_json["idPersona"].intValue
+        dispositivo.idDispositivo = dispositivos_json[0]["idDispositivo"].intValue
+        dispositivo.idPersona = dispositivos_json[0]["idPersona"].intValue
         dispositivo.cvDispositivo = Defaults[.cvDispositivo]!
         dispositivo.cvFirebase = Defaults[.cvFirebase]!
         
@@ -460,9 +514,14 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     
     func get_user()-> Usuario{
         let usuario_db = realm.objects(Usuario.self).first
-        return usuario_db ?? Usuario()        
+        return usuario_db ?? Usuario()
     }
     
+    func get_type_user() -> Int{
+        let usuario_db = realm.objects(Usuario.self).first
+        let usuario = usuario_db ?? Usuario()
+        return (usuario.Persona?.idTipoPersona)!
+    }
     
     func delete_session(){
         print("Delete")
@@ -472,6 +531,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     func save_configuration(data: JSON){
+        
         Defaults[.id_Configuraciones] = data["id_Configuraciones"].intValue
         Defaults[.desRutaWebServices] = data["desRutaWebServices"].stringValue
         Defaults[.desRutaMultimedia] = data["desRutaMultimedia"].stringValue

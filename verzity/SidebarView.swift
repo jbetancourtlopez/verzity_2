@@ -1,60 +1,35 @@
-//
-//  SidebarView.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 20/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
+import RealmSwift
 
 
 protocol SidebarViewDelegate: class {
     func sidebarDidSelectRow(item: AnyObject)
     var profile_menu: String { get set }
-    
 }
 
 class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
-    
-    //var titleArr = [String]()
 
     weak var delegate: SidebarViewDelegate?
     var profile_menu:String = ""
     var side_menu = [AnyObject]()
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        self.backgroundColor = Colors.white   //UIColor(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
-        self.clipsToBounds=true
-       
-        // Recupero el Tipo de Menu a mostrar
-        profile_menu = getSettings_sidebar(key: "profile_menu")
-
-//        if profile_menu == "profile_academic" {
-//            side_menu = Menus.side_menu_university as [AnyObject]
-//        }else if profile_menu == "profile_university" {
-//            side_menu = Menus.side_menu_representative as [AnyObject]
-//        }
-//
-        side_menu = Menus.side_menu_university as [AnyObject]
+        
+        let realm = try! Realm()
+        let usuario = realm.objects(Usuario.self).first
+        var idTipoPersona = usuario?.Persona?.idTipoPersona
+        
+        if idTipoPersona == 1 {
+            side_menu = Menus.side_menu_student as [AnyObject]
+        }else if idTipoPersona == 2 {
+            side_menu = Menus.side_menu_university as [AnyObject]
+        }
+        
         setupViews()
-        
-        myTableView.delegate=self
-        myTableView.dataSource=self
-        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        myTableView.tableFooterView=UIView()
-        myTableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        myTableView.allowsSelection = true
-        myTableView.bounces=false
-        myTableView.showsVerticalScrollIndicator=false
-        myTableView.backgroundColor = UIColor.clear
-        
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,14 +56,13 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
             var name_profile = ""
             var email_profile = ""
            
-            // Set Foto
-            print("Foto SideBar")
-            set_photo_profile(url: Defaults[.academic_pathFoto]!, image: cellImg)
-            name_profile = Defaults[.academic_name]!
-            email_profile = Defaults[.academic_email]!
+            let realm = try! Realm()
+            let usuario = realm.objects(Usuario.self).first
+            let persona = usuario?.Persona
             
-            //cellImg.image = UIImage(named: "ic_user_profile")
-           
+            set_photo_profile(url: (persona?.pathFoto)!, image: cellImg)
+            name_profile = (persona?.nbCompleto)!
+            email_profile = (persona?.desCorreo)!
             
             // Nombre
             let cellLbl = UILabel(frame: CGRect(x: 15, y: 115, width: 250, height: 30))
@@ -113,7 +87,7 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
                 let cell_menu_name_session = UILabel(frame: CGRect(x: 15, y: 10, width: 190, height: 30))
                 cell.addSubview(cell_menu_name_session)
                 cell_menu_name_session.text = "Sesión"
-                cell_menu_name_session.font=UIFont.systemFont(ofSize: 16)
+                cell_menu_name_session.font=UIFont.systemFont(ofSize: 15)
                 cell_menu_name_session.textColor=Colors.gray
                 
                 //Icono
@@ -133,9 +107,8 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
                 var cell_menu_name_sigout = UILabel(frame: CGRect(x: 60, y: 45, width: 190, height: 30))
                 cell.addSubview(cell_menu_name_sigout)
                 cell_menu_name_sigout.text = item_menu["name"].stringValue
-                cell_menu_name_sigout.font=UIFont.systemFont(ofSize: 16)
+                cell_menu_name_sigout.font=UIFont.systemFont(ofSize: 15)
                 cell_menu_name_sigout.textColor=UIColor.black
-                //cell_menu_name_sigout.font = UIFont.boldSystemFont(ofSize: 15.0)
             }
             else{
                 
@@ -153,7 +126,7 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
                 let cell_menu_name = UILabel(frame: CGRect(x: 50, y: 10, width: 190, height: 30))
                 cell.addSubview(cell_menu_name)
                 cell_menu_name.text = item_menu["name"].stringValue
-                cell_menu_name.font=UIFont.systemFont(ofSize: 16)
+                cell_menu_name.font=UIFont.systemFont(ofSize: 15)
                 cell_menu_name.textColor=UIColor.black
             }
         }
@@ -200,11 +173,24 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func setupViews() {
+        self.backgroundColor = Colors.white
+        self.clipsToBounds=true
+        
         self.addSubview(myTableView)
         myTableView.topAnchor.constraint(equalTo: topAnchor).isActive=true
         myTableView.leftAnchor.constraint(equalTo: leftAnchor).isActive=true
         myTableView.rightAnchor.constraint(equalTo: rightAnchor).isActive=true
         myTableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive=true
+        
+        myTableView.delegate=self
+        myTableView.dataSource=self
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        myTableView.tableFooterView=UIView()
+        myTableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        myTableView.allowsSelection = true
+        myTableView.bounces=false
+        myTableView.showsVerticalScrollIndicator=false
+        myTableView.backgroundColor = UIColor.clear
     }
     
     let myTableView: UITableView = {

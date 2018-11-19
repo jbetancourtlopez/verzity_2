@@ -68,9 +68,7 @@ struct Menus{
             "type": "becas",
             "color": "#32cb00"
         ],
-        
-        
-        ]
+    ]
     
     static let menu_find_university = [
         
@@ -107,7 +105,7 @@ struct Menus{
         
     ]
     
-    static let side_menu_university = [
+    static let side_menu_student = [
         [],
         [
             "name":"Inicio",
@@ -117,27 +115,27 @@ struct Menus{
         [
             "name":"Ver Perfil universitario",
             "image":"ic_action_ic_school.png",
-            "type": "profile_academic"
+            "type": "student_profile"
         ],
         [
             "name":"Ver mis Asesores",
             "image":"ic_action_ic_school.png",
-            "type": "profile_asesor"
+            "type": "student_asesor"
         ],
         [
             "name":"Notificaciones",
             "image":"ic_action_notifications.png",
-            "type": "profile_notify"
+            "type": "student_notify"
         ],
         [
             "name":"Cerrar sesión",
             "image":"ic_action_close.png",
-            "type": "sigout_academic"
+            "type": "sigout"
         ]
         
         ] as [Any]
     
-    static let side_menu_representative = [
+    static let side_menu_university = [
         [],
         [
             "name":"Inicio",

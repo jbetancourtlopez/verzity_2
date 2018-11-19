@@ -17,7 +17,8 @@ class MainStudentViewController: BaseViewController{
     @IBOutlet var view_examen: UIView!
     @IBOutlet var view_becas: UIView!
     @IBOutlet var view_extranjero: UIView!
-    
+    @IBOutlet var view_cupones: UIView!
+    @IBOutlet var view_financiamientos: UIView!
     // Variables
     var sidebarView: SidebarView!
     var blackScreen: UIView!
@@ -26,6 +27,7 @@ class MainStudentViewController: BaseViewController{
     weak var delegate:SidebarViewDelegate?
     var have_paquete = 1
     var profile_menu:String = ""
+    var usuario: Usuario = Usuario()
 
     
     override func viewDidLoad() {
@@ -34,9 +36,9 @@ class MainStudentViewController: BaseViewController{
         menu_main = Menus.menu_main_academic  as [AnyObject] as! [[String : String]]
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("notificationFCM"), object: nil)
-    
-        //Eventos
+        usuario = get_user()
         
+        //Eventos
         let event_on_click_university:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_university))
         view_university.addGestureRecognizer(event_on_click_university)
         
@@ -48,6 +50,12 @@ class MainStudentViewController: BaseViewController{
         
         let event_on_click_extranjero:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_extranjero))
         view_extranjero.addGestureRecognizer(event_on_click_extranjero)
+        
+        let event_on_click_cupones:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_cupones))
+        view_cupones.addGestureRecognizer(event_on_click_cupones)
+        
+        let event_on_click_financiamiento:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_financiamientos))
+        view_financiamientos.addGestureRecognizer(event_on_click_financiamiento)
     
     }
     
@@ -79,22 +87,18 @@ class MainStudentViewController: BaseViewController{
         print("Extranjero")
     }
     
-    @IBAction func on_click_cupones(_ sender: Any) {
+    @objc func on_click_cupones(){
         let vc = storyboard?.instantiateViewController(withIdentifier: "CardViewControllerID") as! CardViewController
         vc.type = "coupons"
         self.show(vc, sender: nil)
     }
     
-    @IBAction func on_click_financiamientos(_ sender: Any) {
+    @objc func on_click_financiamientos(){
         print("Financiamientos")
         let vc = storyboard?.instantiateViewController(withIdentifier: "CardViewControllerID") as! CardViewController
         vc.type = "financing"
         self.show(vc, sender: nil)
     }
-    
-    
-    
-    
     
     
     @objc func methodOfReceivedNotification(notification: Notification){
@@ -120,57 +124,6 @@ class MainStudentViewController: BaseViewController{
         self.show(vc, sender: nil)
     }
     
-    
-    
-    
-    
-    /*
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
-        let menu_selected = menu_main[indexPath.row]["type"]
-        switch String(menu_selected!) {
-        case "find_university": //Promociones
-            print("find_university")
-     
-            break
-        case "becas":
-            print("becas")
-     
-            break
-        case "financing": //comunicados
-            print("financing")
-     
-            break
-        case "coupons": //Eventos
-            print("coupons")
-     
-            break
-        case "travel": //Eventos
-            print("travel")
-            
-            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
-            self.show(vc, sender: nil)
- 
-            //showMessage(title: "En proceso ...", automatic: true)
-            break
-        case "package": //Eventos
-            print("package")
-            let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
-            self.show(vc, sender: nil)
-            break
-        case "postulate": //Eventos
-            print("postulate")
-            let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
-            self.show(vc, sender: nil)
-            break
-        default:
-            break
-        }
-    }
- */
-    
-    // ---------------
-    
     @objc func blackScreenTapAction(sender: UITapGestureRecognizer) {
         blackScreen.isHidden=true
         blackScreen.frame=self.view.bounds
@@ -192,10 +145,11 @@ class MainStudentViewController: BaseViewController{
     
     func setup_ux(){
         
+        self.title = "Inicio"
+        
         self.navigationItem.backBarButtonItem?.title = ""
         self.navigationController?.navigationBar.barTintColor = Colors.Color_universidades
 
-        
         //SideBar
         sidebarView=SidebarView(frame: CGRect(x: 0, y: 0, width: 0, height: self.view.frame.height))
         sidebarView.delegate=self
@@ -214,12 +168,10 @@ class MainStudentViewController: BaseViewController{
     
     func sigout(){
         self.delete_session()
-
         _ = self.navigationController?.popToRootViewController(animated: false)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LoginNavigationControllerID") as! UINavigationController
         UIApplication.shared.keyWindow?.rootViewController = vc
-        
     }
 }
 
@@ -234,31 +186,29 @@ extension MainStudentViewController: SidebarViewDelegate {
         }
         let menu_side_selected = JSON(item)
         switch String(menu_side_selected["type"].stringValue) {
-            case "profile_representative": //Promociones
-                print("profile_representative")
+            case "student_profile":
+                print("student_profile")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-                vc.type = "profile_representative"
+                vc.type = "student_profile"
                 self.show(vc, sender: nil)
                 break
-            case "profile_university":
-                print("profile_university")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
-                self.show(vc, sender: nil)
+
+            case "student_asesor":
+                print("student_asesor")
+                break
+            case "student_notify":
+                print("student_notify")
                 break
             case "notifications":
                 print("notifications")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewControllerID") as! NotificationsViewController
                 self.show(vc, sender: nil)
                 break
-            case "profile_academic":
-                print("profile_academic")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-                vc.type = "profile_academic"
-                self.show(vc, sender: nil)
-                break
+            
             case "sigout":
                 print("Salir")
-                cerrarSesion()
+                //sigout()
+                CerrarSesion()
                 break
    
             default:
@@ -266,22 +216,23 @@ extension MainStudentViewController: SidebarViewDelegate {
         }
     }
     
-    func cerrarSesion(){
+    func CerrarSesion(){
         showGifIndicator(view: self.view)
         let array_parameter = [
             "cvDispositivo": Defaults[.cvDispositivo]!,
             "cvFirebase": Defaults[.cvFirebase]!,
-            "idDispositivo": Defaults[.idDispositivo]!
+            "idDispositivo": self.usuario.Persona?.Dispositivos?.idDispositivo,
             ] as [String : Any]
-        
-        debugPrint(array_parameter)
-        
+
+        print(array_parameter)
+                
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.CerrarSesion(parameters: parameter_json_string!, doneFunction: cerrarSesion)
+        webServiceController.CerrarSesion(parameters: parameter_json_string!, doneFunction: callback_CerrarSesion)
     }
     
-    func cerrarSesion(status: Int, response: AnyObject){
+    func callback_CerrarSesion(status: Int, response: AnyObject){
+        print("response: \(response)")
         hiddenGifIndicator(view: self.view)
         if status == 1{
            sigout()

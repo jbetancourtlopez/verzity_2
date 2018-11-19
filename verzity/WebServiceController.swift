@@ -622,6 +622,7 @@ class WebServiceController: AlamofireWebServiceController{
     
     func CerrarSesion(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.CerrarSesion)"
+        print("Url: \(url)")
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -843,8 +844,10 @@ class WebServiceController: AlamofireWebServiceController{
     }
 
     func get(parameters: String, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
-        
+        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
+        let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
+
+        print(url)
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
