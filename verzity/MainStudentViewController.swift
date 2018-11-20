@@ -195,6 +195,10 @@ extension MainStudentViewController: SidebarViewDelegate {
 
             case "student_asesor":
                 print("student_asesor")
+                
+                let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorViewControllerID") as! ListAsesorViewController
+                self.show(vc, sender: nil)
+                
                 break
             case "student_notify":
                 print("student_notify")
@@ -207,7 +211,6 @@ extension MainStudentViewController: SidebarViewDelegate {
             
             case "sigout":
                 print("Salir")
-                //sigout()
                 CerrarSesion()
                 break
    

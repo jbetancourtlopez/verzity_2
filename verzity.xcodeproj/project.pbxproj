@@ -74,6 +74,7 @@
 		92682D3420DC22FC00E6C4A8 /* AlamofireWebServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92682D3320DC22FC00E6C4A8 /* AlamofireWebServiceController.swift */; };
 		92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92682D3520DC317900E6C4A8 /* WebServiceController.swift */; };
 		92682D3820DD62A700E6C4A8 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 92682D3720DD62A700E6C4A8 /* default.png */; };
+		926F042B21A3633300B6EFE7 /* TabUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926F042A21A3633300B6EFE7 /* TabUniversityViewController.swift */; };
 		9276B69320E7318E004D7FC7 /* PlayerViewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */; };
 		9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276B69420E7337A004D7FC7 /* VideoViewController.swift */; };
 		9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9286641820FA448C00876AC0 /* SplashViewController.swift */; };
@@ -189,6 +190,7 @@
 		92682D3320DC22FC00E6C4A8 /* AlamofireWebServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWebServiceController.swift; sourceTree = "<group>"; };
 		92682D3520DC317900E6C4A8 /* WebServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceController.swift; sourceTree = "<group>"; };
 		92682D3720DD62A700E6C4A8 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		926F042A21A3633300B6EFE7 /* TabUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabUniversityViewController.swift; sourceTree = "<group>"; };
 		9276B69220E7318E004D7FC7 /* PlayerViewClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewClass.swift; sourceTree = "<group>"; };
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		9267012E20D8468D00E638A1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				926F042921A362CC00B6EFE7 /* notification */,
 				92682D3120DC038300E6C4A8 /* CardViewController.swift */,
 				92226FE120F5513F00ED30E0 /* ContainerView */,
 				924132E620E2B42F00CEBC81 /* CustomView.swift */,
@@ -480,6 +483,14 @@
 				92DD410920EC218D0035EF4E /* PayPal.jpg */,
 			);
 			path = assets;
+			sourceTree = "<group>";
+		};
+		926F042921A362CC00B6EFE7 /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				926F042A21A3633300B6EFE7 /* TabUniversityViewController.swift */,
+			);
+			name = notification;
 			sourceTree = "<group>";
 		};
 		92B6A40920F9B2B800987258 /* Paypal */ = {
@@ -705,6 +716,7 @@
 				92DD410820EC11560035EF4E /* Dates.swift in Sources */,
 				924132ED20E2F10900CEBC81 /* ListUniversitiesViewController.swift in Sources */,
 				9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */,
+				926F042B21A3633300B6EFE7 /* TabUniversityViewController.swift in Sources */,
 				92180EFF2192A6CF00AEAA5A /* ActionButton.swift in Sources */,
 				922E647E210A6D23005B1699 /* Downloader.swift in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
