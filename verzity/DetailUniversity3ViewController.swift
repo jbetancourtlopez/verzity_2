@@ -189,81 +189,86 @@ class DetailUniversity3ViewController: BaseViewController {
         var paquete = JSON(package["Paquete"])
         
         let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
+        
+        
         let fgAplicaDireccion = paquete["fgAplicaDireccion"].boolValue
+        
+        
         let fgAplicaUbicacion = paquete["fgAplicaUbicacion"].boolValue
+        
         let fgAplicaProspectusVideo = paquete["fgAplicaProspectusVideo"].boolValue
         let fgAplicaProspectusVideos = paquete["fgAplicaProspectusVideos"].boolValue
         
         
-        let fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
-        if !false{
-            print("No Aplica Becas")
-            view_beca.isHidden = true
-            view_beca_ct_heigth.constant = 0
-        }
-        
-        let fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
-        if !false{
-            print("No Aplica Finan")
-            view_finan.isHidden = true
-            view_finan_ct_heigth.constant = 0
-        }
-        
-        let fgProspectus = paquete["fgProspectus"].boolValue
-        if !false{
-            print("No Aplica Prospectus")
-            view_prospectus.isHidden = true
-            view_prospectus_ct_heigth.constant = 0
-        }
-        
-        let fgAplicaImagenes = paquete["fgAplicaImagenes"].boolValue
-        if !false{
-            print("No Aplica Imagenes")
-            view_slider.isHidden = true
-            view_slider_ct_height.constant = 0
-        }
-        
-        let fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
-        if false{
-            print("No Aplica Redes")
-            
-            //Botones Flotantes
-            let postularse = ActionButtonItem(title: "Postularse", image: #imageLiteral(resourceName: "ic_notification_green"))
-            postularse.action = { item in self.self.on_click_postulate_() }
-            
-            actionButton = ActionButton(attachedToView: self.view, items: [postularse])
-            actionButton.setTitle("+", forState: UIControlState())
-            actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
-            actionButton.action = { button in button.toggleMenu()}
-        }
-        
-        
-        let fgAplicaContacto = paquete["fgAplicaContacto"].boolValue
-        if !false{
-            print("No Aplica Contacto")
-            view_contacto.isHidden = true
-            view_contacto_ct_height.constant = 0
-        }
-        
-        let fgAplicaFavoritos = paquete["fgAplicaFavoritos"].boolValue
-        if !false{
-            print("No Aplica Favoritos")
-            button_favorit2.isHidden = true
-        }
-        
-        let fgAplicaRedes = paquete["fgAplicaRedes"].boolValue
-        if !false{
-            print("No Aplica Redes")
-            view_redes.isHidden = true
-            view_redes_ct_height.constant = 0
-        }
-        
-        let fgAplicaDescripcion = paquete["fgAplicaDescripcion"].boolValue
-        if !fgAplicaDescripcion{
-            print("No Aplica Descripcion")
-            view_description.isHidden = true
-            view_description_ct_height.constant = 0
-        }
+//        let fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
+//        if !false{
+//            print("No Aplica Becas")
+//            view_beca.isHidden = true
+//            view_beca_ct_heigth.constant = 0
+//        }
+//
+//        let fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
+//        if !false{
+//            print("No Aplica Finan")
+//            view_finan.isHidden = true
+//            view_finan_ct_heigth.constant = 0
+//        }
+//
+//        let fgProspectus = paquete["fgProspectus"].boolValue
+//        if !false{
+//            print("No Aplica Prospectus")
+//            view_prospectus.isHidden = true
+//            view_prospectus_ct_heigth.constant = 0
+//        }
+//
+//        let fgAplicaImagenes = paquete["fgAplicaImagenes"].boolValue
+//        if !false{
+//            print("No Aplica Imagenes")
+//            view_slider.isHidden = true
+//            view_slider_ct_height.constant = 0
+//        }
+//
+//        let fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
+//        if false{
+//            print("No Aplica Redes")
+//
+//            //Botones Flotantes
+//            let postularse = ActionButtonItem(title: "Postularse", image: #imageLiteral(resourceName: "ic_notification_green"))
+//            postularse.action = { item in self.self.on_click_postulate_() }
+//
+//            actionButton = ActionButton(attachedToView: self.view, items: [postularse])
+//            actionButton.setTitle("+", forState: UIControlState())
+//            actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
+//            actionButton.action = { button in button.toggleMenu()}
+//        }
+//
+//
+//        let fgAplicaContacto = paquete["fgAplicaContacto"].boolValue
+//        if !false{
+//            print("No Aplica Contacto")
+//            view_contacto.isHidden = true
+//            view_contacto_ct_height.constant = 0
+//        }
+//
+//        let fgAplicaFavoritos = paquete["fgAplicaFavoritos"].boolValue
+//        if !false{
+//            print("No Aplica Favoritos")
+//            button_favorit2.isHidden = true
+//        }
+//
+//        let fgAplicaRedes = paquete["fgAplicaRedes"].boolValue
+//        if !false{
+//            print("No Aplica Redes")
+//            view_redes.isHidden = true
+//            view_redes_ct_height.constant = 0
+//        }
+//
+//        let fgAplicaDescripcion = paquete["fgAplicaDescripcion"].boolValue
+//        if !fgAplicaDescripcion{
+//            print("No Aplica Descripcion")
+//            view_description.isHidden = true
+//            view_description_ct_height.constant = 0
+//        }
 
     }
     
