@@ -92,7 +92,6 @@
 		92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */; };
 		92A78069219637B70024C049 /* FormStudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A78068219637B70024C049 /* FormStudentViewController.swift */; };
 		92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */; };
-		92B0F6142100CBEF0003F58F /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */; };
 		92B0F6162100ED490003F58F /* DetailBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0F6152100ED490003F58F /* DetailBuyViewController.swift */; };
 		92B6A3B020F7B28B00987258 /* icon_face_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B6A3AF20F7B28A00987258 /* icon_face_white.png */; };
 		92B6A3D420F957BF00987258 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B6A3D320F957BF00987258 /* GoogleService-Info.plist */; };
@@ -118,6 +117,8 @@
 		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
 		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
+		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
+		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,7 +186,7 @@
 		92682D2520DB7B9D00E6C4A8 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_ic_rightarrow_gray.png; sourceTree = "<group>"; };
 		92682D2B20DB8E1800E6C4A8 /* ic_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_menu.png; sourceTree = "<group>"; };
-		92682D2F20DB8EE600E6C4A8 /* ic_dots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_dots.png; path = ../../../../Downloads/ic_dots.png; sourceTree = "<group>"; };
+		92682D2F20DB8EE600E6C4A8 /* ic_dots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_dots.png; path = ../../externos/ic_dots.png; sourceTree = "<group>"; };
 		92682D3120DC038300E6C4A8 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		92682D3320DC22FC00E6C4A8 /* AlamofireWebServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWebServiceController.swift; sourceTree = "<group>"; };
 		92682D3520DC317900E6C4A8 /* WebServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceController.swift; sourceTree = "<group>"; };
@@ -195,8 +196,8 @@
 		9276B69420E7337A004D7FC7 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9286641820FA448C00876AC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
-		928C1C0A21142D1100B1E131 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_white/ios/AppIcon.appiconset/logo_white.png"; sourceTree = "<group>"; };
-		928C1C0C21142D4300B1E131 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Logos/logo_green/ios/AppIcon.appiconset/logo_verde.png"; sourceTree = "<group>"; };
+		928C1C0A21142D1100B1E131 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_white.png; path = ../../externos/logo_white.png; sourceTree = "<group>"; };
+		928C1C0C21142D4300B1E131 /* logo_verde.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_verde.png; path = ../../externos/logo_verde.png; sourceTree = "<group>"; };
 		92902187219A77C700C9BC57 /* ListAsesorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorViewController.swift; sourceTree = "<group>"; };
 		92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorPaqueteViewController.swift; sourceTree = "<group>"; };
 		9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorSelectedViewController.swift; sourceTree = "<group>"; };
@@ -204,13 +205,12 @@
 		92A64B7520EE8A3B00E96152 /* StringsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsLabel.swift; sourceTree = "<group>"; };
 		92A64B7720EE8D8300E96152 /* FormValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidate.swift; sourceTree = "<group>"; };
 		92A64B7B20EFE8A900E96152 /* verzity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "verzity-Bridging-Header.h"; sourceTree = "<group>"; };
-		92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTPlayerView.m; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.m"; sourceTree = "<group>"; };
-		92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTPlayerView.h; path = "../../../../Downloads/youtube-ios-player-helper-master/Classes/YTPlayerView.h"; sourceTree = "<group>"; };
+		92A64B7C20EFE8AB00E96152 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YTPlayerView.m; path = "../../externos/youtube-ios-player-helper-master/Classes/YTPlayerView.m"; sourceTree = "<group>"; };
+		92A64B7D20EFE8AC00E96152 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YTPlayerView.h; path = "../../externos/youtube-ios-player-helper-master/Classes/YTPlayerView.h"; sourceTree = "<group>"; };
 		92A64B7F20EFF33700E96152 /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFinanciamientoViewController.swift; sourceTree = "<group>"; };
 		92A78068219637B70024C049 /* FormStudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStudentViewController.swift; sourceTree = "<group>"; };
 		92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapViewController.swift; sourceTree = "<group>"; };
-		92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_action_mail_gray.png; path = "../../../Documentacion Verzity/Iconos e Imagenes/Iconografia/ic_action_mail_gray.png"; sourceTree = "<group>"; };
 		92B0F6152100ED490003F58F /* DetailBuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuyViewController.swift; sourceTree = "<group>"; };
 		92B6A3AF20F7B28A00987258 /* icon_face_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_face_white.png; sourceTree = "<group>"; };
 		92B6A3D220F9520400987258 /* verzity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = verzity.entitlements; sourceTree = "<group>"; };
@@ -240,6 +240,8 @@
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
+		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +427,8 @@
 				92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */,
 				9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */,
 				921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */,
+				F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */,
+				F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -465,7 +469,6 @@
 				92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */,
 				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
-				92B0F6132100CBE90003F58F /* ic_action_mail_gray.png */,
 				9267014A20D9994700E638A1 /* ic_action_mail.png */,
 				92226FEA20F5E07700ED30E0 /* ic_action_web_gray.png */,
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
@@ -591,7 +594,6 @@
 				922892AD20F2DE5C0021DB32 /* ic_user_profile.png in Resources */,
 				92682D2A20DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png in Resources */,
 				922ABFBC20F6BA0300C5A56C /* DetailMapView.xib in Resources */,
-				92B0F6142100CBEF0003F58F /* ic_action_mail_gray.png in Resources */,
 				924132F320E422EC00CEBC81 /* loading_data.gif in Resources */,
 				92B6A3D420F957BF00987258 /* GoogleService-Info.plist in Resources */,
 				9267015120D9F76C00E638A1 /* back_white.png in Resources */,
@@ -739,6 +741,8 @@
 				9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */,
 				9267013720D849C900E638A1 /* BaseViewController.swift in Sources */,
 				9290218C219A838300C9BC57 /* ListAsesorSelectedViewController.swift in Sources */,
+				F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */,
+				F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */,
 				9267013D20D84A8C00E638A1 /* Config.swift in Sources */,
 				9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */,
 				92682D3220DC038300E6C4A8 /* CardViewController.swift in Sources */,

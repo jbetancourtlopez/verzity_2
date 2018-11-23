@@ -1,11 +1,3 @@
-//
-//  MainStudentViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 05/11/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
@@ -68,7 +60,7 @@ class MainStudentViewController: BaseViewController{
     @objc func on_click_university(){
         print("University")
         let vc = storyboard?.instantiateViewController(withIdentifier: "FindUniversityViewControllerID") as! FindUniversityViewController
-        vc.type = "find_university"
+        vc.type_menu = "find_university_local"
         self.show(vc, sender: nil)
     }
     
@@ -84,7 +76,10 @@ class MainStudentViewController: BaseViewController{
     }
     
     @objc func on_click_extranjero(){
-        print("Extranjero")
+        print("University")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FindUniversityViewControllerID") as! FindUniversityViewController
+        vc.type_menu = "find_university_extra"
+        self.show(vc, sender: nil)
     }
     
     @objc func on_click_cupones(){

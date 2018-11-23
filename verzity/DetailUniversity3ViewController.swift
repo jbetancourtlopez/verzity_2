@@ -16,35 +16,41 @@ class DetailUniversity3ViewController: BaseViewController {
     //Cabezera
     @IBOutlet var view_logo_center: UIView!
     @IBOutlet var view_logo_left: UIView!
-    
+    @IBOutlet weak var view_logo_center_ct_height: NSLayoutConstraint!
+    @IBOutlet weak var view_logo_left_ct_height: NSLayoutConstraint!
+   
     @IBOutlet var image_logo1: UIImageView!
     @IBOutlet var label_name1: UILabel!
-   
+    @IBOutlet weak var button_favorit1: UIButton!
+    
     @IBOutlet var image_logo2: UIImageView!
     @IBOutlet var label_logo2: UILabel!
     @IBOutlet var button_favorit2: UIButton!
     
-    @IBOutlet var view_logo_left_ct_height: NSLayoutConstraint!
-    @IBOutlet var view_logo_center_ct_height: NSLayoutConstraint!
     
     //Mapa
     @IBOutlet var view_location_empty: UIView!
     @IBOutlet var view_location_empty_ct_height: NSLayoutConstraint!
+    
     @IBOutlet var view_location_map: UIView!
-    //@IBOutlet var map: MKMapView!
     @IBOutlet var view_location_map_ct_height: NSLayoutConstraint!
+    //@IBOutlet var map: MKMapView!
     
     // Contacto
     @IBOutlet var view_contacto: UIView!
     @IBOutlet var view_contacto_ct_height: NSLayoutConstraint!
-    @IBOutlet var image_address: UIImageView!
-    @IBOutlet var label_address: UILabel!
     @IBOutlet var image_phone: UIImageView!
     @IBOutlet var label_phone: UILabel!
     @IBOutlet var image_url: UIImageView!
     @IBOutlet var label_url: UILabel!
     @IBOutlet var image_email: UIImageView!
     @IBOutlet var label_email: UILabel!
+    
+    // Direccion
+    @IBOutlet weak var view_address_ct_height: NSLayoutConstraint!
+    @IBOutlet weak var view_address: UIView!
+    @IBOutlet var image_address: UIImageView!
+    @IBOutlet var label_address: UILabel!
     
     // Botones
     @IBOutlet var image_prospectus: UIImageView!
@@ -77,6 +83,8 @@ class DetailUniversity3ViewController: BaseViewController {
     var webServiceController = WebServiceController()
     var actionButton : ActionButton!
     var idUniversidad: Int!
+    var fgAplicaProspectusVideos = false
+    var fgAplicaProspectusVideo = false
     var data: JSON = []
     
     var swipeGesture  = UISwipeGestureRecognizer()
@@ -85,15 +93,17 @@ class DetailUniversity3ViewController: BaseViewController {
     
     var list_licenciaturas: NSArray = []
     var selected_postulate: String = ""
+    var usuario = Usuario()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.idUniversidad = 3441
         setup_ux()
         load_data()
         set_events()
         setup_slider()
         set_favorito()
+        
+        self.usuario = get_user()
     }
     
     func setup_ux(){
@@ -101,6 +111,8 @@ class DetailUniversity3ViewController: BaseViewController {
         
         //Header
         let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
+        button_favorit1.setImage(image, for: .normal)
+        button_favorit1.tintColor = hexStringToUIColor(hex: "#F7BF25")
         button_favorit2.setImage(image, for: .normal)
         button_favorit2.tintColor = hexStringToUIColor(hex: "#F7BF25")
         
@@ -156,6 +168,7 @@ class DetailUniversity3ViewController: BaseViewController {
     }
     
     func set_data(data:JSON){
+        print(data)
         self.data = data
         self.title = "Univ"
         
@@ -165,15 +178,39 @@ class DetailUniversity3ViewController: BaseViewController {
         set_photo(url: data["pathLogo"].stringValue, image: image_logo1)
         set_photo(url: data["pathLogo"].stringValue, image: image_logo2)
         
-        label_address.text = generate_address(address: JSON(data["Direcciones"]))
-        label_phone.text = data["desTelefono"].stringValue
-        label_url.text = data["desSitioWeb"].stringValue
-        label_email.text = data["desCorreo"].stringValue
+        var direccion_isEmpty = data["Direcciones"].stringValue.isEmpty
+        print("have_direccion: \(direccion_isEmpty)")
         
+        
+        label_address.text = generate_address(address: JSON(data["Direcciones"]))
+        if  (label_address.text?.isEmpty)!{
+            label_address.text = "Sin información para mostrar"
+        }
+      
+        label_phone.text = data["desTelefono"].stringValue
+        if  (label_phone.text?.isEmpty)!{
+            label_phone.text = "Sin información para mostrar"
+        }
+        
+        label_url.text = data["desSitioWeb"].stringValue
+        if  (label_url.text?.isEmpty)!{
+            label_url.text = "Sin información para mostrar"
+        }
+        
+        label_email.text = data["desCorreo"].stringValue
+        if  (label_email.text?.isEmpty)!{
+            label_email.text = "Sin información para mostrar"
+        }
+       
         description_uni.text = data["desUniversidad"].stringValue
+        if  (description_uni.text?.isEmpty)!{
+            print("No tiene Descripcion")
+            view_description.isHidden = true
+            view_description_ct_height.constant = 0
+        }
         
         // Paquete
-        setup_package(package: JSON(data["VentasPaquetes"][0]))
+        setup_package(package: JSON(data["VentasPaquetes"][0]), direccion_isEmpty:direccion_isEmpty)
         
         // Postulado
         self.list_licenciaturas = data["Licenciaturas"].arrayValue as NSArray
@@ -185,91 +222,119 @@ class DetailUniversity3ViewController: BaseViewController {
     }
     
     // Paquete
-    func setup_package(package: JSON){
+    func setup_package(package: JSON, direccion_isEmpty: Bool){
         var paquete = JSON(package["Paquete"])
         
-        let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
+      
+        let fgAplicaUbicacion = paquete["fgAplicaUbicacion"].boolValue
+        if !fgAplicaUbicacion{
+            print("No Aplica Logo")
+            view_location_map.isHidden = true
+            view_location_empty.isHidden = true
+            
+            view_location_map_ct_height.constant = 0
+            view_location_empty_ct_height.constant = 0
+        }
         
+        if direccion_isEmpty{
+            view_location_map.isHidden = true
+            view_location_map_ct_height.constant = 0
+        }
+        
+        
+        let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
+        if !fgAplicaLogo{
+            print("No Aplica Logo")
+            //image_logo1.isHidden = true
+            image_logo1.removeFromSuperview()
+            view_logo_center_ct_height.constant = 70
+            
+            image_logo2.isHidden = true
+        }
         
         let fgAplicaDireccion = paquete["fgAplicaDireccion"].boolValue
+        if !fgAplicaDireccion{
+            print("No Aplica Direccion")
+            view_address.isHidden = true
+            view_address_ct_height.constant = 0
+        }
         
-        
-        let fgAplicaUbicacion = paquete["fgAplicaUbicacion"].boolValue
-        
-        let fgAplicaProspectusVideo = paquete["fgAplicaProspectusVideo"].boolValue
-        let fgAplicaProspectusVideos = paquete["fgAplicaProspectusVideos"].boolValue
-        
-        
-//        let fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
-//        if !false{
-//            print("No Aplica Becas")
-//            view_beca.isHidden = true
-//            view_beca_ct_heigth.constant = 0
-//        }
-//
-//        let fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
-//        if !false{
-//            print("No Aplica Finan")
-//            view_finan.isHidden = true
-//            view_finan_ct_heigth.constant = 0
-//        }
-//
-//        let fgProspectus = paquete["fgProspectus"].boolValue
-//        if !false{
-//            print("No Aplica Prospectus")
-//            view_prospectus.isHidden = true
-//            view_prospectus_ct_heigth.constant = 0
-//        }
-//
-//        let fgAplicaImagenes = paquete["fgAplicaImagenes"].boolValue
-//        if !false{
-//            print("No Aplica Imagenes")
-//            view_slider.isHidden = true
-//            view_slider_ct_height.constant = 0
-//        }
-//
-//        let fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
-//        if false{
-//            print("No Aplica Redes")
-//
-//            //Botones Flotantes
-//            let postularse = ActionButtonItem(title: "Postularse", image: #imageLiteral(resourceName: "ic_notification_green"))
-//            postularse.action = { item in self.self.on_click_postulate_() }
-//
-//            actionButton = ActionButton(attachedToView: self.view, items: [postularse])
-//            actionButton.setTitle("+", forState: UIControlState())
-//            actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
-//            actionButton.action = { button in button.toggleMenu()}
-//        }
-//
-//
-//        let fgAplicaContacto = paquete["fgAplicaContacto"].boolValue
-//        if !false{
-//            print("No Aplica Contacto")
-//            view_contacto.isHidden = true
-//            view_contacto_ct_height.constant = 0
-//        }
-//
-//        let fgAplicaFavoritos = paquete["fgAplicaFavoritos"].boolValue
-//        if !false{
-//            print("No Aplica Favoritos")
-//            button_favorit2.isHidden = true
-//        }
-//
-//        let fgAplicaRedes = paquete["fgAplicaRedes"].boolValue
-//        if !false{
-//            print("No Aplica Redes")
-//            view_redes.isHidden = true
-//            view_redes_ct_height.constant = 0
-//        }
-//
-//        let fgAplicaDescripcion = paquete["fgAplicaDescripcion"].boolValue
-//        if !fgAplicaDescripcion{
-//            print("No Aplica Descripcion")
-//            view_description.isHidden = true
-//            view_description_ct_height.constant = 0
-//        }
+        let fgAplicaBecas = paquete["fgAplicaBecas"].boolValue
+        if !fgAplicaBecas{
+            print("No Aplica Becas")
+            view_beca.isHidden = true
+            view_beca_ct_heigth.constant = 0
+        }
 
+        let fgAplicaFinanciamiento = paquete["fgAplicaFinanciamiento"].boolValue
+        if !fgAplicaFinanciamiento{
+            print("No Aplica Finan")
+            view_finan.isHidden = true
+            view_finan_ct_heigth.constant = 0
+        }
+
+        let fgProspectus = paquete["fgProspectus"].boolValue
+        if !fgProspectus{
+            print("No Aplica Prospectus")
+            view_prospectus.isHidden = true
+            view_prospectus_ct_heigth.constant = 0
+        }
+
+        let fgAplicaImagenes = paquete["fgAplicaImagenes"].boolValue
+        if !fgAplicaImagenes{
+            print("No Aplica Imagenes")
+            view_slider.isHidden = true
+            view_slider_ct_height.constant = 0
+            
+            view_logo_left_ct_height.constant = 0
+            view_logo_left.isHidden = true
+        }else{
+            view_logo_center.isHidden = true
+            view_logo_center_ct_height.constant = 0
+        }
+
+        let fgAplicaPostulacion = paquete["fgAplicaPostulacion"].boolValue
+        if fgAplicaPostulacion{
+            print("No Aplica Redes")
+
+            //Botones Flotantes
+            let postularse = ActionButtonItem(title: "Postularse", image: #imageLiteral(resourceName: "ic_notification_green"))
+            postularse.action = { item in self.self.on_click_postulate_() }
+
+            actionButton = ActionButton(attachedToView: self.view, items: [postularse])
+            actionButton.setTitle("+", forState: UIControlState())
+            actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
+            actionButton.action = { button in button.toggleMenu()}
+        }
+
+
+        let fgAplicaContacto = paquete["fgAplicaContacto"].boolValue
+        if !fgAplicaContacto{
+            print("No Aplica Contacto")
+            view_contacto.isHidden = true
+            view_contacto_ct_height.constant = 0
+        }
+
+        let fgAplicaFavoritos = paquete["fgAplicaFavoritos"].boolValue
+        if !fgAplicaFavoritos{
+            print("No Aplica Favoritos")
+            button_favorit1.isHidden = true
+            button_favorit2.isHidden = true
+        }
+
+        let fgAplicaRedes = paquete["fgAplicaRedes"].boolValue
+        if !fgAplicaRedes{
+            print("No Aplica Redes")
+            view_redes.isHidden = true
+            view_redes_ct_height.constant = 0
+        }
+
+        let fgAplicaDescripcion = paquete["fgAplicaDescripcion"].boolValue
+        if !fgAplicaDescripcion{
+            print("No Aplica Descripcion")
+            view_description.isHidden = true
+            view_description_ct_height.constant = 0
+        }
     }
     
     // Slider
@@ -318,13 +383,12 @@ class DetailUniversity3ViewController: BaseViewController {
         }
     }
     
-    
     // Favorito
     func set_favorito(){
         // Set Favorito
         let array_parameter = [
             "idUniversidad": idUniversidad!,
-            "idPersona": Defaults[.academic_idPersona]!
+            "idPersona": self.usuario.Persona?.idPersona
             ]  as [String : Any]
         
         debugPrint(array_parameter)
@@ -335,17 +399,15 @@ class DetailUniversity3ViewController: BaseViewController {
     
     func VerificarFavorito(status: Int, response: AnyObject){
         hiddenGifIndicator(view: self.view)
-        var json = JSON(response)
-        var data = JSON(json["Data"])
-        debugPrint(json)
-        if status == 1{
-            let image = UIImage(named: "ic_action_star")?.withRenderingMode(.alwaysTemplate)
-            button_favorit2.setImage(image, for: .normal)
-        }else{
-            let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
-            button_favorit2.setImage(image, for: .normal)
+
+        var name_image_favorit = "ic_action_star_border"
+        if  status == 1{
+            name_image_favorit = "ic_action_star"
         }
-        
+    
+        let image = UIImage(named: name_image_favorit)?.withRenderingMode(.alwaysTemplate)
+        button_favorit2.setImage(image, for: .normal)
+        button_favorit1.setImage(image, for: .normal)
     }
     
     @IBAction func on_click_favorit(_ sender: Any) {
@@ -353,7 +415,7 @@ class DetailUniversity3ViewController: BaseViewController {
         showGifIndicator(view: self.view)
         let array_parameter = [
             "idUniversidad": idUniversidad,
-            "idPersona": Defaults[.academic_idPersona]!
+            "idPersona": self.usuario.Persona?.idPersona
             ] as [String : Any]
         
         let parameter_json = JSON(array_parameter)
@@ -367,20 +429,19 @@ class DetailUniversity3ViewController: BaseViewController {
         var data = JSON(json["Data"])
         debugPrint(json)
         if status == 1{
+            var name_image_favorit = "ic_action_star"
             if  data["idFavoritos"].intValue == 0{
-                let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
-                button_favorit2.setImage(image, for: .normal)
-            }else{
-                let image = UIImage(named: "ic_action_star")?.withRenderingMode(.alwaysTemplate)
-                button_favorit2.setImage(image, for: .normal)
+                name_image_favorit = "ic_action_star_border"
             }
+            
+            let image = UIImage(named: name_image_favorit)?.withRenderingMode(.alwaysTemplate)
+            button_favorit2.setImage(image, for: .normal)
+            button_favorit1.setImage(image, for: .normal)
         }else{
             let image = UIImage(named: "ic_action_star_border")?.withRenderingMode(.alwaysTemplate)
             button_favorit2.setImage(image, for: .normal)
         }
-        
     }
-    
     
     // Postulado
     func on_click_postulate_(){
@@ -410,12 +471,12 @@ class DetailUniversity3ViewController: BaseViewController {
     func selected_postulate(name: String, idLicenciatura: Int){
         print("Postulado Metodo: \(name)")
         
-        let idPersona = Defaults[.academic_idPersona]!
+        let idPersona = self.usuario.Persona?.idPersona
         let have_name = Defaults[.academic_name] != ""
         let have_email = Defaults[.academic_email] != ""
         
         //if  (false){
-        if  (idPersona > 0 && have_name && have_email){
+        if  (idPersona! >= 1 && have_name && have_email){
             showGifIndicator(view: self.view)
             let array_parameter = [
                 "idPostuladoUniversidad": 0,
@@ -481,6 +542,8 @@ class DetailUniversity3ViewController: BaseViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ListViewControllerID") as! ListViewController
         vc.idUniversidad = idUniversidad
         vc.type = "prospectus"
+        vc.fgAplicaProspectusVideos = self.fgAplicaProspectusVideos
+        vc.fgAplicaProspectusVideo = self.fgAplicaProspectusVideo
         self.show(vc, sender: nil)
     }
     

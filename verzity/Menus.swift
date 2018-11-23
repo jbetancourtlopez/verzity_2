@@ -41,6 +41,17 @@ struct Menus{
             "color": "#1d47f1"
         ]
     ]
+    
+    static let list_prospectus_folletos = [
+        [
+            "name":"Folletos digitales",
+            "image":"ic_mortarboard",
+            "type": "digital",
+            "color": "#1d47f1"
+        ]
+    ]
+    
+    
 
     static let list_postulation = [
         [

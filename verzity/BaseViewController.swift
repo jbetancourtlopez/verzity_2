@@ -121,7 +121,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     }
     
     //Tabla Vacia
-    func empty_data_tableview(tableView: UITableView, string: String? = "No se encontraron elementos."){
+    func empty_data_tableview(tableView: UITableView, string: String? = "No se encontraron elementos.", color:String? = "000000"){
         let view: UIView     = UIView(frame: CGRect(x: 0, y: 0, width: 21, height: 21))
         let title: UILabel     = UILabel(frame: CGRect(x: 0, y:(tableView.frame.size.height/2), width: self.view.frame.width, height: 21))
         let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (self.view.frame.width/2) - 30, y: (tableView.frame.height/2) - 65, width: 60, height: 60))
@@ -131,7 +131,8 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         noDataLabel.image = UIImage(named: "ic_action_pais")
         view.addSubview(title)
         //view.addSubview(noDataLabel)
-        view.backgroundColor = Colors.black
+        
+        view.backgroundColor = hexStringToUIColor(hex: color!)
         tableView.backgroundView = view
         tableView.backgroundView?.isHidden = false
         tableView.separatorStyle = .none

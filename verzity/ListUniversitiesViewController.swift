@@ -1,15 +1,7 @@
-//
-//  ListUniversitiesViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 26/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
-
 
 class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -19,6 +11,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     var type: String = ""
     var items:NSArray = []
     var list_licensature:[Any] = []
+    
+    // Filtros de Busqueda
+    var country = "";
+    var state = ""
     
     var filtered:NSMutableArray = []
     var filtered_array:NSArray = []
@@ -89,7 +85,6 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             }
             
             if list_licensature.count > 0{
-                
                 array_parameter = [
                     "nombreUniversidad": name_university,
                     "Licenciaturas": list_licensature
@@ -100,6 +95,19 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             
             print(parameter_json_string)
             webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
+        
+        } else if type == "find_state"{
+   
+            var array_parameter:[String: Any] = [
+                "nombreEstado": self.state,
+                "nbPais": self.country
+            ]
+            
+            let parameter_json = JSON(array_parameter)
+            let parameter_json_string = parameter_json.rawString()
+            
+            print(parameter_json_string)
+            webServiceController.get(parameters: parameter_json_string!, method:"BusquedaUniversidades", doneFunction: GetListGeneral)
         }
     }
     
@@ -220,12 +228,9 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let university = items[indexPath.section]
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversity2ViewControllerID") as! DetailUniversity2ViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversity3ViewControllerID") as! DetailUniversity3ViewController
         let university_json = JSON(university)
         vc.idUniversidad = university_json["idUniversidad"].intValue
         self.show(vc, sender: nil)
     }
-    
-
-
 }

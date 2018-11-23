@@ -16,6 +16,8 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var list_postulation = Menus.list_postulation
     var list_academics: NSArray = []
     var idUniversidad: Int!
+    var fgAplicaProspectusVideos: Bool!
+    var fgAplicaProspectusVideo: Bool!
 
     
     override func viewDidLoad() {
@@ -38,7 +40,12 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func load_data(){
         if type == "prospectus"{
-            list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
+            
+            list_prospectus = Menus.list_prospectus_folletos  as [AnyObject] as! [[String : String]]
+
+            if  self.fgAplicaProspectusVideo || self.fgAplicaProspectusVideos{
+                list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
+            }
         }else if type == "academics"{
             showGifIndicator(view: self.view)
             let array_parameter = ["": ""]

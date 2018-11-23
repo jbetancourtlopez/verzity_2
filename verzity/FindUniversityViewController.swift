@@ -1,16 +1,7 @@
-//
-//  FindUniversityViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 26/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
-
 
 class FindUniversityViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource  {
     
@@ -24,7 +15,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     // Variables
     var webServiceController = WebServiceController()
     let menu_main = Menus.menu_find_university
-    var type: String = ""
+    var type_menu: String = ""
     var list_data: AnyObject!
     var items:NSArray = []
     var is_register_visit = false
@@ -211,9 +202,9 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             self.show(vc, sender: nil)
             break
         case "find_euu": //Eventos
-            print("find_euu")
-            let vc = storyboard?.instantiateViewController(withIdentifier: "FindMapViewControllerID") as! FindMapViewController
-            vc.type = menu_selected!
+            print("location")
+            let vc = storyboard?.instantiateViewController(withIdentifier: "LocationViewControllerID") as! LocationViewController
+            //vc.type = menu_selected!
             self.show(vc, sender: nil)
             break
         case "find_favorit": //Eventos
