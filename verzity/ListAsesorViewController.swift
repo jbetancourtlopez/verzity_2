@@ -13,15 +13,35 @@ class ListAsesorViewController: BaseViewController {
     @IBOutlet var email: UILabel!
     @IBOutlet var skype: UILabel!
     
+    
+    @IBOutlet weak var icon_skype: UIImageView!
+    @IBOutlet weak var icon_email: UIImageView!
+    @IBOutlet weak var icon_phone: UIImageView!
+    
     // Variables
     var actionButton : ActionButton!
     var webServiceController = WebServiceController()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        //set_view()
         setup_ux()
         load_data()
+    }
+    
+    func set_view(){
+        
+        var view_container : UIView!
+        view_container = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        view_container.backgroundColor = UIColor.white.withAlphaComponent(1.0)
+        
+        var view_green : UIView!
+        view_green = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height/2))
+        view_green.backgroundColor = hexStringToUIColor(hex: "#3E8426")
+        view_container.addSubview(view_green)
+        
+        self.view.addSubview(view_container)
+        
     }
     
     func load_data(){
@@ -66,8 +86,6 @@ class ListAsesorViewController: BaseViewController {
     func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
         var data = JSON(json["Data"][0])
-        
-        print(data)
         hiddenGifIndicator(view: self.view)
         if status == 1{
             skype.text = data["desSkype"].stringValue
@@ -106,6 +124,17 @@ class ListAsesorViewController: BaseViewController {
         actionButton.setTitle("+", forState: UIControlState())
         actionButton.backgroundColor = UIColor(red: 57.0/255.0, green: 142.0/255.0, blue: 49.0/255.0, alpha: 1)
         actionButton.action = { button in button.toggleMenu()}
+        
+        // Colores de los iconos
+        icon_phone.image = icon_phone.image?.withRenderingMode(.alwaysTemplate)
+        icon_phone.tintColor = hexStringToUIColor(hex: "#000000")
+        
+        icon_email.image = icon_email.image?.withRenderingMode(.alwaysTemplate)
+        icon_email.tintColor = hexStringToUIColor(hex: "#1d47f1")
+        
+        icon_skype.image = icon_skype.image?.withRenderingMode(.alwaysTemplate)
+        icon_skype.tintColor = hexStringToUIColor(hex: "#12A5F4")
+        
     }
     
     func on_click_asesor(){

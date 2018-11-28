@@ -1,11 +1,3 @@
-//
-//  DetailBuyViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 19/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
@@ -29,6 +21,7 @@ class DetailBuyViewController: BaseViewController {
     var webServiceController = WebServiceController()
     var info: AnyObject!
     var is_summary = 0
+    var is_paquete_asesor = 0
     
     var delegate: DetailBuyViewControllerDelegate?
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
@@ -59,24 +52,57 @@ class DetailBuyViewController: BaseViewController {
         if (is_summary == 1) {
             
             let usuario = get_user()
-            let paquete = usuario.Persona?.Universidades?.VestasPaquetes
             var data = JSON(info)
+            print(data)
             
-            date_top.text = get_date_complete(date_complete_string: (paquete?.feVenta)! )
-            vigency.text = get_date_complete(date_complete_string: (paquete?.feVigencia)!)
+            if  self.is_paquete_asesor == 1{
+                let paquete_asesor = usuario.Persona?.VestasPaquetesAsesores
+                print(paquete_asesor)
+                date_top.text = get_date_complete(date_complete_string: (paquete_asesor?.feVenta)! )
+                vigency.text = get_date_complete(date_complete_string: (paquete_asesor?.feVigencia)!)
+                
+                
+                name.text = data["desPaquete"].stringValue
+                price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
+                
             
-            name.text = paquete?.Paquete?.nbPaquete  //data["nbPaquete"].stringValue
-            price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
-          
+            }else{
+                
+                let paquete = usuario.Persona?.Universidades?.VestasPaquetes
+                
+                date_top.text = get_date_complete(date_complete_string: (paquete!.feVenta) )
+                vigency.text = get_date_complete(date_complete_string: (paquete?.feVigencia)!)
+                
+                name.text = paquete?.Paquete?.nbPaquete  //data["nbPaquete"].stringValue
+                price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
+                
+            }
+            
+            
+            
+           
         } else{
-            var json = JSON(info)
-            var data = JSON(json["Data"])
-            Defaults[.package_idPaquete] = data["idPaquete"].intValue
-            date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
-            vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
-            var paquete = JSON(data["Paquete"])
-            name.text = paquete["nbPaquete"].stringValue
-            price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
+            
+            if  self.is_paquete_asesor == 1{
+                var json = JSON(info)
+                var data = JSON(json["Data"])
+                var PaquetesAsesores = JSON(data["PaquetesAsesores"])
+                
+                date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
+                vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
+                name.text = PaquetesAsesores["nbPaquete"].stringValue
+                price.text = String(format: "$ %.02f MXN", PaquetesAsesores["dcCosto"].doubleValue)
+                
+            }else{
+                var json = JSON(info)
+                var data = JSON(json["Data"])
+                Defaults[.package_idPaquete] = data["idPaquete"].intValue
+                date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
+                vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
+                var paquete = JSON(data["Paquete"])
+                name.text = paquete["nbPaquete"].stringValue
+                price.text = String(format: "$ %.02f MXN", paquete["dcCosto"].doubleValue)
+            }
         }
     }
     

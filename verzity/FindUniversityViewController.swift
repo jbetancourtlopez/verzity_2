@@ -19,6 +19,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     var list_data: AnyObject!
     var items:NSArray = []
     var is_register_visit = false
+    var extanjero = false
     
     var timer: Timer!
     var updateCounter: Int!
@@ -26,7 +27,10 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
-        load_banners()
+        
+        if self.type_menu == "find_university_extra"{
+            self.extanjero = true
+        }
         
         //Evento Imagen Banner
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -35,9 +39,20 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        load_banners()
         self.navigationItem.leftBarButtonItem?.title = ""
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if timer != nil{
+            timer.invalidate()
+            timer = nil
+        }
+    }
+
+
     // Evento al hacer click sobre un Banner
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         
@@ -87,6 +102,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.GetBannersVigentes(parameters: parameter_json_string!, doneFunction: getBanners)
+   
     }
     
     func getBanners(status: Int, response: AnyObject){
@@ -110,7 +126,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     func setup_ux(){
         tableView.delegate = self
         tableView.dataSource = self
-        self.title = "Buscar universidades"
+        self.title = "Univ."
         updateCounter = 0
         self.navigationItem.backBarButtonItem?.title = ""
     }
@@ -134,11 +150,26 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             let image_default = UIImage(named: "default.png")
             image?.kf.setImage(with: URL, placeholder: image_default)
             updateCounter = updateCounter + 1
+            
+            register_visor_banner(banner: banner)
+            
         }else{
             updateCounter = 0;
         }
     }
     
+    
+    func register_visor_banner(banner:JSON){
+        let array_parameter = ["idBanner": banner["idBanner"].intValue]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.get(parameters: parameter_json_string!, method: "RegistrarVisorBanners", doneFunction: callback_register_visor_banner)
+    }
+    
+    func callback_register_visor_banner(status: Int, response: AnyObject){
+        //print(response)
+        print("Registrar Visita")
+    }
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -181,6 +212,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             print("find_university")
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
             vc.type = menu_selected!
+            vc.extranjero = self.extanjero
             self.show(vc, sender: nil)
             break
         case "find_academics":
@@ -204,13 +236,14 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         case "find_euu": //Eventos
             print("location")
             let vc = storyboard?.instantiateViewController(withIdentifier: "LocationViewControllerID") as! LocationViewController
-            //vc.type = menu_selected!
+            vc.type = self.type_menu
             self.show(vc, sender: nil)
             break
         case "find_favorit": //Eventos
             print("find_favorit")
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
             vc.type = menu_selected!
+            vc.extranjero = self.extanjero
             self.show(vc, sender: nil)
             break
         default:

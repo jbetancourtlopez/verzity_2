@@ -60,7 +60,7 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     @objc func on_click_back(sender: AnyObject) {
             _ = self.navigationController?.popToRootViewController(animated: false)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_MainViewController") as! UINavigationController
+            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_UniversityViewController") as! UINavigationController
             UIApplication.shared.keyWindow?.rootViewController = vc
     }
 

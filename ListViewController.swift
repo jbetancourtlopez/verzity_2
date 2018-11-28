@@ -18,6 +18,8 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var idUniversidad: Int!
     var fgAplicaProspectusVideos: Bool!
     var fgAplicaProspectusVideo: Bool!
+    var usuario = Usuario()
+    var paquete = Paquete()
 
     
     override func viewDidLoad() {
@@ -25,6 +27,46 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         type = String(type)
         setup_ux()
         load_data()
+        
+        self.usuario = get_user()
+        //print(usuario)
+        
+        self.paquete = get_paquete(usuario: self.usuario)
+        print(paquete)
+        
+        
+        //list_postulation.
+        
+       
+        list_postulation.remove(at: 0)
+        
+        if  paquete.fgAplicaBecas == "true" {
+            list_postulation.append([
+                "name":"Becas",
+                "image":"ic_mortarboard",
+                "type": "becas",
+                "color": "#1d47f1"
+                ])
+        }
+
+        if  paquete.fgAplicaFinanciamiento == "true"{
+            list_postulation.append([
+                "name":"Financiamientos",
+                "image":"ic_mortarboard",
+                "type": "finan",
+                "color": "#1d47f1"
+                ])
+        }
+
+        if  paquete.fgAplicaPostulacion == "true"{
+            list_postulation.append([
+                "name":"Universidad",
+                "image":"ic_mortarboard",
+                "type": "universidad",
+                "color": "#1d47f1"
+                ])
+        }
+        
     }
   
     func setup_ux(){
@@ -40,7 +82,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func load_data(){
         if type == "prospectus"{
-            
+        
             list_prospectus = Menus.list_prospectus_folletos  as [AnyObject] as! [[String : String]]
 
             if  self.fgAplicaProspectusVideo || self.fgAplicaProspectusVideos{

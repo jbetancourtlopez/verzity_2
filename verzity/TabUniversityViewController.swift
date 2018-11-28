@@ -17,8 +17,11 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
     var usuario = Usuario()
     var segment_selected = 0;
     
+    @IBOutlet weak var tab_button: UITabBarItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setup_ux()
         self.usuario = get_user()
         
@@ -32,9 +35,14 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
         self.refreshControl = refreshControl
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        //self.tabBarItem.tag
+        print("buton: \(tab_button.tag)")
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         self.items = []
-        self.tableView.reloadData()
+        tableView.reloadData()
         load_data()
     }
     
@@ -50,11 +58,7 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
     @IBAction func on_click_segment(_ sender: Any) {
         print("click")
         let index = segment.selectedSegmentIndex
-        
-        
-        
-        
-        
+    
         self.segment_selected = index
         load_data()
     }
@@ -88,7 +92,7 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
         if status == 1{
             self.items = []
             
-            let list_items = JSON(json["Data"][0]["Notificaciones"]).arrayValue as NSArray
+            let list_items = JSON(json["Data"][tab_button.tag]["Notificaciones"]).arrayValue as NSArray
             
             for i in 0..<list_items.count{
            
@@ -101,13 +105,10 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
                 print(status["desEstatus"].stringValue)
                 
                 if status["desEstatus"].stringValue == "PENDIENTE" && segment_selected == 2{
-                    print("Pendiente")
                     self.items.add(item_i)
-                }else if status["desEstatus"].stringValue == "PENDIENTE" && segment_selected == 1{
+                }else if status["desEstatus"].stringValue == "VISTO" && segment_selected == 1{
                     self.items.add(item_i)
-                    print("Otro")
                 }else if segment_selected == 0{
-                    print("Todos")
                     self.items.add(item_i)
                 }
             }
@@ -120,7 +121,6 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     //Table View. -------------------
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         if self.items.count == 0 {
             empty_data_tableview(tableView: tableView)

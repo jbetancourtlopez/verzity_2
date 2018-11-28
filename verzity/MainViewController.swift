@@ -1,14 +1,6 @@
-//
-//  MainViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 20/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
-
 
 class MainViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate{
     
@@ -34,6 +26,9 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         validate_package()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("notificationFCM"), object: nil)
+        
+        print(usuario)
+    
     }
     
     @objc func methodOfReceivedNotification(notification: Notification){
@@ -55,7 +50,6 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
         vc.idNotificacion = idNotificacion
         vc.type = "notificacion"
         self.show(vc, sender: nil)
-        
     }
     
     func validate_package(){
@@ -197,8 +191,10 @@ extension MainViewController: SidebarViewDelegate {
                 break
             case "notifications":
                 print("notifications")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewControllerID") as! NotificationsViewController
+                let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationTabBarID") as! UITabBarController
                 self.show(vc, sender: nil)
+                
+        
                 break
             case "profile_academic":
                 print("profile_academic")

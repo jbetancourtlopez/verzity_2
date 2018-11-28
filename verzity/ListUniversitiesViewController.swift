@@ -9,8 +9,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     @IBOutlet weak var tableView: UITableView!
     var webServiceController = WebServiceController()
     var type: String = ""
+    var extranjero = false
     var items:NSArray = []
     var list_licensature:[Any] = []
+    var usuario = Usuario()
     
     // Filtros de Busqueda
     var country = "";
@@ -22,12 +24,12 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         type = String(type)
         self.list_licensature = list_licensature as [Any]
         setup_table()
         setup_search_bar()
         setup_ux()
-        load_data()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -40,12 +42,14 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     }
     
     @objc func handleRefresh() {
+        print("HandleRefresh")
         load_data()
         tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear")
         load_data()
     }
 
@@ -69,44 +73,42 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     func load_data(name_university: String = ""){
         showGifIndicator(view: self.view)
+        let idPersona = self.usuario.Persona?.idPersona
+        
         if  type == "find_favorit" {
-            let idPersona = Defaults[.academic_idPersona]
-            let array_parameter = ["idPersona": idPersona]
-            debugPrint(array_parameter)
+            let array_parameter = ["idPersona": idPersona, "extranjero": self.extranjero] as [String : Any]
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
         } else if type == "find_university" {
             
-            var array_parameter:[String: Any] = ["": ""]
+            var array_parameter:[String: Any] = ["extranjero": self.extranjero]
             
             if  name_university != "" {
-                array_parameter = ["nombreUniversidad": name_university]
+                array_parameter = ["nombreUniversidad": name_university, "extranjero": self.extranjero]
             }
             
             if list_licensature.count > 0{
                 array_parameter = [
                     "nombreUniversidad": name_university,
-                    "Licenciaturas": list_licensature
+                    "Licenciaturas": list_licensature,
+                    "extranjero": self.extranjero
                     ]
             }
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
-            
-            print(parameter_json_string)
             webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
         
         } else if type == "find_state"{
    
             var array_parameter:[String: Any] = [
                 "nombreEstado": self.state,
-                "nbPais": self.country
+                "nbPais": self.country,
+                "extranjero": self.extranjero
             ]
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
-            
-            print(parameter_json_string)
             webServiceController.get(parameters: parameter_json_string!, method:"BusquedaUniversidades", doneFunction: GetListGeneral)
         }
     }

@@ -1,11 +1,3 @@
-//
-//  NotificationsAcademicViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 02/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
@@ -13,17 +5,17 @@ import SwiftyUserDefaults
 
 class NotificationsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
-   
-    
     @IBOutlet var tableView: UITableView!
     var webServiceController = WebServiceController()
     var items: NSArray = []
     var refreshControl = UIRefreshControl()
+    var type = ""
+    var usuario = Usuario()
     
-   
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
+        self.usuario = get_user()
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -39,7 +31,13 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     override func viewDidAppear(_ animated: Bool) {
         self.items = []
         self.tableView.reloadData()
-        load_notifications()
+        
+        if self.type == "student_notify"{
+            load_notifications_student()
+        }else{
+            load_notifications()
+        }
+        
     }
 
     @objc func handleRefresh() {
@@ -82,6 +80,15 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         webServiceController.ConsultarNotificaciones(parameters: parameter_json_string!, doneFunction: ConsultarNotificaciones)
     }
     
+    func load_notifications_student(){
+        let array_parameter = [
+            "idPersona": self.usuario.Persona?.idPersona,
+            ] as [String : Any]
+     
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.get(parameters: parameter_json_string!, method:"ConsultarNotificacionesUniversitario", doneFunction: ConsultarNotificaciones)
+    }
     
     func ConsultarNotificaciones(status: Int, response: AnyObject){
         var json = JSON(response)
@@ -173,11 +180,22 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         var item = JSON(items[indexPath.section])
         let idNotificacion = item["idNotificacion"].intValue
         
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
-        vc.idNotificacion = idNotificacion
-        vc.type = "notificacion"
-        self.show(vc, sender: nil)
- 
+       
+        print(item)
+        
+        if self.type == "student_notify"{
+            
+            print("Abrir examen")
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
+//            vc.question = item
+//            self.show(vc, sender: nil)
+
+        }else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+            vc.idNotificacion = idNotificacion
+            vc.type = "notificacion"
+            self.show(vc, sender: nil)
+        }
  
     }
 

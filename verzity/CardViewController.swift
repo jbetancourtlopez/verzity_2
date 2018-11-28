@@ -1,11 +1,3 @@
-//
-//  CardViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 21/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import Foundation
 import Alamofire
@@ -233,6 +225,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if type == "becas" {
             
             cell.backgroundColor = Colors.Color_becas
+            cell.btnShowMore.backgroundColor = Colors.Color_becas
+
             
             title = item["nbBeca"].stringValue
             name = "Universidad que ofrece la beca"
@@ -252,6 +246,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         // Financiamiento
         if type == "financing" {
             cell.backgroundColor = Colors.color_financiamiento
+            cell.btnShowMore.backgroundColor = Colors.color_financiamiento
             
             title = item["nbFinanciamiento"].stringValue
             name = "Universidad que ofrece el financiamiento"
@@ -271,6 +266,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         //Cupones
         if type == "coupons" {
             cell.backgroundColor = Colors.Color_cupones
+            cell.btnShowMore.backgroundColor = Colors.Color_cupones
             
             title = item["nbCupon"].stringValue
             

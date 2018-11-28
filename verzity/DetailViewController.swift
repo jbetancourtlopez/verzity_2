@@ -1,11 +1,3 @@
-//
-//  DetailViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 02/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
@@ -39,9 +31,11 @@ class DetailViewController: BaseViewController {
 
     var idNotificacion: Int = 0
     var type: String = ""
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.usuario = get_user()
         idNotificacion = idNotificacion as Int
         type = type as String
         
@@ -53,6 +47,8 @@ class DetailViewController: BaseViewController {
         } else if type == "notificacion" {
             load_data();
         }
+
+       
         
     }
     
@@ -87,7 +83,7 @@ class DetailViewController: BaseViewController {
         // Cargamos los datos
         showGifIndicator(view: self.view)
         let array_parameter = [
-            "idDispositivo": Defaults[.idDispositivo]!,
+            "idDispositivo": self.usuario.Persona?.Dispositivos?.idDispositivo,
             "idNotificacion": self.idNotificacion
             ] as [String : Any]
         debugPrint(array_parameter)

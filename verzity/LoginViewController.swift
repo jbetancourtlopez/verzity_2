@@ -159,8 +159,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     
     // Registros
     @IBAction func on_click_register_student(_ sender: UIButton) {
-    
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
         self.show(vc, sender: nil)
     }
@@ -207,6 +205,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         if status == 1{
             var json = JSON(response)
             let data = JSON(json["Data"])
+            
             save_profile(data:data)
             performSegue(withIdentifier: "showSplash", sender: self)
         }else{

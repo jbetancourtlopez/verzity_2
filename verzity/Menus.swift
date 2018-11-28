@@ -59,20 +59,10 @@ struct Menus{
             "image":"ic_mortarboard",
             "type": "becas",
             "color": "#1d47f1"
-        ],
-        [
-            "name":"Financiamientos",
-            "image":"ic_mortarboard",
-            "type": "finan",
-            "color": "#1d47f1"
-        ],
-        [
-            "name":"Universidad",
-            "image":"ic_mortarboard",
-            "type": "universidad",
-            "color": "#1d47f1"
         ]
     ]
+
+
 
 
     

@@ -119,6 +119,11 @@
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
+		F7A7B2F521A9162A0055F6F7 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */; };
+		F7FAC91621AD712400C0201B /* QuestionResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */; };
+		F7FAC91821AE401E00C0201B /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91721AE401E00C0201B /* TabBarViewController.swift */; };
+		F7FAC91A21AE407900C0201B /* TabBecaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91921AE407900C0201B /* TabBecaViewController.swift */; };
+		F7FAC91C21AE40AB00C0201B /* TabFinanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91B21AE40AB00C0201B /* TabFinanViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -242,6 +247,11 @@
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionResultViewController.swift; sourceTree = "<group>"; };
+		F7FAC91721AE401E00C0201B /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		F7FAC91921AE407900C0201B /* TabBecaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBecaViewController.swift; sourceTree = "<group>"; };
+		F7FAC91B21AE40AB00C0201B /* TabFinanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFinanViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,31 +393,37 @@
 		9267012E20D8468D00E638A1 /* viewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				926F042921A362CC00B6EFE7 /* notification */,
 				92682D3120DC038300E6C4A8 /* CardViewController.swift */,
 				92226FE120F5513F00ED30E0 /* ContainerView */,
 				924132E620E2B42F00CEBC81 /* CustomView.swift */,
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
 				92B0F6152100ED490003F58F /* DetailBuyViewController.swift */,
 				92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */,
-				922B9B4B2193723000790678 /* ListViewController.swift */,
 				92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */,
 				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
-				924132EE20E2F7AD00CEBC81 /* DetailUniversityViewController.swift */,
 				92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */,
+				921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */,
+				924132EE20E2F7AD00CEBC81 /* DetailUniversityViewController.swift */,
 				92E698C420EB291000F69FCD /* DetailViewController.swift */,
 				92A64B7F20EFF33700E96152 /* ExampleViewController.swift */,
 				924132E420E2881300CEBC81 /* FindMapViewController.swift */,
 				924132E220E27CFF00CEBC81 /* FindUniversityViewController.swift */,
 				9267014820D98EFB00E638A1 /* ForgetViewController.swift */,
 				9267014C20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift */,
+				92A78068219637B70024C049 /* FormStudentViewController.swift */,
 				924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */,
+				92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */,
+				9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */,
+				92902187219A77C700C9BC57 /* ListAsesorViewController.swift */,
 				924132EC20E2F10900CEBC81 /* ListUniversitiesViewController.swift */,
+				922B9B4B2193723000790678 /* ListViewController.swift */,
+				F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */,
 				9267011820D8462400E638A1 /* LoginViewController.swift */,
 				926264E62191636500CA0DFD /* MainStudentViewController.swift */,
 				92F9D19A21124F3900FD60EF /* MainTableViewController.swift */,
 				92682D1D20DB21A000E6C4A8 /* MainViewController.swift */,
 				922ABFB520F6B8EF00C5A56C /* Map */,
+				926F042921A362CC00B6EFE7 /* notification */,
 				92E698C220EB146400F69FCD /* NotificationsViewController.swift */,
 				92DD410520EBC90D0035EF4E /* PackagesViewController.swift */,
 				92B6A40920F9B2B800987258 /* Paypal */,
@@ -415,6 +431,8 @@
 				92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */,
 				92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */,
 				92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */,
+				F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */,
+				F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */,
 				9267014E20D9E4DA00E638A1 /* RegisterViewController.swift */,
 				924924E3211ABFD200E86740 /* RetryAccountViewController.swift */,
 				9286641A20FCD8D000876AC0 /* SelectLocationViewController.swift */,
@@ -422,13 +440,7 @@
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
-				92A78068219637B70024C049 /* FormStudentViewController.swift */,
-				92902187219A77C700C9BC57 /* ListAsesorViewController.swift */,
-				92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */,
-				9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */,
-				921E87C0219D45BF006C54A4 /* DetailUniversity3ViewController.swift */,
-				F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */,
-				F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */,
+				F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -492,6 +504,9 @@
 			isa = PBXGroup;
 			children = (
 				926F042A21A3633300B6EFE7 /* TabUniversityViewController.swift */,
+				F7FAC91721AE401E00C0201B /* TabBarViewController.swift */,
+				F7FAC91921AE407900C0201B /* TabBecaViewController.swift */,
+				F7FAC91B21AE40AB00C0201B /* TabFinanViewController.swift */,
 			);
 			name = notification;
 			sourceTree = "<group>";
@@ -721,6 +736,7 @@
 				926F042B21A3633300B6EFE7 /* TabUniversityViewController.swift in Sources */,
 				92180EFF2192A6CF00AEAA5A /* ActionButton.swift in Sources */,
 				922E647E210A6D23005B1699 /* Downloader.swift in Sources */,
+				F7FAC91A21AE407900C0201B /* TabBecaViewController.swift in Sources */,
 				924132F120E34EE800CEBC81 /* DetailBecasViewController.swift in Sources */,
 				924132E320E27CFF00CEBC81 /* FindUniversityViewController.swift in Sources */,
 				922ABFBB20F6BA0300C5A56C /* CustomAnnotationView.swift in Sources */,
@@ -728,14 +744,17 @@
 				922ABFBA20F6BA0300C5A56C /* CustomAnnotation.swift in Sources */,
 				92E698BF20E870CD00F69FCD /* ProfileAcademicViewController.swift in Sources */,
 				92A78069219637B70024C049 /* FormStudentViewController.swift in Sources */,
+				F7FAC91821AE401E00C0201B /* TabBarViewController.swift in Sources */,
 				92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */,
 				924132F820E42E4F00CEBC81 /* Reachability.swift in Sources */,
 				92902188219A77C700C9BC57 /* ListAsesorViewController.swift in Sources */,
 				9267013F20D84AD000E638A1 /* Colors.swift in Sources */,
 				92A64B7820EE8D8300E96152 /* FormValidate.swift in Sources */,
+				F7A7B2F521A9162A0055F6F7 /* QuizViewController.swift in Sources */,
 				92A64B7620EE8A3B00E96152 /* StringsLabel.swift in Sources */,
 				9205102420E1FA9C00234F16 /* Menus.swift in Sources */,
 				924132EF20E2F7AE00CEBC81 /* DetailUniversityViewController.swift in Sources */,
+				F7FAC91621AD712400C0201B /* QuestionResultViewController.swift in Sources */,
 				92682D2020DB4E4600E6C4A8 /* SidebarView.swift in Sources */,
 				924132F520E4296C00CEBC81 /* iOSImageGif.swift in Sources */,
 				9286641920FA448C00876AC0 /* SplashViewController.swift in Sources */,
@@ -745,6 +764,7 @@
 				F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */,
 				9267013D20D84A8C00E638A1 /* Config.swift in Sources */,
 				9267014920D98EFB00E638A1 /* ForgetViewController.swift in Sources */,
+				F7FAC91C21AE40AB00C0201B /* TabFinanViewController.swift in Sources */,
 				92682D3220DC038300E6C4A8 /* CardViewController.swift in Sources */,
 				9267011920D8462400E638A1 /* LoginViewController.swift in Sources */,
 				92A64B8220F087E400E96152 /* DetailFinanciamientoViewController.swift in Sources */,

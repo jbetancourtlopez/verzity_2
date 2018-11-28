@@ -73,6 +73,8 @@ class MainStudentViewController: BaseViewController{
     
     @objc func on_click_examen(){
         print("Examen")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
+        self.show(vc, sender: nil)
     }
     
     @objc func on_click_extranjero(){
@@ -197,6 +199,9 @@ extension MainStudentViewController: SidebarViewDelegate {
                 break
             case "student_notify":
                 print("student_notify")
+                let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationsViewControllerID") as! NotificationsViewController
+                vc.type = "student_notify"
+                self.show(vc, sender: nil)
                 break
             case "notifications":
                 print("notifications")

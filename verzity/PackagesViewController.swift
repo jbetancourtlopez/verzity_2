@@ -12,6 +12,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     var have_package = false
     var usuario = Usuario()
     var idPaquete: Int?
+    var package: JSON = JSON()
 
   
     // Init Paypal
@@ -37,6 +38,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -49,9 +52,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         setup_paypal()
         setup_back_button()
     
-        self.usuario = get_user()
         self.idPaquete = self.usuario.Persona?.Universidades?.VestasPaquetes?.idPaquete
-        print(usuario)
     
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -224,7 +225,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         //cell.description_package.isScrollEnabled = false
         
         var height = cell.description_package.frame.height
-
         cell.content_package.frame.size.height = 560
         
         // Aplica
@@ -359,16 +359,19 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             let confirmation = completedPayment.confirmation
             let response = confirmation["response"] as AnyObject
             let state = response["state"]  as! String
+            
+            let id = response["id"]  as! String
             if state == "approved"{
                 // Guardar el Paquete
                 self.showGifIndicator(view: self.view)
 
                 let array_parameter = [
-                    "idUniversidad": Defaults[.university_idUniveridad] ,
-                    "idPaquete": self.selected_idPaquete
-                ]
-                
-                debugPrint(array_parameter)
+                    "idUniversidad": self.usuario.Persona?.Universidades?.idUniversidad,
+                    "idPaquete": self.selected_idPaquete,
+                    "fgPaqueteActual": false,
+                    "fgRecurrente": false,
+                    "numReferenciaPayPal": id
+                    ] as [String : Any]
                 
                 let parameter_json = JSON(array_parameter)
                 let parameter_json_string = parameter_json.rawString()
@@ -386,10 +389,19 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         if status == 1{
             var data = JSON(json["Data"])
             print("Guardando Paquete")
-            debugPrint(data)
-            Defaults[.package_idPaquete] = data["idPaquete"].intValue
-            Defaults[.package_feVenta] = data["feVenta"].stringValue
-            Defaults[.package_feVigencia] = data["feVigencia"].stringValue
+            
+            if let usuario_db = realm.objects(Usuario.self).first{
+                try! realm.write {
+                    let ventasPaquetes = VestasPaquetes()
+                    ventasPaquetes.idPaquete = data["idPaquete"].intValue
+                    ventasPaquetes.feVenta = data["feVenta"].stringValue
+                    ventasPaquetes.feVigencia = data["feVigencia"].stringValue
+                    usuario_db.Persona?.Universidades?.VestasPaquetes = ventasPaquetes
+                }
+            }
+            
+            
+            
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
             customAlert.providesPresentationContextTransitionStyle = true
@@ -432,7 +444,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func payment(index:Int){
-        var package = JSON(self.items[index])
+        self.package = JSON(self.items[index])
         
         // Process Payment once the pay button is clicked.
         self.selected_idPaquete = package["idPaquete"].intValue
@@ -446,7 +458,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         
         // --------
         var item = PayPalItem(name: product_name, withQuantity: UInt(quantity), withPrice: NSDecimalNumber(string: product_price), withCurrency: currency_code, withSku: product_sku)
-        
         let items = [item]
         let subtotal = PayPalItem.totalPrice(forItems: items)
         

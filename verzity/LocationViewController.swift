@@ -9,28 +9,34 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
     
-    
     // Variables
     var webServiceController = WebServiceController()
     var type: String = ""
     var country = ""
-    let list = ["Uno"]
-    
     var list_countries: NSArray = []
     var list_states: NSArray = []
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
+        
+        print(self.usuario)
+        
         setup_ux()
         load_data_country()
     }
     
     func setup_ux(){
         
-        if type == "prospectus"{
-            self.title = "local"
-        }else if type == "extra"{
-            self.title = ""
+        if type == "find_university_local"{
+            self.title = "Ubicación"
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
+            
+        }else if type == "find_university_extra"{
+            self.title = "Ubicación"
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
+            
         }
     }
     
@@ -40,16 +46,30 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "GetPaises", doneFunction:callback_load_data_country)
-        
     }
     
     func callback_load_data_country(status: Int, response: AnyObject){
         var json = JSON(response)
         if status == 1{
             list_countries = json["Data"].arrayValue as NSArray
+            
+            
+            if type == "find_university_local"{
+                
+                for item in list_countries{
+                    var item_json = JSON(item)
+                    let nbPais = self.usuario.Persona?.Direcciones?.nbPais
+                    
+                    if nbPais == item_json["nbPais"].stringValue{
+                        list_countries = [item]
+                    }
+                }
+            }
         }
+        
         pickerView.reloadAllComponents()
         hiddenGifIndicator(view: self.view)
+        load_data_states(country: JSON(list_countries[0]))
     }
     
     func load_data_states(country:JSON){

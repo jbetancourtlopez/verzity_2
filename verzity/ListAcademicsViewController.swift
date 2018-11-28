@@ -1,11 +1,3 @@
-//
-//  ListAcademicsViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 27/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
@@ -86,8 +78,6 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
     }
-    
-   
     
     func setup_ux(){
         tableView.delegate = self

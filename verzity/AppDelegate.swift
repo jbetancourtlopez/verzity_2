@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 18/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import CoreData
 import CoreLocation

@@ -15,7 +15,11 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     var package: AnyObject  = {} as AnyObject
     
     var selected_idPaquete = 0;
+    var asesor: JSON = JSON()
     var have_package = false
+    
+    var usuario = Usuario()
+    var idPaqueteAsesor: Int?
     
     // Init Paypal
     var payPalConfig = PayPalConfiguration()
@@ -38,10 +42,12 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup_ux()
         load_data()
         setup_paypal()
+        
+        self.usuario = get_user()
+        self.idPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores?.idPaqueteAsesor
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -145,42 +151,12 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     }
     
     @objc func on_click_select(sender: UIButton){
-        print("Selected")
-        
-        print(self.package);
         let index = sender.tag
-        
-        var package = JSON(self.package)
-        
-         if package["idPaqueteAsesor"].intValue == Defaults[.package_idPaquete]!{
-            
-            /*
-             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
-             customAlert.info = package as AnyObject
-             customAlert.is_summary = 1
-            
-             customAlert.providesPresentationContextTransitionStyle = true
-             customAlert.definesPresentationContext = true
-             customAlert.delegate = self
-             self.present(customAlert, animated: true, completion: nil)
-             */
-         }else{
-             if (Defaults[.package_idPaquete]! > 0){
-                 let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
-                     self.payment(index: index)
-                 }
-                
-                 let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
-                 }
-                
-                 showAlert("Atención", message: "Ya cuenta con un paquete activo. ¿Desea actualizarlo?", okAction: yesAction, cancelAction: cancelAction, automatic: false)
-             }else{
-                 self.payment(index: index)
-             }
-         }
+        self.payment(index: index)
     }
     
     func payment(index:Int){
+        self.asesor = JSON(list_items[index])
         var package = JSON(self.package)
         
         // Process Payment once the pay button is clicked.
@@ -191,7 +167,6 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
         let product_price = package["dcCosto"].stringValue
         let product_description_short = package["desPaquete"].stringValue
         let product_sku = "\(product_name)-\(package["cvPaquete"].stringValue)"
-        
         
         // --------
         var item = PayPalItem(name: product_name, withQuantity: UInt(quantity), withPrice: NSDecimalNumber(string: product_price), withCurrency: currency_code, withSku: product_sku)
@@ -244,20 +219,29 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
             let confirmation = completedPayment.confirmation
             let response = confirmation["response"] as AnyObject
             let state = response["state"]  as! String
+            let id = response["id"]  as! String
             if state == "approved"{
-                // Guardar el Paquete
-                self.showGifIndicator(view: self.view)
+//                print(self.package)
+//                print(response)
+//                print(confirmation)
+//                print(self.asesor)
                 
+                var paq = JSON(self.package)
+                
+
                 let array_parameter = [
-                    "idUniversidad": Defaults[.university_idUniveridad] ,
-                    "idPaquete": self.selected_idPaquete
-                ]
-                
-                debugPrint(array_parameter)
-                
+                    "idVentaPaqueteAsesor": 0,
+                    "idPersonaAsesor": self.asesor["idPersona"].intValue,
+                    "idPaqueteAsesor": paq["idPaqueteAsesor"].intValue,
+                    "idPersona": self.usuario.Persona?.idPersona,
+                    "numReferenciaPayPal": id
+                ] as [String : Any]
+
+
                 let parameter_json = JSON(array_parameter)
                 let parameter_json_string = parameter_json.rawString()
-                self.webServiceController.SaveVentaPaquete(parameters: parameter_json_string!, doneFunction: self.SaveVentaPaquete)
+                self.webServiceController.get(parameters: parameter_json_string!, method:"SaveVentaPaqueteAsesor", doneFunction: self.SaveVentaPaquete)
+            
             }else{
                 self.showMessage(title: "El pago fue rechazado", automatic: true)
             }
@@ -271,11 +255,28 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
             var data = JSON(json["Data"])
             print("Guardando Paquete")
             debugPrint(data)
-            Defaults[.package_idPaquete] = data["idPaquete"].intValue
-            Defaults[.package_feVenta] = data["feVenta"].stringValue
-            Defaults[.package_feVigencia] = data["feVigencia"].stringValue
+            
+            if let usuario_db = realm.objects(Usuario.self).first{
+                try! realm.write {
+                    let vestasPaquetesAsesores = VestasPaquetesAsesores()
+                    vestasPaquetesAsesores.idVentaPaqueteAsesor = data["idVentaPaqueteAsesor"].intValue
+                    vestasPaquetesAsesores.idPaqueteAsesor = data["idPaqueteAsesor"].intValue
+                    vestasPaquetesAsesores.idPersona = data["idPersona"].intValue
+                    vestasPaquetesAsesores.idPersonaAsesor = data["idPersonaAsesor"].intValue
+                    vestasPaquetesAsesores.feVenta = data["feVenta"].stringValue
+                    vestasPaquetesAsesores.feVigencia = data["feVigencia"].stringValue
+                    vestasPaquetesAsesores.fgPaqueteActual = data["fgPaqueteActual"].stringValue
+                    vestasPaquetesAsesores.numReferenciaPaypal = data["numReferenciaPayPal"].stringValue
+                    vestasPaquetesAsesores.numLiberados = data["numLiberados"].stringValue
+                    
+                    usuario_db.Persona?.VestasPaquetesAsesores = vestasPaquetesAsesores
+                    
+                }
+            }
+            
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
+            customAlert.is_paquete_asesor = 1
             customAlert.providesPresentationContextTransitionStyle = true
             customAlert.definesPresentationContext = true
             customAlert.delegate = self
@@ -290,17 +291,8 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
 extension ListAsesorSelectedViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
         if  is_summary == 0{
-            if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
-                
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
-                self.show(vc, sender: nil)
-                
-            }else{
-                
-                let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-                self.show(vc, sender: nil)
-                
-            }
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorPaqueteViewControllerID") as! ListAsesorPaqueteViewController
+            self.show(vc, sender: nil)
         }
         
     }

@@ -12,6 +12,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     var scrollView_: UIScrollView?
     var indicator : UIActivityIndicatorView!
     var viewLoading : UIView!
+    var view_container : UIView!
     
     let realm = try! Realm()
     
@@ -243,12 +244,44 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         let imageData = try? Data(contentsOf: Bundle.main.url(forResource: "loading_data", withExtension: "gif")!)
         let advTimeGif = UIImage.gifImageWithData(imageData!)
         let imageLoading = UIImageView(image: advTimeGif)
+    
+        
         
         imageLoading.frame = CGRect(x: (viewLoading.frame.size.width/2) - 50, y: (viewLoading.frame.height/2)-50, width: 100, height: 100)
         imageLoading.backgroundColor = Colors.green_dark
         imageLoading.layer.cornerRadius = 8.0
-        imageLoading.contentMode = .scaleAspectFill//.scaleAspectFit
+        imageLoading.contentMode = .scaleAspectFill
         viewLoading.addSubview(imageLoading)
+        view.addSubview(viewLoading)
+    }
+    
+    func showGifIndicator_ext(view: UIView){
+        viewLoading = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        viewLoading.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        
+        view_container = UIView(frame: CGRect(x: (self.view.frame.size.width/2) - 125, y: (self.view.frame.size.height/2) - 100, width: 250, height: 200))
+        view_container.backgroundColor = UIColor.white.withAlphaComponent(1.0)
+        
+        
+        let image: UIImageView!
+        image = UIImageView(frame: CGRect(x: (view_container.frame.size.width/2) - 50, y: (view_container.frame.height/2)-80, width: 100, height: 100))
+        image.layer.cornerRadius = 50
+        image.layer.masksToBounds=true
+        image.contentMode = .scaleAspectFill
+        image.image = UIImage(named: "sucess_ask")
+  
+        let label = UILabel(frame: CGRect(x: 0, y: 125, width: self.view_container.frame.width, height: 40))
+        label.text = "Guardado correctamente"
+        label.font=UIFont.systemFont(ofSize: 15)
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 2
+        
+        view_container.addSubview(image)
+        view_container.addSubview(label)
+        
+        viewLoading.addSubview(view_container)
         view.addSubview(viewLoading)
     }
     
@@ -372,7 +405,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         let direccion_json = JSON(personas_json["Direcciones"])
         let vestasPaquetesAsesores_json = JSON(personas_json["VentasPaquetesAsesores"])
         let universidades_json = JSON(personas_json["Universidades"]).arrayValue
-      
      
         let direccion = Direcciones()
         direccion.idDireccion = direccion_json["idDireccion"].intValue
@@ -390,18 +422,20 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         dispositivo.idPersona = dispositivos_json[0]["idPersona"].intValue
         dispositivo.cvDispositivo = Defaults[.cvDispositivo]!
         dispositivo.cvFirebase = Defaults[.cvFirebase]!
+
         
         let vestasPaquetesAsesores = VestasPaquetesAsesores()
-        vestasPaquetesAsesores.idVentaPaqueteAsesor = vestasPaquetesAsesores_json[].intValue
-        vestasPaquetesAsesores.idPaqueteAsesor = vestasPaquetesAsesores_json[].intValue
-        vestasPaquetesAsesores.idPersona = vestasPaquetesAsesores_json[].intValue
-        vestasPaquetesAsesores.idPersonaAsesor = vestasPaquetesAsesores_json[].intValue
-        vestasPaquetesAsesores.feVenta = vestasPaquetesAsesores_json[].stringValue
-        vestasPaquetesAsesores.feVigencia = vestasPaquetesAsesores_json[].stringValue
-        vestasPaquetesAsesores.fgPaqueteActual = vestasPaquetesAsesores_json[].stringValue
-        vestasPaquetesAsesores.numReferenciaPaypal = vestasPaquetesAsesores_json[].stringValue
-        vestasPaquetesAsesores.numLiberados = vestasPaquetesAsesores_json[].stringValue
-        vestasPaquetesAsesores.numUsados = vestasPaquetesAsesores_json[].stringValue
+        vestasPaquetesAsesores.idVentaPaqueteAsesor = vestasPaquetesAsesores_json[0]["idVentaPaqueteAsesor"].intValue
+        vestasPaquetesAsesores.idPaqueteAsesor = vestasPaquetesAsesores_json[0]["idPaqueteAsesor"].intValue
+        vestasPaquetesAsesores.idPersona = vestasPaquetesAsesores_json[0]["idPersona"].intValue
+        vestasPaquetesAsesores.idPersonaAsesor = vestasPaquetesAsesores_json[0]["idPersonaAsesor"].intValue
+        vestasPaquetesAsesores.feVenta = vestasPaquetesAsesores_json[0]["feVenta"].stringValue
+        vestasPaquetesAsesores.feVigencia = vestasPaquetesAsesores_json[0]["feVigencia"].stringValue
+        vestasPaquetesAsesores.fgPaqueteActual = vestasPaquetesAsesores_json[0]["fgPaqueteActual"].stringValue
+        vestasPaquetesAsesores.numReferenciaPaypal = vestasPaquetesAsesores_json[0]["numReferenciaPayPal"].stringValue
+        vestasPaquetesAsesores.numLiberados = vestasPaquetesAsesores_json[0]["numLiberados"].stringValue
+        vestasPaquetesAsesores.numUsados = vestasPaquetesAsesores_json[0]["numUsados"].stringValue
+        
         
         let universidades = Universidades()
         if  personas_json["idTipoPersona"].intValue == 2 {
@@ -488,6 +522,8 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         persona.desSkype = personas_json["desSkype"].stringValue
         persona.desPersona = personas_json["desPersona"].stringValue
 
+        print(vestasPaquetesAsesores)
+
         persona.VestasPaquetesAsesores = vestasPaquetesAsesores
         persona.Direcciones = direccion
         persona.Dispositivos = dispositivo
@@ -520,8 +556,15 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     
     func get_type_user() -> Int{
         let usuario_db = realm.objects(Usuario.self).first
-        let usuario = usuario_db ?? Usuario()
+        let usuario = usuario_db!
         return (usuario.Persona?.idTipoPersona)!
+    }
+
+    func get_paquete(usuario:Usuario) -> Paquete{
+        
+        var paquete = usuario.Persona?.Universidades?.VestasPaquetes?.Paquete
+
+        return paquete ?? Paquete()
     }
     
     func delete_session(){

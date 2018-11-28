@@ -1,11 +1,3 @@
-//
-//  BaseViewCell.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 21/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 
 class ListTableViewCell: UITableViewCell{
@@ -110,9 +102,6 @@ class PackageTableViewCell: UITableViewCell {
     }
 }
 
-
-
-
 class VideoTableViewCell: UITableViewCell{
 
     @IBOutlet var title: UILabel!
@@ -122,6 +111,27 @@ class VideoTableViewCell: UITableViewCell{
     @IBOutlet var playerView: PlayerViewClass!
     
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class QuestionTableViewCell: UITableViewCell{
+
+    @IBOutlet var photo_question: UIImageView!
+    @IBOutlet var title: UILabel!
+    @IBOutlet var status: UILabel!
+    @IBOutlet var buton_start: UIButton!
+        
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class QuizTableViewCell: UITableViewCell {
+    @IBOutlet var answer: UILabel!
+    @IBOutlet weak var switch_answer: CustomSwich!
+   
     override func awakeFromNib() {
         super.awakeFromNib()
     }
