@@ -159,6 +159,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     
     // Registros
     @IBAction func on_click_register_student(_ sender: UIButton) {
+        print("Register Student")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
         self.show(vc, sender: nil)
     }

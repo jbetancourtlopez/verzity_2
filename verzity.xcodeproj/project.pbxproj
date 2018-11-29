@@ -117,6 +117,7 @@
 		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
 		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
+		F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */; };
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
 		F7A7B2F521A9162A0055F6F7 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */; };
@@ -245,6 +246,7 @@
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
+		F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail_gray.png; sourceTree = "<group>"; };
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				92226FD720F4367400ED30E0 /* ic_action_ciudad_gray.png */,
 				92226FE820F5E02F00ED30E0 /* ic_action_descripcion_gray.png */,
 				92226FD520F4361D00ED30E0 /* ic_action_estado_gray.png */,
+				F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */,
 				9267015420DAB3D600E638A1 /* ic_action_ic_contrasea.png */,
 				92682D2920DB8C9000E6C4A8 /* ic_action_ic_rightarrow_gray.png */,
 				9267014A20D9994700E638A1 /* ic_action_mail.png */,
@@ -599,6 +602,7 @@
 				9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */,
 				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
 				92226FE920F5E03100ED30E0 /* ic_action_descripcion_gray.png in Resources */,
+				F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */,
 				9267015820DAB3D900E638A1 /* ic_telefono.png in Resources */,
 				92226FD620F4362000ED30E0 /* ic_action_estado_gray.png in Resources */,
 				9267011C20D8462400E638A1 /* Main.storyboard in Resources */,

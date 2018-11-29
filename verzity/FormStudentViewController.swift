@@ -42,7 +42,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var webServiceController = WebServiceController()
     var countries: NSArray = []
     var is_mexico = 1;
-     var is_facebook:Int = 0
+    var is_facebook:Int = 0
     var name_country = ""
     var type_view: String = "register"
     var name_image = ""

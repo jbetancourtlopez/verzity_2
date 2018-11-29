@@ -15,6 +15,7 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     
     var idCatNivelEstudios: Int!
     var nbNivelEstudios: String = ""
+    var extanjero = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +94,7 @@ class ListAcademicsViewController: BaseViewController, UITableViewDelegate, UITa
     @objc func on_click_find(sender: AnyObject) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
         vc.type = "find_university"
+        vc.extranjero = self.extanjero
         vc.list_licensature = list_licensature_array
         self.show(vc, sender: nil)
     }

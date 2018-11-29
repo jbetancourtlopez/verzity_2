@@ -224,6 +224,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListViewControllerID") as! ListViewController
             vc.idUniversidad = 0
             vc.type = "academics"
+            vc.extanjero = self.extanjero
             self.show(vc, sender: nil)
 
             break

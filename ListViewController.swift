@@ -20,6 +20,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var fgAplicaProspectusVideo: Bool!
     var usuario = Usuario()
     var paquete = Paquete()
+    var extanjero = false
 
     
     override func viewDidLoad() {
@@ -209,6 +210,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             print("Academicos")
             var item = JSON(list_academics[indexPath.section])
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListAcademicsViewControllerID") as! ListAcademicsViewController
+            vc.extanjero = self.extanjero
             vc.nbNivelEstudios = item["nbNivelEstudios"].stringValue
             vc.idCatNivelEstudios = item["idCatNivelEstudios"].intValue
             self.show(vc, sender: nil)

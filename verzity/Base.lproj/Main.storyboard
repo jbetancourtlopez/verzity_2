@@ -92,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="-7448" y="-443"/>
         </scene>
-        <!--Form Student View Controller-->
+        <!--Registro-Estudiante-->
         <scene sceneID="2Ch-eK-dZB">
             <objects>
-                <viewController storyboardIdentifier="FormStudentViewControllerID" id="H80-kS-ypI" customClass="FormStudentViewController" customModule="verzity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FormStudentViewControllerID" title="Registro-Estudiante" id="H80-kS-ypI" customClass="FormStudentViewController" customModule="verzity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yVy-vv-4uW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,8 +103,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9L-8l-x7K">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1250"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="cyq-jA-TRM">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1246"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="cyq-jA-TRM">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1201"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EkZ-eA-RCN">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
@@ -163,7 +163,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKm-uH-gW0">
-                                                <rect key="frame" x="0.0" y="182" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="179" width="320" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Asegúrese de escribir correctamente su nombre, una vez concluido el registro no podrá modificarse." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvl-z0-QtP">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="35"/>
@@ -180,7 +180,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-dI-5sg">
-                                                <rect key="frame" x="0.0" y="244" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="238" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nombre completo" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OMI-m0-sao" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -216,7 +216,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHg-QG-KCk">
-                                                <rect key="frame" x="0.0" y="311" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="302" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Télefono" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iUp-T9-A19" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -249,7 +249,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="56D-Hy-ym2">
-                                                <rect key="frame" x="0.0" y="378" width="320" height="128"/>
+                                                <rect key="frame" x="0.0" y="366" width="320" height="128"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_action_pais" translatesAutoresizingMaskIntoConstraints="NO" id="avw-hZ-mhY">
                                                         <rect key="frame" x="8" y="48" width="30" height="30"/>
@@ -291,7 +291,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugz-5y-deU">
-                                                <rect key="frame" x="0.0" y="518" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="503" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Código Postal" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKo-bK-ots" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -324,7 +324,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gf9-hY-A8A">
-                                                <rect key="frame" x="0.0" y="585" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="567" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Estado" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kuf-09-9BE" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -357,7 +357,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9D-s3-vOV">
-                                                <rect key="frame" x="0.0" y="652" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="631" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Municipio" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pi5-jy-Fx3" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -390,7 +390,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PfK-bt-k2e">
-                                                <rect key="frame" x="0.0" y="719" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="695" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Ciudad" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY3-5L-KoK" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -423,7 +423,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GN2-8k-pUf">
-                                                <rect key="frame" x="0.0" y="786" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="759" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Dirección" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pgy-Ap-dQu" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -456,9 +456,9 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="od4-Sg-JEK">
-                                                <rect key="frame" x="0.0" y="853" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="823" width="320" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Datos de acceso" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3q3-j3-ryL">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Datos de acceso1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3q3-j3-ryL">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="50"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" red="0.24219554660000001" green="0.51679889899999998" blue="0.14828827720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -475,7 +475,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKb-gU-QYB">
-                                                <rect key="frame" x="0.0" y="915" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="882" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Correo electrónico" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dNu-qC-bFS" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -508,7 +508,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adY-Ks-Rdn">
-                                                <rect key="frame" x="0.0" y="982" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="946" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMa-ng-xHA" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -541,7 +541,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yFZ-L8-1Dy">
-                                                <rect key="frame" x="0.0" y="1049" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="1010" width="320" height="55"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirmar contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f4R-70-uu4" customClass="FloatableTextField" customModule="FloatableTextField">
                                                         <rect key="frame" x="8" y="0.0" width="304" height="55"/>
@@ -574,7 +574,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZS-vt-i9Z">
-                                                <rect key="frame" x="0.0" y="1116" width="320" height="68"/>
+                                                <rect key="frame" x="0.0" y="1074" width="320" height="68"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbD-sP-Feb">
                                                         <rect key="frame" x="8" y="0.0" width="49" height="31"/>
@@ -619,7 +619,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JkW-Dd-ACJ">
-                                                <rect key="frame" x="0.0" y="1196" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="1151" width="320" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q8L-T4-FKw">
                                                         <rect key="frame" x="89" y="0.0" width="142" height="30"/>
@@ -669,7 +669,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="A9L-8l-x7K" firstAttribute="leading" secondItem="Txc-lC-ISS" secondAttribute="leading" id="3WH-MZ-KVI"/>
+                            <constraint firstItem="Txc-lC-ISS" firstAttribute="trailing" secondItem="A9L-8l-x7K" secondAttribute="trailing" id="W4E-gW-TQc"/>
                             <constraint firstItem="A9L-8l-x7K" firstAttribute="trailing" secondItem="Txc-lC-ISS" secondAttribute="trailing" id="Yub-KQ-jOZ"/>
+                            <constraint firstItem="Txc-lC-ISS" firstAttribute="top" secondItem="A9L-8l-x7K" secondAttribute="top" constant="20" id="bvu-BR-Gho"/>
                             <constraint firstItem="fKb-gU-QYB" firstAttribute="width" secondItem="yVy-vv-4uW" secondAttribute="width" id="mgu-P1-shS"/>
                             <constraint firstItem="A9L-8l-x7K" firstAttribute="bottom" secondItem="Txc-lC-ISS" secondAttribute="bottom" id="s1d-eB-d8U"/>
                             <constraint firstItem="A9L-8l-x7K" firstAttribute="top" secondItem="yVy-vv-4uW" secondAttribute="top" id="vi5-bC-atz"/>
@@ -704,7 +706,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gL1-iO-F01" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3180" y="-1780.9859154929577"/>
+            <point key="canvasLocation" x="-4359.375" y="1547.5352112676057"/>
         </scene>
         <!--Profile Academic View Controller-->
         <scene sceneID="F5I-zC-lwR">
@@ -5300,7 +5302,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Nueva Postulacion- ,miercoles 30/05/2018 05:21:24 p.m." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GR3-81-Szz">
-                                                            <rect key="frame" x="48" y="1" width="163" height="48"/>
+                                                            <rect key="frame" x="48" y="1" width="224" height="48"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="48" id="yUt-tv-xab"/>
@@ -5309,7 +5311,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Nueva Postulacion- ,miercoles 30/05/2018 05:21:24 p.m." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL0-M6-7vR">
-                                                            <rect key="frame" x="48" y="44" width="163" height="77"/>
+                                                            <rect key="frame" x="48" y="44" width="224" height="77"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="77" id="KM4-bt-UMS"/>
@@ -5334,7 +5336,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_action_ic_rightarrow_gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="kSY-Ln-vfs">
-                                                            <rect key="frame" x="219" y="48" width="25" height="25"/>
+                                                            <rect key="frame" x="280" y="48" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="8oI-6N-nkt"/>
                                                                 <constraint firstAttribute="width" constant="25" id="VKM-r0-EwT"/>
@@ -5457,7 +5459,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Nueva Postulacion- ,miercoles 30/05/2018 05:21:24 p.m." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHM-Sg-tw0">
-                                                            <rect key="frame" x="48" y="1" width="163" height="48"/>
+                                                            <rect key="frame" x="48" y="1" width="224" height="48"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="48" id="OBP-s0-ioR"/>
@@ -5466,7 +5468,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Nueva Postulacion- ,miercoles 30/05/2018 05:21:24 p.m." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cP6-po-rkV">
-                                                            <rect key="frame" x="48" y="44" width="163" height="77"/>
+                                                            <rect key="frame" x="48" y="44" width="224" height="77"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="77" id="fjq-hG-L48"/>
@@ -5491,7 +5493,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_action_ic_rightarrow_gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="xUm-qw-olW">
-                                                            <rect key="frame" x="219" y="48" width="25" height="25"/>
+                                                            <rect key="frame" x="280" y="48" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="25" id="9W5-wf-0Wy"/>
                                                                 <constraint firstAttribute="height" constant="25" id="owO-v1-4Qt"/>
@@ -5725,7 +5727,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2b-JP-qos">
                                                     <rect key="frame" x="0.0" y="4" width="320" height="157"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="kVz-tL-5WL">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eva" translatesAutoresizingMaskIntoConstraints="NO" id="kVz-tL-5WL">
                                                             <rect key="frame" x="130" y="8" width="60" height="60"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="60" id="2bw-GN-s5Q"/>
@@ -5998,7 +6000,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="nUy-6G-XcN">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_circle" translatesAutoresizingMaskIntoConstraints="NO" id="nUy-6G-XcN">
                                                         <rect key="frame" x="73" y="27" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -6018,7 +6020,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-ry-8eB">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="highlight_off" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-ry-8eB">
                                                         <rect key="frame" x="73" y="27" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -6106,7 +6108,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAq-Og-so0">
                                                 <rect key="frame" x="258" y="0.0" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="default.png"/>
+                                                <state key="normal" image="transit_enterexit"/>
                                                 <connections>
                                                     <action selector="on_click_close:" destination="K0e-5y-ZdB" eventType="touchUpInside" id="jDD-Tf-2z4"/>
                                                 </connections>
@@ -8735,8 +8737,11 @@
     <resources>
         <image name="PayPal.jpg" width="322" height="93"/>
         <image name="Videos1" width="16" height="16"/>
+        <image name="check_circle" width="36" height="36"/>
         <image name="default.png" width="570" height="321"/>
+        <image name="eva" width="335.25" height="273.75"/>
         <image name="facebook" width="89.475730895996094" height="89.475730895996094"/>
+        <image name="highlight_off" width="36" height="36"/>
         <image name="ic_action_aeroplane" width="48" height="48"/>
         <image name="ic_action_camera_enhance" width="48" height="48"/>
         <image name="ic_action_ciudad_gray.png" width="96" height="96"/>
@@ -8780,6 +8785,7 @@
         <image name="instagram" width="72" height="72"/>
         <image name="logo_verde.png" width="228" height="228"/>
         <image name="logo_white" width="76" height="76"/>
+        <image name="transit_enterexit" width="36" height="36"/>
         <image name="twitter" width="89.475730895996094" height="89.475730895996094"/>
     </resources>
 </document>
