@@ -97,7 +97,7 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
         let count = list_states.count
         
         if count == 0 {
-            empty_data_tableview(tableView: tableView, string: "No se encontraron elementos1.", color: "FFFFFF")
+            empty_data_tableview(tableView: tableView, string: "No se encontraron elementos.", color: "FFFFFF")
             return 0
         }else{
             tableView.backgroundView = nil

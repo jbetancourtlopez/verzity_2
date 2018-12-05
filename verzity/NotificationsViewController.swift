@@ -43,37 +43,26 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     @objc func handleRefresh() {
         self.items = []
         self.tableView.reloadData()
-        load_notifications()
+        load_notifications_student()
         tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
     func load_notifications(){
         let array_parameter = [
-            "desCorreo": Defaults[.academic_email]!,
-            "idPersona": Defaults[.academic_idPersona]!,
-            "idDireccion": Defaults[.academic_idDireccion]!,
-            "nbCompleto": Defaults[.academic_name]! ,
-            "desTelefono": Defaults[.academic_phone]!,
+            "desCorreo": usuario.Persona?.desCorreo,
+            "idPersona": usuario.Persona?.idPersona,
+            "idDireccion": usuario.Persona?.idDireccion,
+            "nbCompleto": usuario.Persona?.nbCompleto,
+            "desTelefono": usuario.Persona?.desTelefono,
             "Dispositivos": [
                 [
-                    "cvDispositivo": Defaults[.cvDispositivo]!,
-                    "cvFirebase": Defaults[.cvFirebase]!,
-                    "idDispositivo": Defaults[.idDispositivo]!
+                    "cvDispositivo": usuario.Persona?.Dispositivos?.cvDispositivo,
+                    "cvFirebase": usuario.Persona?.Dispositivos?.cvFirebase,
+                    "idDispositivo": usuario.Persona?.Dispositivos?.idDispositivo
                 ]
             ]
-            ] as [String : Any]
-        
-        print("Notificaciones")
-        debugPrint(array_parameter)
-        
-        let array_parameter_test = [
-            "desCorreo": "marco.yam.catina@gmail.com",
-            "idPersona": 86,
-            "idDireccion": 75,
-            "nbCompleto": "Marco Yam Cetina",
-            "desTelefono": "9971419990"
-            ] as [String : Any]
+        ] as [String : Any]
         
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -98,7 +87,6 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             items = json["Data"].arrayValue as NSArray
         }
         tableView.reloadData()
-        
     }
     
     func setup_ux(){
@@ -161,18 +149,13 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             cell.image_notification.image = UIImage(named: "ic_action_notifications")
             
         }
-        
         cell.description_notificaction.text = item["desMensaje"].stringValue
-        
-        
         
         //Icono
         cell.image_notification.image = cell.image_notification.image?.withRenderingMode(.alwaysTemplate)
         cell.image_notification.tintColor = Colors.green_dark
  
-        
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -184,11 +167,13 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         print(item)
         
         if self.type == "student_notify"{
-            
             print("Abrir examen")
-//            let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
-//            vc.question = item
-//            self.show(vc, sender: nil)
+            print(item["idDiscriminador"].intValue)
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
+            vc.idEvaluacion = item["idDiscriminador"].intValue
+            vc.idEvaluacionPersona = item["idPersonaRecibe"].intValue
+            self.show(vc, sender: nil)
 
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController

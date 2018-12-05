@@ -221,14 +221,10 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
             let state = response["state"]  as! String
             let id = response["id"]  as! String
             if state == "approved"{
-//                print(self.package)
-//                print(response)
-//                print(confirmation)
-//                print(self.asesor)
                 
+                self.showGifIndicator(view: self.view)
                 var paq = JSON(self.package)
                 
-
                 let array_parameter = [
                     "idVentaPaqueteAsesor": 0,
                     "idPersonaAsesor": self.asesor["idPersona"].intValue,
@@ -254,7 +250,6 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
         if status == 1{
             var data = JSON(json["Data"])
             print("Guardando Paquete")
-            debugPrint(data)
             
             if let usuario_db = realm.objects(Usuario.self).first{
                 try! realm.write {
@@ -270,7 +265,6 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
                     vestasPaquetesAsesores.numLiberados = data["numLiberados"].stringValue
                     
                     usuario_db.Persona?.VestasPaquetesAsesores = vestasPaquetesAsesores
-                    
                 }
             }
             
@@ -291,12 +285,8 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
 extension ListAsesorSelectedViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
         if  is_summary == 0{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorPaqueteViewControllerID") as! ListAsesorPaqueteViewController
-            self.show(vc, sender: nil)
+            _ = self.navigationController?.popViewController(animated: false)
         }
-        
     }
-    
-    
 }
 

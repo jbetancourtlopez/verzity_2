@@ -48,8 +48,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var name_image = ""
     
     
-    var is_postulate = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.type_view = type_view as String
@@ -57,10 +55,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         setup_textfield()
         load_countries()
         
-        
-        if self.type_view == "edit"{
-            get_data_profile()
-        }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
@@ -71,12 +65,10 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     }
     
     @objc func cpDidChange(_ textField: UITextField) {
-        print("Change CP")
         let cp = textField.text
         if (cp?.count)! >= 5{
             showGifIndicator(view: self.view)
             let array_parameter = ["Cp_CodigoPostal": cp]
-            
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.get(parameters: parameter_json_string!, method: Singleton.BuscarCodigoPostal, doneFunction: BuscarCodigoPostal)
@@ -84,30 +76,26 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     }
     
     @objc func emailDidChange(_ textField: UITextField) {
-//        if  is_postulate == 0 {
-//            return
-//        }
-//
-//        // Email
-//        if !FormValidate.isEmptyTextField(textField: email){
-//            if !FormValidate.validateEmail(email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
-//                print("Email Valido")
-//                showGifIndicator(view: self.view)
-//                let array_parameter = [
-//                    "desCorreo": email.text!,
-//                    "Dispositivos": [
-//                        [
-//                        "cvDispositivo": "",//Defaults[.cvDispositivo]!,
-//                        "cvFirebase": "", //Defaults[.cvFirebase]!
-//                        ]
-//                    ]
-//                ] as [String : Any]
-//
-//                let parameter_json = JSON(array_parameter)
-//                let parameter_json_string = parameter_json.rawString()
-//                webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
-//            }
-//        }
+      
+        if !FormValidate.isEmptyTextField(textField: email){
+            if !FormValidate.validateEmail(email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
+                print("Email Valido")
+                showGifIndicator(view: self.view)
+                let array_parameter = [
+                    "desCorreo": email.text!,
+                    "Dispositivos": [
+                        [
+                        "cvDispositivo": "",
+                        "cvFirebase": "",
+                        ]
+                    ]
+                ] as [String : Any]
+
+                let parameter_json = JSON(array_parameter)
+                let parameter_json_string = parameter_json.rawString()
+                webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
+            }
+        }
     }
     
     func verificarCuentaUniversitario(status: Int, response: AnyObject){
@@ -193,50 +181,9 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         hiddenGifIndicator(view: self.view)
     }
     
-    // Cargar Imagen
-    @IBAction func import_image(_ sender: Any) {
-        let image = UIImagePickerController()
-        image.delegate = self
-        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        image.allowsEditing = false
-        self.present(image, animated: true){ }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            img_profile.image = image
-        }else{
-            showMessage(title: "Error al cargar la imagen", automatic: true)
-        }
-        self.dismiss(animated: true, completion: upload_photo)
-    }
 
-    func upload_photo(){
-        print("Subiendo Foto")
-        let data = UIImageJPEGRepresentation(img_profile.image!, 0.5)
-        webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
-    }
-    
-    func upload_file(status: Int, response: AnyObject){
-         print("Imagen cargada con exito")
-         print(response)
-         let json = JSON(response)
-         self.name_image = json["data"].stringValue
-        
-        if status == 1{
-            toast(title:StringsLabel.upload_image)
-        }else{
-            toast(title: response as! String)
-        }
-    }
-    
-    
     @IBAction func on_click_continue(_ sender: Any) {
-        
         print("Continuar")
-        
-        
-        
         if validate_form() == 0 {
             let array_parameter = [
                 "pwdContrasenia": password.text!,
@@ -255,21 +202,20 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
                     ],
                     "Dispositivos": [
                         [
-                            "cvDispositivo": "11",
-                            "cvFirebase":"11",
+                            "cvDispositivo": Defaults[.cvDispositivo]!,
+                            "cvFirebase": Defaults[.cvFirebase]!,
                             "idDispositivo": 0
                         ]
                     ],
                     "desTelefono": phone.text!,
                     "nbCompleto": name.text!,
+                    "pathFoto": self.name_image,
                     "idDireccion": 0,
                     "idPersona": 0
                 ]
                 
             ] as [String : Any]
         
-            
-            //"pathFoto": self.name_image,
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
@@ -359,18 +305,58 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
 
     }
     
+    func is_mexico_setup(name_country: String){
+        
+        if  name_country != "México" {
+            
+            cp_constraint_height.constant = 0
+            municipio_contraint_height.constant = 0
+            city_constraint_height.constant = 0
+            state_constraint_height.constant = 0
+            
+            cp.isHidden = true
+            state.isHidden = true
+            municipio.isHidden = true
+            city.isHidden = true
+            
+            is_mexico = 0
+            
+            cp.text = ""
+            state.text = ""
+            municipio.text = ""
+            city.text = ""
+            
+        }else{
+            cp_constraint_height.constant = 55
+            municipio_contraint_height.constant = 55
+            city_constraint_height.constant = 55
+            state_constraint_height.constant = 55
+            
+            cp.isHidden = false
+            state.isHidden = false
+            municipio.isHidden = false
+            city.isHidden = false
+            
+            is_mexico = 1
+        }
+    }
+    
     func setup_ux(){
+        
+        self.navigationItem.title = "Registro"
+        
+        self.navigationController?.isNavigationBarHidden = false
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        self.navigationController?.navigationBar.backItem?.backBarButtonItem = backItem
+        
         self.img_profile.layer.masksToBounds = true
         self.img_profile.cornerRadius = 60
         self.import_image.layer.masksToBounds = true
         self.import_image.cornerRadius = 17.5
         
-        if is_postulate == 0 {
-            button_save.setTitle("Guardar cambios", for: .normal)
-        }else{
-            button_save.setTitle("Continuar", for: .normal)
-            
-        }
+        button_save.setTitle("Guardar cambios", for: .normal)
+       
     }
     
     func setup_textfield(){
@@ -382,6 +368,15 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         municipio.floatableDelegate = self
         email.floatableDelegate = self
         state.floatableDelegate = self
+        
+        
+        self.state.isEnabled = false
+        self.municipio.isEnabled = false
+        self.city.isEnabled = false
+        
+        self.state.textColor = hexStringToUIColor(hex: "#939393")
+        self.municipio.textColor = hexStringToUIColor(hex: "#939393")
+        self.city.textColor = hexStringToUIColor(hex: "#939393")
         
         // on_change_code_postal
         cp.addTarget(self, action: #selector(ProfileAcademicViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
@@ -412,41 +407,42 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         is_mexico_setup(name_country: self.name_country)
     }
     
-    func is_mexico_setup(name_country: String){
-        
-        if  name_country != "México" {
-            
-            cp_constraint_height.constant = 0
-            municipio_contraint_height.constant = 0
-            city_constraint_height.constant = 0
-            state_constraint_height.constant = 0
-            
-            cp.isHidden = true
-            state.isHidden = true
-            municipio.isHidden = true
-            city.isHidden = true
-
-            is_mexico = 0
-            
-            cp.text = ""
-            state.text = ""
-            municipio.text = ""
-            city.text = ""
-            
+    // Inicio Foto
+    @IBAction func import_image(_ sender: Any) {
+        let image = UIImagePickerController()
+        image.delegate = self
+        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        image.allowsEditing = false
+        self.present(image, animated: true){ }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            img_profile.image = image
         }else{
-            cp_constraint_height.constant = 55
-            municipio_contraint_height.constant = 55
-            city_constraint_height.constant = 55
-            state_constraint_height.constant = 55
-            
-            cp.isHidden = false
-            state.isHidden = false
-            municipio.isHidden = false
-            city.isHidden = false
-            
-            is_mexico = 1
+            showMessage(title: "Error al cargar la imagen", automatic: true)
+        }
+        self.dismiss(animated: true, completion: upload_photo)
+    }
+    
+    func upload_photo(){
+        print("Subiendo Foto")
+        let data = UIImageJPEGRepresentation(img_profile.image!, 0.5)
+        webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)
+    }
+    
+    func upload_file(status: Int, response: AnyObject){
+        print("Imagen cargada con exito")
+        let json = JSON(response)
+        self.name_image = json["data"].stringValue
+        
+        if status == 1{
+            toast(title:StringsLabel.upload_image)
+        }else{
+            toast(title: response as! String)
         }
     }
+    
     
     //Validar Formulario
     func validate_form()-> Int{
@@ -531,6 +527,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         
         return count_error
     }
+    
     
     @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         

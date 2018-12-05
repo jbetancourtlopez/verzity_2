@@ -1,16 +1,7 @@
-//
-//  ProfileAcademicViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 30/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import FloatableTextField
 import SwiftyJSON
 import SwiftyUserDefaults
-
 
 class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FloatableTextFieldDelegate{
     
@@ -40,20 +31,17 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var type = ""
     var is_postulate = 0
     var name_image = ""
+    var usuario = Usuario()
 
-    // Datos obtenidos de facebook
-    var facebook_url: String = ""
-    var facebook_name: String = ""
-    var facebook_email: String = ""
-    var facebook_id: String = ""
-    var is_facebook:Int = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         self.type = type as String
         setup_ux()
         setup_textfield()
-        //get_data_profile()
+        
         load_countries()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
@@ -61,48 +49,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         registerForKeyboardNotifications(scrollView: scrollView)
         setGestureRecognizerHiddenKeyboard()
 
-        // Valido si es por Facebook
-        if is_facebook == 1 {
-            setdata_facebook()
-        }
-        //
+        self.title = "Perfil universitario"
+        get_data_profile()
+       
     }
 
-    func setdata_facebook(){
-        self.facebook_url = facebook_url as String
-        self.facebook_name = facebook_name as String
-        self.facebook_email = facebook_email as String
-        self.is_facebook = Int(is_facebook)
-        self.facebook_id = facebook_id as String
-        
-        name_profile.text = self.facebook_name
-        email_profile.text = self.facebook_email
-        //confirm_password.text = self.facebook_id
-        //password.text = String(describing: self.facebook_id)
-
-        // Foto Profile
-        let url = self.facebook_url
-        let URL = Foundation.URL(string: url)
-        let image_default = UIImage(named: "ic_user_profile.png")
-        img_profile.kf.setImage(with: URL, placeholder: image_default)
-        
-        // Email 
-        email_profile.isEnabled = false
-        if  (self.facebook_email.isEmpty){
-           email_profile.isEnabled = true
-        }
-
-        /*
-        password.isHidden = true
-        confirm_password.isHidden = true
-        topContrainstLabelTerminos.constant = -100
-        topConstrainsSwich.constant = -100
-        topConstrainsButtonRegister.constant = -70
-        */
-
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.upload_photo), userInfo: nil, repeats: false)
-    }
-    
+   
     @objc func cpDidChange(_ textField: UITextField) {
         print("Change CP")
         let cp = textField.text
@@ -131,38 +83,17 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                     "desCorreo": email_profile.text!,
                     "Dispositivos": [
                         [
-                        "cvDispositivo": "",//Defaults[.cvDispositivo]!,
-                        "cvFirebase": "", //Defaults[.cvFirebase]!
+                        "cvDispositivo": usuario.Persona?.Dispositivos?.cvDispositivo,//Defaults[.cvDispositivo]!,
+                        "cvFirebase": usuario.Persona?.Dispositivos?.cvFirebase
                         ]
                     ]
                 ] as [String : Any]
                 
-                let parameter_json = JSON(array_parameter)
-                let parameter_json_string = parameter_json.rawString()
-                webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
             }
         }
     }
     
-    func verificarCuentaUniversitario(status: Int, response: AnyObject){
-        hiddenGifIndicator(view: self.view)
-        var json = JSON(response)
-        print("Respuesta")
-        debugPrint(json)
-        if status == 1{
-            print("Abro modal")
-            open_modal(info: json["Data"])
-        }
-    }
     
-    func open_modal(info:JSON){
-        let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "RetryAccountViewControllerID") as! RetryAccountViewController
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.delegate = self
-        customAlert.info = info as AnyObject
-        self.present(customAlert, animated: true, completion: nil)
-    }
     
     func BuscarCodigoPostal(status: Int, response: AnyObject){
         var json = JSON(response)
@@ -186,7 +117,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func load_countries(){
-        print("Carga de Paises")
         let array_parameter = ["": ""]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -195,11 +125,10 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     
     func GetPaises(status: Int, response: AnyObject){
         var json = JSON(response)
-        //debugPrint(json)
-        let selected_name_country = Defaults[.academic_nbPais]!
+        let selected_name_country = usuario.Persona?.Direcciones?.nbPais
         if status == 1{
+            
             var countries_aux = json["Data"].arrayObject
-            print(countries)
             let default_c = [
                 "cvPais" : "SP",
                 "nbPais" : "-Seleccionar país.-",
@@ -209,7 +138,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             countries_aux?.insert(default_c, at: 0)
             countries = countries_aux! as NSArray
             countryPickerView.selectRow((countries.count), inComponent:0, animated:true)
-            
 
         }else{
             countries = []
@@ -227,7 +155,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
-        is_mexico_setup(name_country: selected_name_country)
+        is_mexico_setup(name_country: selected_name_country!)
         hiddenGifIndicator(view: self.view)
     }
     
@@ -248,8 +176,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             showMessage(title: "Error al cargar la imagen", automatic: true)
         }
         self.dismiss(animated: true, completion: upload_photo)
-
-
     }
 
     @objc func upload_photo(){
@@ -282,8 +208,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
     }
     
-   
-    
     @IBAction func on_click_continue(_ sender: Any) {
         print("Continuar")
         
@@ -297,13 +221,13 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                     "nbEstado": state_profile.text!,
                     "nbPais": name_country,
                     "nbMunicipio": municipio_profile.text!,
-                    "idDireccion": Defaults[.academic_idDireccion]!
+                    "idDireccion": usuario.Persona?.Direcciones?.idDireccion,
                 ],
                 "desTelefono": phone_profile.text!,
                 "nbCompleto": name_profile.text!,
                 "pathFoto": self.name_image,
-                "idDireccion": Defaults[.academic_idDireccion]!,
-                "idPersona": Defaults[.academic_idPersona]!
+                "idDireccion": usuario.Persona?.Direcciones?.idDireccion,
+                "idPersona": usuario.Persona?.idPersona
             ] as [String : Any]
         
 
@@ -321,25 +245,26 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             var data = JSON(json["Data"])
             let direcciones = JSON(data["Direcciones"])
             
-            Defaults[.academic_name] = data["nbCompleto"].stringValue
-            Defaults[.academic_email] = data["desCorreo"].stringValue
-            Defaults[.academic_phone] = data["desTelefono"].stringValue
-            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
-            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
-            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
-            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
-            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
-            Defaults[.academic_description] = direcciones["desDireccion"].stringValue
             
-            
-            Defaults[.academic_pathFoto] = self.name_image
-            if (self.type == "profile_representative"){
-               //Defaults[.representative_pathFoto] = self.name_image
-            }else{
-              // Defaults[.academic_pathFoto] = self.name_image
+            if let usuario_db = realm.objects(Usuario.self).first{
+                try! realm.write {
+                    
+                    let direccion = Direcciones()
+                    direccion.nbPais = direcciones["nbPais"].stringValue
+                    direccion.numCodigoPostal = direcciones["numCodigoPostal"].stringValue
+                    direccion.nbCiudad = direcciones["nbCiudad"].stringValue
+                    direccion.nbMunicipio = direcciones["nbMunicipio"].stringValue
+                    direccion.nbEstado = direcciones["nbEstado"].stringValue
+                    direccion.desDireccion = direcciones["desDireccion"].stringValue
+                    
+                    usuario_db.Persona?.pathFoto = self.name_image
+                    usuario_db.Persona?.nbCompleto = data["nbCompleto"].stringValue
+                    usuario_db.Persona?.desCorreo = data["desCorreo"].stringValue
+                    usuario_db.Persona?.desTelefono = data["desTelefono"].stringValue
+                    usuario_db.Persona?.Direcciones = direccion
+                }
             }
             
-            print("Perfil Universitario")
             Timer.scheduledTimer(timeInterval: 5.4, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
             
         }else{
@@ -349,31 +274,23 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     @objc func go_home(){
-        if self.is_postulate == 0 {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-            self.show(vc, sender: nil)
-        }
-        else{
-            print("Back")
-            _ = navigationController?.popViewController(animated: true)
-        }
-        
+        _ = navigationController?.popViewController(animated: true)
     }
     
     func get_data_profile(){
-        name_profile.text = Defaults[.academic_name]
-        phone_profile.text = Defaults[.academic_phone]
-        email_profile.text = Defaults[.academic_email]
+        name_profile.text = usuario.Persona?.nbCompleto
+        phone_profile.text = usuario.Persona?.desTelefono
+        email_profile.text = usuario.Persona?.desCorreo
         
         // Direcciones
-        cp_profile.text = Defaults[.academic_cp]
-        city_profile.text = Defaults[.academic_city]
-        municipio_profile.text = Defaults[.academic_municipio]
-        state_profile.text = Defaults[.academic_state]
-        description_profile.text = Defaults[.academic_description]
+        cp_profile.text = usuario.Persona?.Direcciones?.numCodigoPostal
+        city_profile.text = usuario.Persona?.Direcciones?.nbCiudad
+        municipio_profile.text = usuario.Persona?.Direcciones?.nbMunicipio
+        state_profile.text = usuario.Persona?.Direcciones?.nbEstado
+        description_profile.text = usuario.Persona?.Direcciones?.desDireccion
 
         
-        set_photo_profile(url: Defaults[.academic_pathFoto]!, image: img_profile)
+        set_photo_profile(url: (usuario.Persona?.pathFoto)!, image: img_profile)
         
         if (self.type == "profile_representative"){
         //if (true){
@@ -422,6 +339,11 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         
         email_profile.addTarget(self, action: #selector(ProfileAcademicViewController.emailDidChange(_:)), for: UIControlEvents.editingChanged)
 
+        self.email_profile.isEnabled = false
+        self.name_profile.isEnabled = false
+        self.name_profile.textColor = hexStringToUIColor(hex: "#939393")
+        self.email_profile.textColor = hexStringToUIColor(hex: "#939393")
+        
     }
     
     // Picker View
@@ -466,8 +388,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             state_profile.isHidden = false
             municipio_profile.isHidden = false
             city_profile.isHidden = false
-            
-         
             
             topContraintDescription.constant = 0
             is_mexico = 1

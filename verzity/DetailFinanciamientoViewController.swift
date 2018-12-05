@@ -189,9 +189,11 @@ class DetailFinanciamientoViewController: BaseViewController {
     @IBAction func on_click_university(_ sender: Any) {
         print("Universidad")
         var detail = JSON(self.detail)
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversity3ViewControllerID") as! DetailUniversity3ViewController
         vc.idUniversidad = detail["idUniversidad"].intValue
         self.show(vc, sender: nil)
+        
+        
     }
     
     @IBAction func on_click_file(_ sender: Any) {

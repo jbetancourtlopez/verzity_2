@@ -116,7 +116,16 @@ class ListAsesorViewController: BaseViewController {
         open(scheme: "skype:asesor2@live.com")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+    }
+    
     func setup_ux(){
+        
+        self.title = "Mi Asesor"
+        
         let postularse = ActionButtonItem(title: "Consultar paquetes", image: #imageLiteral(resourceName: "ic_notification_green"))
         postularse.action = { item in self.self.on_click_asesor() }
         

@@ -2,7 +2,7 @@ import UIKit
 import SwiftyJSON
 import Kingfisher
 
-class QuestionViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class QuestionViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource,  UISearchBarDelegate {
 
     // Inputs
     @IBOutlet weak var search_bar: UISearchBar!
@@ -13,6 +13,9 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
     var items:NSArray = []
     var refreshControl = UIRefreshControl()
     var usuario = Usuario()
+    var sections: NSMutableArray = []
+    var actionButton : ActionButton!
+    var search = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,24 +54,88 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         items = []
         if status == 1{
             self.items = json["Data"].arrayValue as NSArray
+            
+            build_data()
         }
         
-        tableView.reloadData()
+    
         hiddenGifIndicator(view: self.view)
     }
     
     func setup_ux(){
-     self.title = "Cuestionarios"
+        self.title = "Cuestionarios"
+        
+        let postularse = ActionButtonItem(title: "Consultar paquetes", image: #imageLiteral(resourceName: "ic_notification_green"))
+        postularse.action = { item in self.self.on_click_asesor() }
+        
+        actionButton = ActionButton(attachedToView: self.view, items: [postularse])
+        actionButton.setTitle("+", forState: UIControlState())
+        actionButton.backgroundColor = UIColor(red: 255.0/255.0, green: 157.0/255.0, blue: 0.0/255.0, alpha: 1)
+        actionButton.action = { button in button.toggleMenu()}
+    }
+    
+    func on_click_asesor(){
+        print("Paquetes Asesor")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorPaqueteViewControllerID") as! ListAsesorPaqueteViewController
+        self.show(vc, sender: nil)
+    }
+    
+    //Search Bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.search = searchText
+        build_data()
+    }
+    
+    func build_data(){
+        
+        let sear = self.search.lowercased()
+        let sear_clean = sear.folding(options: .diacriticInsensitive, locale: .current)
+        
+        var list_no_pay:[Any] = []
+        var list_pay:[Any] = []
+        
+        for item in self.items{
+            var item_json = JSON(item)
+            var evaluacion = JSON(item_json["Evaluaciones"])
+            var is_pay = evaluacion["idPruebaAplica"].intValue
+            var name = evaluacion["nbEvaluacion"].stringValue
+            name = name.lowercased()
+            let name_clean = name.folding(options: .diacriticInsensitive, locale: .current)
+        
+            if sear == ""{
+                if is_pay == 0{
+                    list_no_pay.append(item)
+                }else{
+                    list_pay.append(item)
+                }
+            } else{
+                var is_containt = name_clean.contains(sear_clean)
+                if  (is_containt){
+                    if is_pay == 0{
+                        list_no_pay.append(item)
+                    }else{
+                        list_pay.append(item)
+                    }
+                }
+            }
+        }
+        
+        sections[0] = list_no_pay
+        sections[1] = list_pay
+        self.tableView.reloadData()
     }
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(items.count)
-        return items.count
+        print("section: \(section)")
+        let section_item = JSON(sections[section])
+        let count = section_item.count
+        print(count)
+        return count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -77,7 +144,14 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableCell(withIdentifier: "cell_header") as! HeaderTableViewCell
-        header.title.text = "Hola"
+        
+        if section == 0{
+           header.title.text = "BÁSICO"
+        }else{
+             header.title.text = "DE PAGA"
+        }
+        
+       
         header.backgroundColor = Colors.green_dark
         return header
     }
@@ -85,7 +159,11 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! QuestionTableViewCell
-        let item = JSON(self.items[indexPath.row])
+        
+        let list = JSON(sections[indexPath.section])
+
+        
+        let item = JSON(list[indexPath.row])
         let estatus = JSON(item["Estatus"])
         let evaluaciones = JSON(item["Evaluaciones"])
         
@@ -133,13 +211,10 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
             customAlert.question = item
             self.present(customAlert, animated: true, completion: nil)
         }
-        
-        
     }
 }
 
 extension QuestionViewController: QuestionResultViewControllerDelegate{
-    
     func closeButtonTapped() {
         print("Close Button")
     }

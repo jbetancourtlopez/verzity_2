@@ -455,7 +455,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
         let product_description_short = package["desPaquete"].stringValue
         let product_sku = "\(product_name)-\(package["cvPaquete"].stringValue)"
         
-        
         // --------
         var item = PayPalItem(name: product_name, withQuantity: UInt(quantity), withPrice: NSDecimalNumber(string: product_price), withCurrency: currency_code, withSku: product_sku)
         let items = [item]
@@ -487,18 +486,13 @@ extension PackagesViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
         if  is_summary == 0{
             if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
-                
                 let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
                 self.show(vc, sender: nil)
-                
             }else{
-                
                 let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
                 self.show(vc, sender: nil)
-                
             }
         }
-        
     }
     
 

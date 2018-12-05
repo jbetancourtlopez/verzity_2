@@ -112,17 +112,17 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                         self.login_facebook()
                     }
                     else{
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-                        vc.facebook_name = name
-                        vc.facebook_email = email
-
-                        vc.facebook_id = self.facebook_id
-                        vc.facebook_url = self.facebook_url
-                        vc.is_facebook = 1
+//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
+//                        vc.facebook_name = name
+//                        vc.facebook_email = email
+//
+//                        vc.facebook_id = self.facebook_id
+//                        vc.facebook_url = self.facebook_url
+//                        vc.is_facebook = 1
+//
+//
                         
-                        
-                        
-                        self.show(vc, sender: nil)
+                        //self.show(vc, sender: nil)
                         
                     }
                 }
@@ -165,7 +165,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     @IBAction func on_click_register_university(_ sender: UIButton) {
+         print("Register University")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
+
         self.show(vc, sender: nil)
     }
     
@@ -206,7 +208,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         if status == 1{
             var json = JSON(response)
             let data = JSON(json["Data"])
-            
             save_profile(data:data)
             performSegue(withIdentifier: "showSplash", sender: self)
         }else{

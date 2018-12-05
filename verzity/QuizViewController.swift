@@ -40,17 +40,25 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let event_on_click_ask:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_ask))
         view_ask.addGestureRecognizer(event_on_click_ask)
     }
+ 
     
     func set_webview(){
         self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height))
+        self.webView.frame.size.height = 1
+        self.webView.frame.size = webView.sizeThatFits(CGSize.zero)
         self.view_web.addSubview(webView)
     }
     
     func load_data(){
         showGifIndicator(view: self.view)
         let idPersona = self.usuario.Persona?.idPersona
-        let idEvaluacion = self.question["idEvaluacion"].intValue
-        let array_parameter = ["idEvaluacion": idEvaluacion, "idPersona": idPersona] as [String : Any]
+        
+        if self.idEvaluacion == 0{
+           self.idEvaluacion = self.question["idEvaluacion"].intValue
+        }
+        
+        
+        let array_parameter = ["idEvaluacion": self.idEvaluacion, "idPersona": idPersona] as [String : Any]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "getDetalleEvaluacion", doneFunction: callback_load_data)
@@ -59,6 +67,7 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
+        print(status)
         self.items = []
         if status == 1{
             var data = JSON(json["Data"])
@@ -76,6 +85,12 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
           
             set_data_question()
 
+        }else{
+            print("Cuestionario")
+            _ = self.navigationController?.popViewController(animated: false)
+
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
+            self.show(vc, sender: nil)
         }
         tableView.reloadData()
         hiddenGifIndicator(view: self.view)
@@ -132,7 +147,7 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func call_on_click_ask(status: Int, response: AnyObject){
         let json = JSON(response)
-        print(json)
+        print(status)
         if status == 1{
             self.selected_switch = -1;
             showGifIndicator_ext(view: self.view)

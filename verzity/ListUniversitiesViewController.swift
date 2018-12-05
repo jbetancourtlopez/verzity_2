@@ -67,7 +67,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             self.title = "Favoritos"
         } else if type == "find_university" {
             self.title = "Universidades"
+        } else if type == "find_state"{
+            self.title = "Universidades"
         }
+        
         self.navigationItem.leftBarButtonItem?.title = ""
     }
     
@@ -82,17 +85,18 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
         } else if type == "find_university" {
             
-            var array_parameter:[String: Any] = ["extranjero": self.extranjero]
+            var array_parameter:[String: Any] = ["extranjero": self.extranjero, "nbPais": usuario.Persona?.Direcciones?.nbPais]
             
             if  name_university != "" {
-                array_parameter = ["nombreUniversidad": name_university, "extranjero": self.extranjero]
+                array_parameter = ["nombreUniversidad": name_university, "extranjero": self.extranjero, "nbPais": usuario.Persona?.Direcciones?.nbPais]
             }
             
             if list_licensature.count > 0{
                 array_parameter = [
                     "nombreUniversidad": name_university,
                     "Licenciaturas": list_licensature,
-                    "extranjero": self.extranjero
+                    "extranjero": self.extranjero,
+                    "nbPais": usuario.Persona?.Direcciones?.nbPais
                     ]
             }
             let parameter_json = JSON(array_parameter)
@@ -104,7 +108,8 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             var array_parameter:[String: Any] = [
                 "nombreEstado": self.state,
                 "nbPais": self.country,
-                "extranjero": self.extranjero
+                "extranjero": self.extranjero,
+                "nbPais": usuario.Persona?.Direcciones?.nbPais
             ]
             
             let parameter_json = JSON(array_parameter)
