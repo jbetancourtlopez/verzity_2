@@ -24,7 +24,7 @@ class ListAsesorViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //set_view()
+        set_view()
         setup_ux()
         load_data()
     }

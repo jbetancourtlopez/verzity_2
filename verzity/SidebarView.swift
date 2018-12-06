@@ -23,7 +23,7 @@ class SidebarView: UIView, UITableViewDelegate, UITableViewDataSource {
         let usuario = realm.objects(Usuario.self).first
         var idTipoPersona = usuario?.Persona?.idTipoPersona
         
-        if idTipoPersona == 1 {
+        if idTipoPersona == 1 || idTipoPersona == 0 {
             side_menu = Menus.side_menu_student as [AnyObject]
         }else if idTipoPersona == 2 {
             side_menu = Menus.side_menu_university as [AnyObject]

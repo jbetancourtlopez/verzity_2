@@ -193,8 +193,17 @@ extension MainStudentViewController: SidebarViewDelegate {
             case "student_asesor":
                 print("student_asesor")
                 
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorViewControllerID") as! ListAsesorViewController
-                self.show(vc, sender: nil)
+                var idVentaPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores!.idVentaPaqueteAsesor
+                
+                if idVentaPaqueteAsesor! > 0 || true{
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorViewControllerID") as! ListAsesorViewController
+                    self.show(vc, sender: nil)
+                }else{
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorEmptyViewControllerID") as! ListAsesorEmptyViewController
+                    self.show(vc, sender: nil)
+                }
+                
+                
                 
                 break
             case "student_notify":

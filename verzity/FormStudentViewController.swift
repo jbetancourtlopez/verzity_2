@@ -29,9 +29,19 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     
     @IBOutlet var swich_accept: UISwitch!
     @IBOutlet var accept_error: UILabel!
-    
     @IBOutlet var button_save: UIButton!
 
+    //View
+    @IBOutlet weak var view_cp: UIView!
+    @IBOutlet weak var view_municipio: UIView!
+    @IBOutlet weak var view_ciudad: UIView!
+    @IBOutlet weak var view_direccion: UIView!
+    @IBOutlet weak var view_state: UIView!
+    @IBOutlet weak var view_cp_ct_height: NSLayoutConstraint!
+    
+    @IBOutlet weak var view_password: UIView!
+    @IBOutlet weak var view_password_conf: UIView!
+    
     // Constrain
     @IBOutlet var cp_constraint_height: NSLayoutConstraint!
     @IBOutlet var municipio_contraint_height: NSLayoutConstraint!
@@ -42,9 +52,16 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var webServiceController = WebServiceController()
     var countries: NSArray = []
     var is_mexico = 1;
-    var is_facebook:Int = 0
     var name_country = ""
     var type_view: String = "register"
+    
+    // Datos obtenidos de facebook
+    var facebook_url: String = ""
+    var facebook_name: String = ""
+    var facebook_email: String = ""
+    var facebook_id: String = ""
+    var is_facebook:Int = 0
+
     var name_image = ""
     
     
@@ -61,8 +78,39 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         
         registerForKeyboardNotifications(scrollView: scrollView)
         setGestureRecognizerHiddenKeyboard()
-
+        
+        print("Facebook_id: \(facebook_id)")
+        if is_facebook == 1 {
+            print("Entro Facebook")
+            setdata_facebook()
+        }
     }
+    
+    func setdata_facebook(){
+
+        name.text = self.facebook_name
+        email.text = self.facebook_email
+        
+        // Foto Profile
+        let url = self.facebook_url
+        let URL = Foundation.URL(string: url)
+        let image_default = UIImage(named: "ic_user_profile.png")
+        img_profile.kf.setImage(with: URL, placeholder: image_default)
+        if is_facebook == 1{
+            
+            email.isEnabled = false
+            email.textColor = hexStringToUIColor(hex: "#939393")
+            view_password.isHidden = true
+            view_password_conf.isHidden = true
+            
+            if  (self.facebook_email.isEmpty){
+                email.isEnabled = true
+            }
+    
+        }
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(upload_photo), userInfo: nil, repeats: false)
+    }
+
     
     @objc func cpDidChange(_ textField: UITextField) {
         let cp = textField.text
@@ -80,7 +128,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         if !FormValidate.isEmptyTextField(textField: email){
             if !FormValidate.validateEmail(email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
                 print("Email Valido")
-                showGifIndicator(view: self.view)
+                //showGifIndicator(view: self.view)
                 let array_parameter = [
                     "desCorreo": email.text!,
                     "Dispositivos": [
@@ -93,7 +141,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
 
                 let parameter_json = JSON(array_parameter)
                 let parameter_json_string = parameter_json.rawString()
-                webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
+                //webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
             }
         }
     }
@@ -181,12 +229,12 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         hiddenGifIndicator(view: self.view)
     }
     
-
     @IBAction func on_click_continue(_ sender: Any) {
         print("Continuar")
         if validate_form() == 0 {
             let array_parameter = [
                 "pwdContrasenia": password.text!,
+                "cvFacebook": self.facebook_id,
                 "idUsuario": 0,
                 "nbUsuario": email.text!,
                 "Personas": [
@@ -213,9 +261,10 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
                     "idDireccion": 0,
                     "idPersona": 0
                 ]
-                
+
             ] as [String : Any]
-        
+            
+            print(array_parameter)
             
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
@@ -225,40 +274,11 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     
     func callback_on_click_continue(status: Int, response: AnyObject){
         var json = JSON(response)
-        //debugPrint(json)
+        debugPrint(json)
         if status == 1{
-            showMessage(title: json["Mensaje"].stringValue, automatic: true)
-            
-            var data = JSON(json["Data"])
-            
-            
-            //save_profile(data:data)
-            
-            let direcciones = JSON(data["Direcciones"])
-            
-            
-            
-//            _ = self.navigationController?.popToRootViewController(animated: false)
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_StudentViewController") as! UINavigationController
-//            UIApplication.shared.keyWindow?.rootViewController = vc
-            
-            
-//            Defaults[.academic_name] = data["nbCompleto"].stringValue
-//            Defaults[.academic_email] = data["desCorreo"].stringValue
-//            Defaults[.academic_phone] = data["desTelefono"].stringValue
-//            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
-//            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
-//            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
-//            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
-//            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
-//            Defaults[.academic_description] = direcciones["desDireccion"].stringValue
-//            Defaults[.academic_pathFoto] = self.name_image
-          
-            
-            print("Perfil Universitario")
-           // Timer.scheduledTimer(timeInterval: 5.4, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
-            
+            let data = JSON(json["Data"])
+            save_profile(data:data)
+            performSegue(withIdentifier: "showSplash", sender: self)
         }else{
             showMessage(title: response as! String, automatic: true)
         }
@@ -292,16 +312,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         
         set_photo_profile(url: Defaults[.academic_pathFoto]!, image: img_profile)
         
-        
-//        cp.isHidden = true
-//        state.isHidden = true
-//        municipio.isHidden = true
-//        city.isHidden = true
-//
-//        icon_country.isHidden = true
-//
-//        countryPickerView.isHidden = true
-//        address.isHidden = true
+
 
     }
     
@@ -309,16 +320,12 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         
         if  name_country != "México" {
             
-            cp_constraint_height.constant = 0
-            municipio_contraint_height.constant = 0
-            city_constraint_height.constant = 0
-            state_constraint_height.constant = 0
-            
-            cp.isHidden = true
-            state.isHidden = true
-            municipio.isHidden = true
-            city.isHidden = true
-            
+            // Hidden View
+            view_cp.isHidden = true
+            view_municipio.isHidden = true
+            view_ciudad.isHidden = true
+            view_state.isHidden = true
+
             is_mexico = 0
             
             cp.text = ""
@@ -327,15 +334,10 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
             city.text = ""
             
         }else{
-            cp_constraint_height.constant = 55
-            municipio_contraint_height.constant = 55
-            city_constraint_height.constant = 55
-            state_constraint_height.constant = 55
-            
-            cp.isHidden = false
-            state.isHidden = false
-            municipio.isHidden = false
-            city.isHidden = false
+            view_cp.isHidden = false
+            view_municipio.isHidden = false
+            view_ciudad.isHidden = false
+            view_state.isHidden = false
             
             is_mexico = 1
         }
@@ -356,7 +358,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         self.import_image.cornerRadius = 17.5
         
         button_save.setTitle("Guardar cambios", for: .normal)
-       
+       self.swich_accept.setOn(false, animated: false)
     }
     
     func setup_textfield(){
@@ -425,7 +427,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         self.dismiss(animated: true, completion: upload_photo)
     }
     
-    func upload_photo(){
+     @objc func upload_photo(){
         print("Subiendo Foto")
         let data = UIImageJPEGRepresentation(img_profile.image!, 0.5)
         webServiceController.upload_file(imageData:data, parameters: [:], doneFunction:upload_file)

@@ -83,7 +83,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     var picture = self.dict["picture"] as! [String : AnyObject]
                     var data = picture["data"] as! [String : AnyObject]
                     let url = data["url"] as! String
-                    self.password.text = (self.dict["id"] as! String)
                     
                     let keyExistsEmail = self.dict["email"] != nil
                     let keyExistsName = self.dict["name"] != nil
@@ -103,9 +102,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                         name = self.dict["name"] as! String
                     }
                     
-                    if(false){
-                    //if (keyExistsEmail && keyExistsName){
-                        self.email.text = email
+                    if (keyExistsEmail && keyExistsName){
                         self.facebook_email = email
                         self.facebook_name = name
                         
@@ -131,10 +128,9 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     func login_facebook(){
-        if validate_form() == 0 {
             showGifIndicator(view: self.view)
                var parameters = [
-                    "cvFacebook": password.text!,
+                    "cvFacebook": self.facebook_id,
                     "pwdContrasenia": "",
                     "Personas": [
                         "Dispositivos": [
@@ -147,27 +143,28 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                         "idDireccion": 0,
                         "idPersona": 0
                     ],
-                    "nbUsuario": email.text!,
+                    "nbUsuario": self.facebook_email,
                     "idUsuario": 0
                     ] as [String : Any]
         
             let parameter_json = JSON(parameters)
             let parameter_json_string = parameter_json.rawString()
-            webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: callback_on_click_login)
-        }
+            webServiceController.get(parameters: parameter_json_string!, method: Singleton.IngresarApp, doneFunction: callback_on_click_login)
+
+            //webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: callback_on_click_login)
+        
     }
     
     // Registros
     @IBAction func on_click_register_student(_ sender: UIButton) {
         print("Register Student")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
+         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
         self.show(vc, sender: nil)
     }
     
     @IBAction func on_click_register_university(_ sender: UIButton) {
-         print("Register University")
+        print("Register University")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
-
         self.show(vc, sender: nil)
     }
     
@@ -203,7 +200,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     
     func callback_on_click_login(status: Int, response: AnyObject){
         hiddenGifIndicator(view: self.view)
-        debugPrint(response)
         
         if status == 1{
             var json = JSON(response)
@@ -212,14 +208,16 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             performSegue(withIdentifier: "showSplash", sender: self)
         }else{
             if  is_click_facebook == 1{
-//                print("Registro Login Incorrecto")
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewControllerID") as! RegisterViewController
-//                vc.facebook_name = self.facebook_name
-//                vc.facebook_email = self.facebook_email
-//                vc.facebook_id = self.facebook_id
-//                vc.facebook_url = self.facebook_url
-//                vc.is_facebook = 1
-//                self.show(vc, sender: nil)
+                print("Registro Login Incorrecto")
+
+
+                var vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
+                vc.facebook_name = self.facebook_name
+                vc.facebook_email = self.facebook_email
+                vc.facebook_id = self.facebook_id
+                vc.facebook_url = self.facebook_url
+                vc.is_facebook = 1
+                self.show(vc, sender: nil)
             }
             else{
                 updateAlert(title: "", message: response as! String, automatic: true)
@@ -238,8 +236,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     func setup_ux(){
-//        email.text = ""
-//        password.text = ""
         email.floatableDelegate = self
         password.floatableDelegate = self
         

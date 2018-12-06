@@ -117,6 +117,7 @@
 		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
 		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
+		F707C4A321B8E3E80025D384 /* ListAsesorEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */; };
 		F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */; };
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
@@ -246,6 +247,7 @@
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
+		F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorEmptyViewController.swift; sourceTree = "<group>"; };
 		F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail_gray.png; sourceTree = "<group>"; };
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
 				F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */,
+				F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				92226FE320F5517000ED30E0 /* ContainerViewController.swift in Sources */,
 				926264E72191636500CA0DFD /* MainStudentViewController.swift in Sources */,
 				92A64B8020EFF33700E96152 /* ExampleViewController.swift in Sources */,
+				F707C4A321B8E3E80025D384 /* ListAsesorEmptyViewController.swift in Sources */,
 				92682D3620DC317900E6C4A8 /* WebServiceController.swift in Sources */,
 				9276B69520E7337A004D7FC7 /* VideoViewController.swift in Sources */,
 				92DD410420EBC8EE0035EF4E /* PostuladoViewController.swift in Sources */,

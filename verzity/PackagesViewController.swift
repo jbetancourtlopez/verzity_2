@@ -14,7 +14,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     var idPaquete: Int?
     var package: JSON = JSON()
 
-  
     // Init Paypal
     var payPalConfig = PayPalConfiguration()
     
@@ -24,7 +23,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)
             }
         }
-        
     }
     
     var acceptCreditCards: Bool = true {

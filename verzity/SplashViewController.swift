@@ -56,9 +56,11 @@ class SplashViewController: BaseViewController {
     
     func validate_user(){
         let usuario = get_user()
+        print(usuario)
+        //return
         if usuario.idUsuario > 0 {
             let idTipoPersona = usuario.Persona?.idTipoPersona
-            if idTipoPersona == 1{
+            if idTipoPersona == 1 || idTipoPersona == 0{
                 _ = self.navigationController?.popToRootViewController(animated: false)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_StudentViewController") as! UINavigationController
