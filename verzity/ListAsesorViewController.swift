@@ -21,24 +21,63 @@ class ListAsesorViewController: BaseViewController {
     // Variables
     var actionButton : ActionButton!
     var webServiceController = WebServiceController()
-
+    var usuario = Usuario()
     override func viewDidLoad() {
         super.viewDidLoad()
-        set_view()
+        self.usuario = get_user()
+        
+        var idVentaPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores!.idVentaPaqueteAsesor
+        
+        if idVentaPaqueteAsesor! == 0{
+            set_view()
+        }
         setup_ux()
         load_data()
+        
+        
     }
     
     func set_view(){
         
         var view_container : UIView!
         view_container = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
-        view_container.backgroundColor = UIColor.white.withAlphaComponent(1.0)
+        view_container.backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
         
         var view_green : UIView!
         view_green = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height/2))
         view_green.backgroundColor = hexStringToUIColor(hex: "#3E8426")
         view_container.addSubview(view_green)
+        
+        
+        var view_center : UIView!
+        view_center = UIView(frame: CGRect(x: 10, y: (self.view.frame.size.height/2) - 50, width: self.view.frame.size.width - 20, height: 100))
+        view_center.backgroundColor = hexStringToUIColor(hex: "#FFFFFF") //UIColor.white.withAlphaComponent(1.0)
+        view_center.layer.cornerRadius = 10
+        
+        view_center.layer.borderWidth = 2
+        view_center.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+        
+        view_container.addSubview(view_center)
+        
+        
+        let image_icon: UIImageView!
+        image_icon = UIImageView(frame: CGRect(x: (view_center.frame.width/2) - 20, y: view_center.frame.height - 90, width: 40, height: 40))
+        image_icon.image = UIImage(named:"facebook")!
+        view_center.addSubview(image_icon)
+        
+        let ups = UILabel(frame: CGRect(x: 0 , y: view_center.frame.height - 45, width: view_center.frame.width, height: 20))
+        ups.text = "Upss"
+        ups.textAlignment = .center
+        ups.font = UIFont.boldSystemFont(ofSize: 17.0)
+        ups.textColor = hexStringToUIColor(hex: "#388E3C")
+        view_center.addSubview(ups)
+        
+        let text_ley = UILabel(frame: CGRect(x: 00 , y: view_center.frame.height - 25, width: view_center.frame.width, height: 20))
+        text_ley.text = "Al parecer no cuenta con un asesor contratado."
+        text_ley.textAlignment = .center
+        text_ley.font=UIFont.systemFont(ofSize: 13)
+        text_ley.textColor = hexStringToUIColor(hex: "#388E3C")
+        view_center.addSubview(text_ley)
         
         self.view.addSubview(view_container)
         
@@ -46,7 +85,7 @@ class ListAsesorViewController: BaseViewController {
     
     func load_data(){
         
-        var usuario = get_user()
+        
         print(usuario)
         // Cargamos los datos
        showGifIndicator(view: self.view)
