@@ -2,7 +2,7 @@ import UIKit
 import SwiftyJSON
 import Kingfisher
 
-class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
    
     //Inputs
     @IBOutlet weak var view_web: UIView!
@@ -11,8 +11,10 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var view_ask: UIView!
     @IBOutlet weak var progress_view: UIProgressView!
     
+    @IBOutlet weak var web_view: UIWebView!
     @IBOutlet weak var label_count: UILabel!
     
+    @IBOutlet weak var view_web_ct_height: NSLayoutConstraint!
     // Varibales
     var items:NSArray = []
     var list_answer:NSArray = []
@@ -26,12 +28,19 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var idEvaluacion = 0
     var idEvaluacionPersona = 0
     
+    // ---
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
         self.usuario = get_user()
-        set_webview()
         load_data()
+        setup_back_button()
+        set_webview()
+        
+        
+        self.web_view.delegate = self
         
         // Eventos
         let event_on_click_finish:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_finish))
@@ -40,13 +49,44 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let event_on_click_ask:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_ask))
         view_ask.addGestureRecognizer(event_on_click_ask)
     }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        web_view.frame.size.height = 1
+        web_view.frame.size = webView.sizeThatFits(CGSize.zero)
+        
+        var height = self.web_view.frame.height
+        print(height)
+        
+        self.view_web_ct_height.constant = height
+//        self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height)) //self.view_web.frame.size.height
+//        self.webView.frame.size.height = 1
+//
+//        self.view_web.frame.size
+    }
  
     
+    
     func set_webview(){
-        self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height))
+        self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height)) //self.view_web.frame.size.height
         self.webView.frame.size.height = 1
         self.webView.frame.size = webView.sizeThatFits(CGSize.zero)
-        self.view_web.addSubview(webView)
+        //self.view_web.addSubview(webView)
+        
+        let height = webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight")
+        if let height = height {
+            if let heightInt = Int(height) {
+                let heightFloat = Float(heightInt)
+                
+                print("Height: \(heightFloat)")
+            }
+        }
+        
+    }
+    
+    func setup_back_button(){
+        let image = UIImage(named: "back")?.withRenderingMode(.alwaysOriginal)
+        let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_finish))
+        self.navigationItem.leftBarButtonItem = button_back
     }
     
     func load_data(){
@@ -57,7 +97,6 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
            self.idEvaluacion = self.question["idEvaluacion"].intValue
         }
         
-        
         let array_parameter = ["idEvaluacion": self.idEvaluacion, "idPersona": idPersona] as [String : Any]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -67,7 +106,7 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
-        print(status)
+        print(json)
         self.items = []
         if status == 1{
             var data = JSON(json["Data"])
@@ -84,7 +123,6 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             }
           
             set_data_question()
-
         }else{
             print("Cuestionario")
             _ = self.navigationController?.popViewController(animated: false)
@@ -97,7 +135,8 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func setup_ux(){
-        self.title = self.question["nbEvaluacion"].stringValue
+        var Evaluaciones = JSON(self.question["Evaluaciones"])
+        self.title = Evaluaciones["nbEvaluacion"].stringValue
         self.progress_view.transform = self.progress_view.transform.scaledBy(x: 1, y: 10)
     }
     
@@ -108,15 +147,15 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
             
             print("SI")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
-            self.show(vc, sender: nil)
+            _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
+
         }
         
         let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
             print("No")
         }
         
-        showAlert("Atención", message: "¿Desea cancelar la presentación del cuestionario? Se guardará su progreso actual", okAction: yesAction, cancelAction: cancelAction, automatic: false)
+        showAlert("Atención", message: "¿Desea cancelar la presentación del cuestionario? Se guardará su progreso actual.", okAction: yesAction, cancelAction: cancelAction, automatic: false)
     }
     
     @objc func on_click_ask(){
@@ -221,7 +260,8 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.list_answer = question["RespuestasList"].arrayValue as NSArray
         var ask = JSON(question["Preguntas"])
         var html = ask["nbPregunta"].stringValue
-        webView.loadHTMLString(html, baseURL: nil)
+        //webView.loadHTMLString(html, baseURL: nil)
+        self.web_view.loadHTMLString(html, baseURL: nil)
         tableView.reloadData()
         
     }

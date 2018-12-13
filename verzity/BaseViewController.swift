@@ -19,6 +19,12 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backItem // title = "Atras"
+
+    
     }
     
     func adjustUITextViewHeight(arg : UITextView){

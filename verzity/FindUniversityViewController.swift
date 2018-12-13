@@ -126,7 +126,7 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     func setup_ux(){
         tableView.delegate = self
         tableView.dataSource = self
-        self.title = "Univ."
+        self.title = "Buscar universidades"
         updateCounter = 0
         self.navigationItem.backBarButtonItem?.title = ""
     }

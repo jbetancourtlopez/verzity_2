@@ -80,8 +80,13 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
         hiddenGifIndicator(view: self.view)
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // This will show in the next view controller being pushed
+    }
+    
     func setup_ux(){
-        self.title = "Paquetes asesores"
+        self.title = "Paquete asesores"
     }
     
     //Table View. -------------------
