@@ -16,6 +16,7 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
     var list_countries: NSArray = []
     var list_states: NSArray = []
     var usuario = Usuario()
+    var extanjero = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +29,11 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
     }
     
     func setup_ux(){
-        
-        if type == "find_university_local"{
-            self.title = "Ubicación"
+        self.title = "Ubicación"
+        if !self.extanjero{
             navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
-            
-        }else if type == "find_university_extra"{
-            self.title = "Ubicación"
+        }else {
             navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
-            
         }
     }
     

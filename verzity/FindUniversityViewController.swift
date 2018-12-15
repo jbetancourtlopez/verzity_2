@@ -26,11 +26,11 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup_ux()
         
         if self.type_menu == "find_university_extra"{
             self.extanjero = true
         }
+        setup_ux()
         
         //Evento Imagen Banner
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -129,6 +129,12 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
         self.title = "Buscar universidades"
         updateCounter = 0
         self.navigationItem.backBarButtonItem?.title = ""
+        
+        if !self.extanjero{
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
+        }else {
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
+        }
     }
     
     // Timer de los Banners de Universidades
@@ -216,10 +222,6 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             self.show(vc, sender: nil)
             break
         case "find_academics":
-            // let vc = storyboard?.instantiateViewController(withIdentifier: "ListAcademicsViewControllerID") as! ListAcademicsViewController
-            // //vc.type = menu_selected!
-            // self.show(vc, sender: nil)
-
             print("Academicos")
             let vc = storyboard?.instantiateViewController(withIdentifier: "ListViewControllerID") as! ListViewController
             vc.idUniversidad = 0
@@ -232,12 +234,14 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
             print("find_next_to_me")
             let vc = storyboard?.instantiateViewController(withIdentifier: "FindMapViewControllerID") as! FindMapViewController
             vc.type = menu_selected!
+            vc.extanjero = self.extanjero
             self.show(vc, sender: nil)
             break
         case "find_euu": //Eventos
             print("location")
             let vc = storyboard?.instantiateViewController(withIdentifier: "LocationViewControllerID") as! LocationViewController
             vc.type = self.type_menu
+            vc.extanjero = self.extanjero
             self.show(vc, sender: nil)
             break
         case "find_favorit": //Eventos

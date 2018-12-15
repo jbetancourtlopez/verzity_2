@@ -25,7 +25,7 @@ class customPin: NSObject, MKAnnotation{
     }
 }
 
-class DetailMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class DetailMapViewController: BaseViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var info: AnyObject = {} as AnyObject
     @IBOutlet weak var mapView: MKMapView!
@@ -142,7 +142,11 @@ class DetailMapViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation{ return nil }
         let anotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnotation")
-        anotationView.image = UIImage(named: "ic_school_map.png")
+        
+        let pinImage = resizeImage(image: UIImage(named: "border_maker")!, targetSize: CGSize(width: 50, height: 50))
+        
+        anotationView.image = pinImage
+        
         anotationView.canShowCallout = true
         return anotationView
         

@@ -34,10 +34,6 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         self.paquete = get_paquete(usuario: self.usuario)
         print(paquete)
-        
-        
-        //list_postulation.
-        
        
         list_postulation.remove(at: 0)
         
@@ -227,7 +223,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 self.show(vc, sender: nil)
                 break
             case "finan":
-                print("Financiamietos")
+                print("Financiamientos")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "PostuladoViewControllerID") as! PostuladoViewController
                 vc.tipo = 3
                 self.show(vc, sender: nil)

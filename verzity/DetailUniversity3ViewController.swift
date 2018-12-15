@@ -1,9 +1,13 @@
 import UIKit
+import CoreLocation
+import MapKit
+import CoreLocation
 import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
 
-class DetailUniversity3ViewController: BaseViewController {
+
+class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDelegate, MKMapViewDelegate{
     
     @IBOutlet var scrollView: UIScrollView!
     
@@ -27,14 +31,13 @@ class DetailUniversity3ViewController: BaseViewController {
     @IBOutlet var label_logo2: UILabel!
     @IBOutlet var button_favorit2: UIButton!
     
-    
     //Mapa
     @IBOutlet var view_location_empty: UIView!
     @IBOutlet var view_location_empty_ct_height: NSLayoutConstraint!
     
     @IBOutlet var view_location_map: UIView!
     @IBOutlet var view_location_map_ct_height: NSLayoutConstraint!
-    //@IBOutlet var map: MKMapView!
+    @IBOutlet weak var mapView: MKMapView!
     
     // Contacto
     @IBOutlet var view_contacto: UIView!
@@ -94,6 +97,10 @@ class DetailUniversity3ViewController: BaseViewController {
     var list_licenciaturas: NSArray = []
     var selected_postulate: String = ""
     var usuario = Usuario()
+    
+    var locationManager:CLLocationManager!
+    var lat = 19.405014
+    var lon = -99.141464
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +111,77 @@ class DetailUniversity3ViewController: BaseViewController {
         set_favorito()
         
         self.usuario = get_user()
+        
+        mapView.delegate = self
+        mapView.mapType = MKMapType.standard
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        determineCurrentLocation()
+    }
+    
+    func determineCurrentLocation(){
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        print("Updating location")
+        
+        let location = CLLocationCoordinate2D(latitude:self.lat, longitude:self.lon)
+        let center = location
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        mapView.setRegion(region, animated: true)
+        
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
+    }
+    
+   
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        
+        print("Updating Mapa")
+        if !(annotation is MKPointAnnotation) {
+            return nil
+        }
+        
+        let annotationIdentifier = "AnnotationIdentifier"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView!.canShowCallout = true
+        }
+        else {
+            annotationView!.annotation = annotation
+        }
+        
+        let pinImage = resizeImage(image: UIImage(named: "border_maker")!, targetSize: CGSize(width: 50, height: 50))
+
+        annotationView!.image = pinImage
+        
+        return annotationView
     }
     
     func setup_ux(){
@@ -168,9 +246,11 @@ class DetailUniversity3ViewController: BaseViewController {
     }
     
     func set_data(data:JSON){
+        
         print(data)
         self.data = data
-        self.title = "Univ"
+        var direcciones = JSON(data["Direcciones"])
+        self.title = ""
         
         label_name1.text = data["nbUniversidad"].stringValue
         label_logo2.text = data["nbUniversidad"].stringValue
@@ -181,6 +261,14 @@ class DetailUniversity3ViewController: BaseViewController {
         var direccion_isEmpty = data["Direcciones"].stringValue.isEmpty
         print("have_direccion: \(direccion_isEmpty)")
         
+        // Mapa
+        let myAnnotation: MKPointAnnotation = MKPointAnnotation()
+        myAnnotation.coordinate = CLLocationCoordinate2DMake(direcciones["dcLatitud"].doubleValue, direcciones["dcLongitud"].doubleValue)
+        
+        self.lat = direcciones["dcLatitud"].doubleValue
+        self.lon = direcciones["dcLongitud"].doubleValue
+        
+        mapView.addAnnotation(myAnnotation)
         
         label_address.text = generate_address(address: JSON(data["Direcciones"]))
         if  (label_address.text?.isEmpty)!{
@@ -225,6 +313,8 @@ class DetailUniversity3ViewController: BaseViewController {
     func setup_package(package: JSON, direccion_isEmpty: Bool){
         var paquete = JSON(package["Paquete"])
         
+        print(paquete)
+        
       
         let fgAplicaUbicacion = paquete["fgAplicaUbicacion"].boolValue
         if !fgAplicaUbicacion{
@@ -236,11 +326,7 @@ class DetailUniversity3ViewController: BaseViewController {
             view_location_empty_ct_height.constant = 0
         }
         
-        if direccion_isEmpty{
-            view_location_map.isHidden = true
-            view_location_map_ct_height.constant = 0
-        }
-        
+       
         
         let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
         if !fgAplicaLogo{
@@ -253,7 +339,7 @@ class DetailUniversity3ViewController: BaseViewController {
         }
         
         let fgAplicaDireccion = paquete["fgAplicaDireccion"].boolValue
-        if !fgAplicaDireccion{
+        if direccion_isEmpty && !fgAplicaDireccion{
             print("No Aplica Direccion")
             view_address.isHidden = true
             view_address_ct_height.constant = 0
@@ -382,6 +468,9 @@ class DetailUniversity3ViewController: BaseViewController {
             set_photo(url:image["desRutaFoto"].stringValue, image: self.image_slide)
         }
     }
+    
+    //    Mapa
+    
     
     // Favorito
     func set_favorito(){
@@ -519,8 +608,23 @@ class DetailUniversity3ViewController: BaseViewController {
         let event_on_click_instagram:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_instagram))
         instagram.isUserInteractionEnabled = true
         instagram.addGestureRecognizer(event_on_click_instagram)
+        
+        let event_on_click_map:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_map))
+        mapView.isUserInteractionEnabled = true
+        mapView.addGestureRecognizer(event_on_click_map)
     
     }
+    
+    
+    @objc func on_click_map(){
+        print("Mapa")
+        let university_json = JSON(self.data)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailMapViewControllerID") as! DetailMapViewController
+        vc.info = university_json as AnyObject
+        self.show(vc, sender: nil)
+       
+    }
+    
     
     @objc func on_click_facebook(){
         print("Facebook: \(self.data["urlFaceBook"].stringValue)")

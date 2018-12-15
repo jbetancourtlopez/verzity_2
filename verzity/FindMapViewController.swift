@@ -21,23 +21,25 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
     
     // data
     var type: String = ""
+    var extanjero = false
     var idUniversidad: Int = 0
     var webServiceController = WebServiceController()
     var items:NSArray = []
     var locationManager:CLLocationManager!
     var annotations = [MKAnnotation]()
+    var usuario = Usuario()
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        type = String(type)
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.usuario = get_user()
         set_map()
         load_data()
         mapView.showsUserLocation = true
+        set_ux()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,12 +47,22 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         determineCurrentLocation()
     }
     
+    func set_ux(){
+        
+        if !self.extanjero{
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
+            self.title = "Universidades cercanas"
+        }else {
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
+            self.title = "Universidades en el extranjero"
+        }
+    }
+    
     func determineCurrentLocation(){
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
         }
@@ -77,8 +89,6 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         //mapView.addAnnotation(myAnnotation)
         /*
         self.annotations.append(myAnnotation)
-    
-    
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(annotations)
          */
@@ -91,32 +101,16 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
     func load_data(name_university: String = ""){
         hiddenGifIndicator(view: self.view)
         
-        if  type == "find_next_to_me" {
-            
-            var name_state = ""
-            if  (!(Defaults[.academic_state]?.isEmpty)!) {
-                name_state = Defaults[.academic_state]!
-            }else{
-                name_state = "Yucatán"
-            }
-            
-            let array_parameter = [
-                "nombreEstado": name_state
+        // "nbUniversidad" : "Dw Medios Laboratorio",
+        
+        let array_parameter = [
+            "nbPais": self.usuario.Persona?.Direcciones?.nbPais,
+            "extranjero": self.extanjero,
             ] as [String : Any]
-            debugPrint(array_parameter)
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            print(parameter_json_string!)
-            webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: BusquedaUniversidades)
-            
-        } else if type == "find_euu" {
-            
-            let array_parameter = ["extranjero": true]
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            print(parameter_json_string!)
-            webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: BusquedaUniversidades)
-        }
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        print(parameter_json_string!)
+        webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: BusquedaUniversidades)
     }
     
     func BusquedaUniversidades(status: Int, response: AnyObject){
@@ -138,6 +132,8 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
             var item = JSON(items[i])
             var direcciones = JSON(item["Direcciones"])
             let title_item =  item["nbUniversidad"].stringValue
+            let descrip_item =  item["desUniversidad"].stringValue
+            
             let idUniversidad = item["idUniversidad"].intValue
             
             // Image
@@ -153,10 +149,10 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
             
             let coordinate = CLLocationCoordinate2D(latitude: latitud, longitude: longitude)
             
-            let annotation = CustomAnnotation.init(title: title_item, idUniversidad: idUniversidad, location: coordinate, avatar: avatar)
+            let annotation = CustomAnnotation.init(title: title_item, idUniversidad: idUniversidad, location: coordinate, avatar: avatar, descrip: descrip_item)
             self.annotations.append(annotation)
         }
-        
+    
         
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(self.annotations)
@@ -195,7 +191,7 @@ class FindMapViewController: BaseViewController, MKMapViewDelegate, DetailMapVie
         print("Hola:\(idUniversidad)")
         self.idUniversidad = idUniversidad
         
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversityViewControllerID") as! DetailUniversityViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailUniversity3ViewControllerID") as! DetailUniversity3ViewController
         vc.idUniversidad = idUniversidad
         self.show(vc, sender: nil)
     }

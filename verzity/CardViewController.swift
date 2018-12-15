@@ -78,7 +78,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             break
         case "financing":
             print("financing")
-            self.title = "Fmto"
+            self.title = "Financiamientos"
             self.navigationItem.title = "Financiamientos"
             let array_parameter = ["idUniversidad": idUniversidad]
             let parameter_json = JSON(array_parameter)

@@ -42,14 +42,12 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     }
     
     @objc func handleRefresh() {
-        print("HandleRefresh")
         load_data()
         tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("viewDidAppear")
         load_data()
     }
 
@@ -72,6 +70,14 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         }
         
         self.navigationItem.leftBarButtonItem?.title = ""
+        
+        if !self.extranjero{
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
+            searchBar.barTintColor = hexStringToUIColor(hex: "388E3C")
+        }else {
+            navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
+            searchBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
+        }
     }
     
     func load_data(name_university: String = ""){

@@ -117,6 +117,8 @@
 		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
 		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
+		F7057EFE21C4D06100CB4E38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7057EFD21C4D06000CB4E38 /* MapKit.framework */; };
+		F7057F0021C4D81000CB4E38 /* DetailMapUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */; };
 		F707C4A321B8E3E80025D384 /* ListAsesorEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */; };
 		F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */; };
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
@@ -247,6 +249,8 @@
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
+		F7057EFD21C4D06000CB4E38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapUniversityViewController.swift; sourceTree = "<group>"; };
 		F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorEmptyViewController.swift; sourceTree = "<group>"; };
 		F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail_gray.png; sourceTree = "<group>"; };
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7057EFE21C4D06100CB4E38 /* MapKit.framework in Frameworks */,
 				92B6A41C20F9B42100987258 /* Accelerate.framework in Frameworks */,
 				92B6A41320F9B3FF00987258 /* MobileCoreServices.framework in Frameworks */,
 				92B6A41420F9B3FF00987258 /* AudioToolbox.framework in Frameworks */,
@@ -282,6 +287,7 @@
 		27A94DA676EA0AB5D4A1AE20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7057EFD21C4D06000CB4E38 /* MapKit.framework */,
 				92B6A41B20F9B42000987258 /* Accelerate.framework */,
 				92B6A40C20F9B3FE00987258 /* AudioToolbox.framework */,
 				92B6A40D20F9B3FE00987258 /* AVFoundation.framework */,
@@ -446,6 +452,7 @@
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
 				F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */,
 				F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */,
+				F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -718,6 +725,7 @@
 				92226FE720F59E6000ED30E0 /* SecondFormViewController.swift in Sources */,
 				924132E720E2B42F00CEBC81 /* CustomView.swift in Sources */,
 				922ABFBD20F6BA0300C5A56C /* DetailMapView.swift in Sources */,
+				F7057F0021C4D81000CB4E38 /* DetailMapUniversityViewController.swift in Sources */,
 				92454FF121954AB5009F27B7 /* model.swift in Sources */,
 				92226FE020F54FC800ED30E0 /* EmptySegue.swift in Sources */,
 				92682D2220DB740500E6C4A8 /* BaseTableViewController.swift in Sources */,

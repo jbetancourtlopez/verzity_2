@@ -18,6 +18,7 @@ class DetailMapView: UIView {
     // outlets
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var descrip: UILabel!
     @IBOutlet weak var seeDetailsButton: UIButton!
     
     // data
@@ -34,18 +35,18 @@ class DetailMapView: UIView {
     }
     
     func setup_ux(){
-        self.avatar.layer.masksToBounds = true
-        self.avatar.cornerRadius = 33
+       
     }
     
-    func configureData(title: String, avatar: String, idUniversidad: Int) {
+    func configureData(title: String, avatar: String, idUniversidad: Int, descrip: String) {
         self.idUniversidad = idUniversidad
         
         self.title.text = title
+        self.descrip.text = descrip
         
-        let image_default = UIImage(named: "default.png")
-        let URL = Foundation.URL(string: avatar)
-        self.avatar.kf.setImage(with: URL, placeholder: image_default)
+        //let image_default = UIImage(named: "default.png")
+        //let URL = Foundation.URL(string: avatar)
+        //self.avatar.kf.setImage(with: URL, placeholder: image_default)
     }
     
 

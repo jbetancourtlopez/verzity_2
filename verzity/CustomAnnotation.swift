@@ -13,12 +13,15 @@ class CustomAnnotation: NSObject, MKAnnotation{
     
     var coordinate: CLLocationCoordinate2D
     var title: String?
+    var descrip: String?
     var subtitle: String?
     var avatar: String
     var idUniversidad: Int
     
-    init(title: String, idUniversidad: Int, location:CLLocationCoordinate2D, avatar: String ){
+    
+    init(title: String,idUniversidad: Int, location:CLLocationCoordinate2D, avatar: String, descrip: String = "" ){
         self.title = title
+        self.descrip = descrip
         self.idUniversidad = idUniversidad
         self.coordinate = location
         self.avatar = avatar
