@@ -260,8 +260,10 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.list_answer = question["RespuestasList"].arrayValue as NSArray
         var ask = JSON(question["Preguntas"])
         var html = ask["nbPregunta"].stringValue
+        
+         var html_v2 = "<div style=\"text-align:center !important; margin: 0 auto !important;\">\(html)</div>"
         //webView.loadHTMLString(html, baseURL: nil)
-        self.web_view.loadHTMLString(html, baseURL: nil)
+        self.web_view.loadHTMLString(html_v2, baseURL: nil)
         tableView.reloadData()
         
     }
@@ -271,7 +273,9 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 extension QuizViewController: QuestionResultViewControllerDelegate{
     func closeButtonTapped() {
         print("Close Button")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
-        self.show(vc, sender: nil)
+       // let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
+       // self.show(vc, sender: nil)
+        _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
+
     }
 }

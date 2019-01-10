@@ -22,7 +22,7 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         self.usuario = get_user()
         
         setup_ux()
-        load_data()
+        
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -32,6 +32,10 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
             tableView.addSubview(refreshControl)
         }
         self.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        load_data()
     }
     
     @objc func handleRefresh() {
@@ -54,7 +58,6 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         items = []
         if status == 1{
             self.items = json["Data"].arrayValue as NSArray
-            
             build_data()
         }
         

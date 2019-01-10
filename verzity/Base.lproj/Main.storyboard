@@ -3784,13 +3784,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhe-on-LEJ">
-                                                    <rect key="frame" x="8" y="8" width="304" height="20"/>
+                                                    <rect key="frame" x="8" y="8" width="304" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkZ-6U-MZf">
-                                                    <rect key="frame" x="0.0" y="218" width="320" height="54"/>
+                                                    <rect key="frame" x="0.0" y="217.5" width="320" height="54"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="54" id="kUv-eb-Qlz"/>
                                                     </constraints>
@@ -3800,7 +3800,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I77-Sj-69o" customClass="PlayerViewClass" customModule="verzity" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="28" width="320" height="190"/>
+                                                    <rect key="frame" x="0.0" y="27.5" width="320" height="190"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="190" id="6ez-xP-T4F"/>
@@ -6320,7 +6320,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_circle" translatesAutoresizingMaskIntoConstraints="NO" id="nUy-6G-XcN">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="highlight_off" translatesAutoresizingMaskIntoConstraints="NO" id="nUy-6G-XcN">
                                                         <rect key="frame" x="73" y="27" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -6340,7 +6340,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="highlight_off" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-ry-8eB">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_circle" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-ry-8eB">
                                                         <rect key="frame" x="73" y="27" width="15" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -6492,22 +6492,40 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHT-qx-cNd">
                                         <rect key="frame" x="0.0" y="114" width="288" height="294"/>
+                                        <subviews>
+                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1h-Ej-8kf">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="294"/>
+                                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </webView>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="u1h-Ej-8kf" firstAttribute="top" secondItem="mHT-qx-cNd" secondAttribute="top" id="G09-WR-KqB"/>
+                                            <constraint firstItem="u1h-Ej-8kf" firstAttribute="leading" secondItem="mHT-qx-cNd" secondAttribute="leading" id="KB8-iL-v7L"/>
+                                            <constraint firstAttribute="bottom" secondItem="u1h-Ej-8kf" secondAttribute="bottom" id="RYg-5N-TDV"/>
+                                            <constraint firstAttribute="trailing" secondItem="u1h-Ej-8kf" secondAttribute="trailing" id="cWJ-LM-Y8e"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="mHT-qx-cNd" secondAttribute="bottom" id="54r-15-R6U"/>
+                                    <constraint firstAttribute="trailing" secondItem="mHT-qx-cNd" secondAttribute="trailing" id="7M4-ar-Qv9"/>
                                     <constraint firstItem="qU0-Jd-8zl" firstAttribute="top" secondItem="JoV-Ve-Jwn" secondAttribute="top" constant="71" id="BZS-lk-0tJ"/>
                                     <constraint firstAttribute="trailing" secondItem="mHT-qx-cNd" secondAttribute="trailing" id="Bcu-RL-S97"/>
                                     <constraint firstItem="mHT-qx-cNd" firstAttribute="leading" secondItem="JoV-Ve-Jwn" secondAttribute="leading" id="CXS-9h-8Uu"/>
                                     <constraint firstItem="HdE-52-t6S" firstAttribute="leading" secondItem="JoV-Ve-Jwn" secondAttribute="leading" id="IC8-hT-7y3"/>
+                                    <constraint firstAttribute="trailing" secondItem="mHT-qx-cNd" secondAttribute="trailing" id="Mab-RJ-PwI"/>
                                     <constraint firstAttribute="bottom" secondItem="mHT-qx-cNd" secondAttribute="bottom" id="SZi-k6-MZv"/>
+                                    <constraint firstItem="mHT-qx-cNd" firstAttribute="leading" secondItem="JoV-Ve-Jwn" secondAttribute="leading" id="T9L-Wn-m4j"/>
                                     <constraint firstAttribute="trailing" secondItem="HdE-52-t6S" secondAttribute="trailing" id="U1y-hN-mOk"/>
                                     <constraint firstAttribute="height" constant="408" id="iPO-Bb-KZw"/>
                                     <constraint firstItem="HdE-52-t6S" firstAttribute="top" secondItem="JoV-Ve-Jwn" secondAttribute="top" id="jK7-9d-E9R"/>
                                     <constraint firstItem="mHT-qx-cNd" firstAttribute="top" secondItem="HdE-52-t6S" secondAttribute="bottom" constant="42" id="qtP-Rl-PTf"/>
+                                    <constraint firstItem="mHT-qx-cNd" firstAttribute="leading" secondItem="JoV-Ve-Jwn" secondAttribute="leading" id="sCz-kx-zIj"/>
                                     <constraint firstAttribute="trailing" secondItem="qU0-Jd-8zl" secondAttribute="trailing" id="tS2-f5-8s4"/>
                                     <constraint firstItem="qU0-Jd-8zl" firstAttribute="leading" secondItem="JoV-Ve-Jwn" secondAttribute="leading" id="xj4-ZN-OPr"/>
+                                    <constraint firstAttribute="bottom" secondItem="mHT-qx-cNd" secondAttribute="bottom" id="yGM-KM-8Zh"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -6525,6 +6543,7 @@
                         <outlet property="puntaje" destination="kbE-Id-ieP" id="Hc6-NX-9yh"/>
                         <outlet property="title_question" destination="keJ-AM-7GE" id="RC9-e8-HWm"/>
                         <outlet property="view_result" destination="mHT-qx-cNd" id="Yha-rk-HTL"/>
+                        <outlet property="web_view" destination="u1h-Ej-8kf" id="9UG-UB-PgL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Yq-FU-mcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9174,7 +9193,4 @@
         <image name="transit_enterexit" width="36" height="36"/>
         <image name="twitter" width="89.475730895996094" height="89.475730895996094"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="eOa-i7-TDU"/>
-    </inferredMetricsTieBreakers>
 </document>

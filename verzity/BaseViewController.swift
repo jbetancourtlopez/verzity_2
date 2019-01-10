@@ -444,7 +444,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         direccion.numCodigoPostal = direccion_json["numCodigoPostal"].stringValue
         direccion.nbPais = direccion_json["nbPais"].stringValue
         direccion.nbEstado = direccion_json["nbEstado"].stringValue
-        direccion.nbMunicipio = direccion_json[].stringValue
+        direccion.nbMunicipio = direccion_json["nbMunicipio"].stringValue
         direccion.nbCiudad = direccion_json["nbCiudad"].stringValue
         direccion.dcLatitud = direccion_json["dcLatitud"].stringValue
         direccion.dcLongitud = direccion_json["dcLongitud"].stringValue

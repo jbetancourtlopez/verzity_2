@@ -2,13 +2,15 @@ import UIKit
 import FloatableTextField
 import SwiftyJSON
 
-class QuestionResultViewController: BaseViewController {
+class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
 
     // Inputs
     @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var title_question: UILabel!
     @IBOutlet weak var view_result: UIView!
     @IBOutlet weak var puntaje: UILabel!
+    @IBOutlet weak var web_view: UIWebView!
+
     
     // Variables
     var webServiceController = WebServiceController()
@@ -23,10 +25,16 @@ class QuestionResultViewController: BaseViewController {
         print(self.question)
         self.usuario = get_user()
         load_data()
-        
-        self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_result.frame.size.width, height: self.view_result.frame.size.height))
-        self.view_result.addSubview(webView)
+        self.web_view.delegate = self
     }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        web_view.frame.size.height = 1
+        web_view.frame.size = webView.sizeThatFits(CGSize.zero)
+        var height = self.web_view.frame.height
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()
@@ -54,15 +62,17 @@ class QuestionResultViewController: BaseViewController {
     
     func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
-        print(json)
+        //print(json)
         if status == 1{
             var data = JSON(json["Data"])
             title_question.text = data["nombreEvaluacion"].stringValue
             puntaje.text = data["puntaje"].stringValue
             let html = data["mensaje"].stringValue
-            webView.loadHTMLString(html, baseURL: nil)
+            let html1 = html.replacingOccurrences(of:"\r", with: "")
+            let html2 = html1.replacingOccurrences(of:"\n", with: "")
+            let html_v2 = "<div style=\"text-align:center !important; margin: 0 auto !important;\">\(html2)</div>"
+            //self.web_view.loadHTMLString(html_v2, baseURL: nil)
         }
-        
         hiddenGifIndicator(view: self.view)
     }
     
@@ -82,7 +92,10 @@ class QuestionResultViewController: BaseViewController {
 
     @IBAction func on_click_close(_ sender: Any) {
         delegate?.closeButtonTapped()
+        
+        _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
         self.dismiss(animated: true, completion: nil)
+        //
     }
 }
 

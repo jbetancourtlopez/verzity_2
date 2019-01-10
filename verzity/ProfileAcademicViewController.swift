@@ -283,6 +283,9 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         email_profile.text = usuario.Persona?.desCorreo
         
         // Direcciones
+        
+        print(usuario.Persona?.Direcciones)
+        
         cp_profile.text = usuario.Persona?.Direcciones?.numCodigoPostal
         city_profile.text = usuario.Persona?.Direcciones?.nbCiudad
         municipio_profile.text = usuario.Persona?.Direcciones?.nbMunicipio
@@ -506,19 +509,22 @@ extension ProfileAcademicViewController: RetryAccountViewControllerDelegate {
             let list_dispositivos = data["Dispositivos"].arrayValue
             let dispositivo = JSON(list_dispositivos[0])
             
-            Defaults[.academic_name] = data["nbCompleto"].stringValue
-            Defaults[.academic_email] = data["desCorreo"].stringValue
-            Defaults[.academic_phone] = data["desTelefono"].stringValue
-            Defaults[.academic_nbPais] = direcciones["nbPais"].stringValue
-            Defaults[.academic_cp] = direcciones["numCodigoPostal"].stringValue
-            Defaults[.academic_city] = direcciones["nbCiudad"].stringValue
-            Defaults[.academic_municipio] = direcciones["nbMunicipio"].stringValue
-            Defaults[.academic_state] = direcciones["nbEstado"].stringValue
-            Defaults[.academic_description] = direcciones["desDireccion"].stringValue
+
             
-            Defaults[.academic_idPersona] = data["idPersona"].intValue
-            Defaults[.academic_idDireccion] = direcciones["idDireccion"].intValue
-            Defaults[.academic_idDireccion] = dispositivo["idDispositivo"].intValue
+            if let usuario_db = realm.objects(Usuario.self).first{
+                try! realm.write {
+                    
+                    usuario_db.Persona?.desTelefono = data["desTelefono"].stringValue
+                    
+                    usuario_db.Persona?.Direcciones?.nbPais = direcciones["nbPais"].stringValue
+                    usuario_db.Persona?.Direcciones?.numCodigoPostal = direcciones["numCodigoPostal"].stringValue
+                    usuario_db.Persona?.Direcciones?.nbCiudad = direcciones["nbCiudad"].stringValue
+                    usuario_db.Persona?.Direcciones?.nbMunicipio = direcciones["nbMunicipio"].stringValue
+                    usuario_db.Persona?.Direcciones?.nbEstado = direcciones["nbEstado"].stringValue
+                    usuario_db.Persona?.Direcciones?.desDireccion = direcciones["desDireccion"].stringValue
+                    
+                }
+            }
             
             print("Back")
             _ = navigationController?.popViewController(animated: true)
