@@ -59,11 +59,19 @@ class ListAsesorViewController: BaseViewController {
         
         view_container.addSubview(view_center)
         
+        // Image png
+//        let image_icon: UIImageView!
+//        image_icon = UIImageView(frame: CGRect(x: (view_center.frame.width/2) - 20, y: view_center.frame.height - 90, width: 40, height: 40))
+//        image_icon.image = UIImage(named:"facebook")!
+//
+        // Image gif
+        let imageData = try? Data(contentsOf: Bundle.main.url(forResource: "emoji_sad", withExtension: "gif")!)
+        let advTimeGif = UIImage.gifImageWithData(imageData!)
         
-        let image_icon: UIImageView!
-        image_icon = UIImageView(frame: CGRect(x: (view_center.frame.width/2) - 20, y: view_center.frame.height - 90, width: 40, height: 40))
-        image_icon.image = UIImage(named:"facebook")!
-        view_center.addSubview(image_icon)
+        let imageLoading = UIImageView(image: advTimeGif)
+        imageLoading.frame =  CGRect(x: (view_center.frame.width/2) - 25, y: view_center.frame.height - 100, width: 50, height: 50)
+        
+        view_center.addSubview(imageLoading)
         
         let ups = UILabel(frame: CGRect(x: 0 , y: view_center.frame.height - 45, width: view_center.frame.width, height: 20))
         ups.text = "Upss"

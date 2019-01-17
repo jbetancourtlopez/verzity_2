@@ -17,9 +17,7 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         setup_ux()
-        load_data()
-        self.usuario = get_user()
-        self.idPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores?.idPaqueteAsesor
+        
         
         
         let refreshControl = UIRefreshControl()
@@ -39,10 +37,17 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.usuario = get_user()
+        self.idPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores?.idPaqueteAsesor
+        
+        print("viewWillAppear: \(self.idPaqueteAsesor)")
+        load_data()
         self.tableView.layoutSubviews()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        load_data()
         tableView.reloadData()
     }
 
@@ -185,7 +190,6 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
             customAlert.delegate = self
             self.present(customAlert, animated: true, completion: nil)
         }else{
-            
             
             if (self.idPaqueteAsesor! > 0){
                 let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in

@@ -3784,13 +3784,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yhe-on-LEJ">
-                                                    <rect key="frame" x="8" y="8" width="304" height="19.5"/>
+                                                    <rect key="frame" x="8" y="8" width="304" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkZ-6U-MZf">
-                                                    <rect key="frame" x="0.0" y="217.5" width="320" height="54"/>
+                                                    <rect key="frame" x="0.0" y="218" width="320" height="54"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="54" id="kUv-eb-Qlz"/>
                                                     </constraints>
@@ -3800,7 +3800,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I77-Sj-69o" customClass="PlayerViewClass" customModule="verzity" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="27.5" width="320" height="190"/>
+                                                    <rect key="frame" x="0.0" y="28" width="320" height="190"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="190" id="6ez-xP-T4F"/>

@@ -627,18 +627,33 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
     
     
     @objc func on_click_facebook(){
-        print("Facebook: \(self.data["urlFaceBook"].stringValue)")
-        open(scheme: self.data["urlFaceBook"].stringValue)
+        
+        if  self.data["urlFaceBook"].stringValue == "" {
+            showMessage(title: "No cuenta con dirección de Facebook", automatic: true)
+        }else{
+            print("Facebook: \(self.data["urlFaceBook"].stringValue)")
+            open(scheme: self.data["urlFaceBook"].stringValue)
+        }
     }
     
     @objc func on_click_twitter(){
-        print("twitter")
-        open(scheme: self.data["urlTwitter"].stringValue)
+        if  self.data["urlTwitter"].stringValue == "" {
+            showMessage(title: "No cuenta con dirección de Twitter", automatic: true)
+        }else{
+            print("twitter")
+            open(scheme: self.data["urlTwitter"].stringValue)
+        }
     }
     
     @objc func on_click_instagram(){
-        print("instagram")
-        open(scheme: self.data["urlInstagram"].stringValue)
+        
+        if  self.data["urlInstagram"].stringValue == "" {
+            showMessage(title: "No cuenta con dirección de Instagram", automatic: true)
+        }else{
+            print("instagram")
+            open(scheme: self.data["urlInstagram"].stringValue)
+        }
+        
     }
     
     @IBAction func on_click_prospectus(_ sender: Any) {

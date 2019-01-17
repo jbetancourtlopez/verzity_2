@@ -68,6 +68,9 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
     func setup_ux(){
         self.title = "Cuestionarios"
         
+        navigationController?.navigationBar.barTintColor = Colors.Color_examen
+        search_bar.barTintColor = Colors.Color_examen
+        
         let postularse = ActionButtonItem(title: "Consultar paquetes", image: #imageLiteral(resourceName: "ic_notification_green"))
         postularse.action = { item in self.self.on_click_asesor() }
         

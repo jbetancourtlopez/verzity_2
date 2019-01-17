@@ -143,7 +143,7 @@ struct Menus{
             "type": "student_profile"
         ],
         [
-            "name":"Ver mis Asesores",
+            "name":"Ver mi Asesor",
             "image":"ic_action_ic_school.png",
             "type": "student_asesor"
         ],

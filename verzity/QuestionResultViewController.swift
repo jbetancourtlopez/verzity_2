@@ -71,7 +71,7 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
             let html1 = html.replacingOccurrences(of:"\r", with: "")
             let html2 = html1.replacingOccurrences(of:"\n", with: "")
             let html_v2 = "<div style=\"text-align:center !important; margin: 0 auto !important;\">\(html2)</div>"
-            //self.web_view.loadHTMLString(html_v2, baseURL: nil)
+            self.web_view.loadHTMLString(html_v2, baseURL: nil)
         }
         hiddenGifIndicator(view: self.view)
     }

@@ -46,8 +46,6 @@ class AlamofireWebServiceController {
     }
     
     func sendRequest_fix(url: String, jsonObject: String, type:Int, completionHandler: @escaping (Any?, Error?) -> () ){
-        
-       
         let json_parameters: Parameters = ["json": jsonObject, "tipo": type]
 
         print("Alamore")
@@ -60,6 +58,35 @@ class AlamofireWebServiceController {
                 }
         }
        
+    }
+    
+    func sendRequest_fix_get_favoritos(url: String, jsonObject: String, extranjero:Bool, completionHandler: @escaping (Any?, Error?) -> () ){
+        let url_ws = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
+        //let json_string = "{ idPersona : 3444, idDireccion : 3442, desCorreo : jbetancourt_isc@outlook.es, Dispositivos : [   {     idDispositivo : 60   } ], Direcciones :{     idDireccion : 3442   }}"
+        let json_parameters: Parameters = ["json":jsonObject,
+                                           "extranjero": true]
+
+        let headers = ["Content-Type": "application/x-www-form-urlencoded"]
+        print("Alamofire: \(url_ws)")
+        debugPrint(json_parameters)
+        Alamofire.request(url_ws,
+                          method:HTTPMethod.post,
+                          parameters: json_parameters,
+                          encoding: URLEncoding(),
+                          headers: headers
+            )
+            .validate()
+            .response{
+                response in
+                print(response)
+            }
+            .responseJSON { response in
+                if let value = response.value {
+                    print(response)
+                    completionHandler(value, response.error)
+                }
+        }
+        
     }
     
     func convertToDictionary(text: String) -> [String: Any]? {

@@ -82,13 +82,36 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
     
     func load_data(name_university: String = ""){
         showGifIndicator(view: self.view)
-        let idPersona = self.usuario.Persona?.idPersona
+        let persona = self.usuario.Persona
         
         if  type == "find_favorit" {
-            let array_parameter = ["idPersona": idPersona, "extranjero": self.extranjero] as [String : Any]
+            
+
+            
+            let array_parameter: [String: Any] = [
+                "idPersona": persona?.idPersona,
+                "desCorreo": persona?.desCorreo,
+                "idDireccion":persona?.idDireccion,
+                "desTelefono":persona?.desTelefono,
+                "Direcciones":[
+                    "idDireccion":persona?.idDireccion
+                ],
+                "Dispositivos": [
+                    [
+                        "cvFirebase": persona?.Dispositivos?.cvFirebase,
+                        "cvDispositivo": persona?.Dispositivos?.cvDispositivo,
+                        "idDispositivo": persona?.Dispositivos?.idDispositivo
+                    ]
+                ]
+                ] as [String : Any]
+            
+            
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
-            webServiceController.GetFavoritos(parameters: parameter_json_string!, doneFunction: GetListGeneral)
+            
+            webServiceController.sendRequest_fix_get_favoritos(parameters: parameter_json_string!, extranjero: true, doneFunction: GetListGeneral)
+
+            
         } else if type == "find_university" {
             
             var array_parameter:[String: Any] = ["extranjero": self.extranjero, "nbPais": usuario.Persona?.Direcciones?.nbPais]

@@ -846,6 +846,7 @@ class WebServiceController: AlamofireWebServiceController{
     func get(parameters: String, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
         let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
+        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ActualizarCuentaUniversitario)"
 
         print(url)
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
@@ -866,12 +867,35 @@ class WebServiceController: AlamofireWebServiceController{
 
     func sendRequest_fix(parameters: String, type: Int, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
-        let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
-        print(url)
+        //let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
+        //print(url)
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ActualizarCuentaUniversitario)"
 
         
 
         sendRequest_fix(url:url, jsonObject: parameters, type:type ){ response, error in
+            if(error == nil){
+                if let value = response {
+                    let json = JSON(value)
+                    if(json["Estatus"].numberValue == 1){
+                        doneFunction(1, json as AnyObject)
+                    }else{
+                        doneFunction(0, (json["Mensaje"].stringValue as AnyObject?)!)
+                    }
+                }
+            }else{
+                doneFunction(-1, (Strings.error_conexion as AnyObject?)!)
+            }
+        }
+    }
+    
+    func sendRequest_fix_get_favoritos(parameters: String, extranjero: Bool, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        let url = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
+        //print(url)
+        
+        
+        
+        sendRequest_fix_get_favoritos(url:url, jsonObject: parameters, extranjero:extranjero ){ response, error in
             if(error == nil){
                 if let value = response {
                     let json = JSON(value)

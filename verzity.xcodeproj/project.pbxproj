@@ -124,6 +124,7 @@
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
 		F7A7B2F521A9162A0055F6F7 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */; };
+		F7DAE45521EE55A70097EC5A /* emoji_sad.gif in Resources */ = {isa = PBXBuildFile; fileRef = F7DAE45421EE55A50097EC5A /* emoji_sad.gif */; };
 		F7FAC91621AD712400C0201B /* QuestionResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */; };
 		F7FAC91821AE401E00C0201B /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91721AE401E00C0201B /* TabBarViewController.swift */; };
 		F7FAC91A21AE407900C0201B /* TabBecaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91921AE407900C0201B /* TabBecaViewController.swift */; };
@@ -256,6 +257,7 @@
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		F7DAE45421EE55A50097EC5A /* emoji_sad.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emoji_sad.gif; sourceTree = "<group>"; };
 		F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionResultViewController.swift; sourceTree = "<group>"; };
 		F7FAC91721AE401E00C0201B /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F7FAC91921AE407900C0201B /* TabBecaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBecaViewController.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
 				928C1C0C21142D4300B1E131 /* logo_verde.png */,
 				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
+				F7DAE45421EE55A50097EC5A /* emoji_sad.gif */,
 				9267015520DAB3D700E638A1 /* ic_telefono.png */,
 				9267015220DA9AFC00E638A1 /* ic_user_gray.png */,
 				922892AC20F2DE5B0021DB32 /* ic_user_profile.png */,
@@ -603,6 +606,7 @@
 			files = (
 				92A64B7420EE78B500E96152 /* ic_telefono_gray.png in Resources */,
 				9267014B20D9994800E638A1 /* ic_action_mail.png in Resources */,
+				F7DAE45521EE55A70097EC5A /* emoji_sad.gif in Resources */,
 				924132EB20E2B6A300CEBC81 /* CustomView.xib in Resources */,
 				9267015720DAB3D900E638A1 /* ic_action_ic_contrasea.png in Resources */,
 				92226FD820F4367700ED30E0 /* ic_action_ciudad_gray.png in Resources */,
