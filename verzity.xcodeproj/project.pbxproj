@@ -120,6 +120,7 @@
 		F7057EFE21C4D06100CB4E38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7057EFD21C4D06000CB4E38 /* MapKit.framework */; };
 		F7057F0021C4D81000CB4E38 /* DetailMapUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */; };
 		F707C4A321B8E3E80025D384 /* ListAsesorEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */; };
+		F70B616621F18D5900C209D4 /* ModalNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70B616521F18D5900C209D4 /* ModalNotificationViewController.swift */; };
 		F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */; };
 		F7A7B2F121A7954C0055F6F7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */; };
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
@@ -253,6 +254,7 @@
 		F7057EFD21C4D06000CB4E38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapUniversityViewController.swift; sourceTree = "<group>"; };
 		F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorEmptyViewController.swift; sourceTree = "<group>"; };
+		F70B616521F18D5900C209D4 /* ModalNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNotificationViewController.swift; sourceTree = "<group>"; };
 		F72F61EE21B09AC60092BFAD /* ic_action_mail_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_mail_gray.png; sourceTree = "<group>"; };
 		F7A7B2F021A7954C0055F6F7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				924132F020E34EE800CEBC81 /* DetailBecasViewController.swift */,
 				92B0F6152100ED490003F58F /* DetailBuyViewController.swift */,
 				92A64B8120F087E400E96152 /* DetailFinanciamientoViewController.swift */,
+				F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */,
 				92B0F60D2100C7E40003F58F /* DetailMapViewController.swift */,
 				922E647B210A6776005B1699 /* DetailPdfViewController.swift */,
 				92180F0121934B1100AEAA5A /* DetailUniversity2ViewController.swift */,
@@ -424,6 +427,7 @@
 				9267014C20D99C9F00E638A1 /* ForgetViewControllerDelegate.swift */,
 				92A78068219637B70024C049 /* FormStudentViewController.swift */,
 				924132F920E4396300CEBC81 /* ListAcademicsViewController.swift */,
+				F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */,
 				92902189219A79A000C9BC57 /* ListAsesorPaqueteViewController.swift */,
 				9290218B219A838300C9BC57 /* ListAsesorSelectedViewController.swift */,
 				92902187219A77C700C9BC57 /* ListAsesorViewController.swift */,
@@ -443,6 +447,7 @@
 				92E698BE20E870CC00F69FCD /* ProfileAcademicViewController.swift */,
 				92226FDD20F465C600ED30E0 /* ProfileUniversityViewController.swift */,
 				92E698C020EAFE8E00F69FCD /* QrCouponViewController.swift */,
+				F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */,
 				F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */,
 				F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */,
 				9267014E20D9E4DA00E638A1 /* RegisterViewController.swift */,
@@ -452,9 +457,7 @@
 				9286641820FA448C00876AC0 /* SplashViewController.swift */,
 				92DD410B20EC753C0035EF4E /* UniversityTableViewController.swift */,
 				9276B69420E7337A004D7FC7 /* VideoViewController.swift */,
-				F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */,
-				F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */,
-				F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */,
+				F70B616521F18D5900C209D4 /* ModalNotificationViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				924132FA20E4396300CEBC81 /* ListAcademicsViewController.swift in Sources */,
 				92B0F6162100ED490003F58F /* DetailBuyViewController.swift in Sources */,
 				924132E520E2881300CEBC81 /* FindMapViewController.swift in Sources */,
+				F70B616621F18D5900C209D4 /* ModalNotificationViewController.swift in Sources */,
 				92DD410C20EC753C0035EF4E /* UniversityTableViewController.swift in Sources */,
 				9267014F20D9E4DA00E638A1 /* RegisterViewController.swift in Sources */,
 				92B0F60E2100C7E40003F58F /* DetailMapViewController.swift in Sources */,

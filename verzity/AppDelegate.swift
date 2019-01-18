@@ -65,31 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         
-        // Realm DataBase
-//        let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
-//            if oldSchemaVersion < 1 {
-//                migration.enumerateObjects(ofType: Usuario.className()) { oldObject, newObject in
-//                    if oldSchemaVersion < 1 {
-//                        // combine name fields into a single field
-//                        //let owner = oldObject!["owner"] as! Persona
-//                        newObject?["Persona"] as! Persona
-//                        
-//                    }
-//                }
-//            }
-//            if oldSchemaVersion < 2 {
-//                migration.enumerateObjects(ofType: Usuario.className()) { oldObject, newObject in
-//                    // give JP a dog
-//                    let owner = oldObject!["owner"] as! Persona
-//                    newObject?["Persona"] = owner as Persona
-//                    
-//                }
-//            }
-//            print("Migration complete.")
-//        }
-//        
-//        Realm.Configuration.defaultConfiguration = Realm.Configuration(schemaVersion: 1, migrationBlock: migrationBlock)
-//        
         // Facebook
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
@@ -151,11 +126,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func showAlert(withUserInfo userInfo: [AnyHashable : Any], type: String = "") {
+        
+        print("showAlert")
         let apsKey = "aps"
         let gcmMessage = "alert"
         let gcmLabel = "google.c.a.c_l"
 
         let dataDict:[String: Any] = ["data": userInfo]
+        
         NotificationCenter.default.post(name: Notification.Name("notificationFCM"), object: ["type": type], userInfo: dataDict)
         
         if let aps = userInfo[apsKey] as? NSDictionary {
@@ -170,7 +148,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
     // End Métodos Firebase
     
 
@@ -239,6 +216,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
+        
         showAlert(withUserInfo: userInfo)
         
         // Change this to your preferred presentation option
@@ -281,7 +259,7 @@ extension AppDelegate : MessagingDelegate {
 
 
 /*
- Documentancion:
+ Documentacion:
  
  https://codelabs.developers.google.com/codelabs/firebase-ios-swift/#16
  */

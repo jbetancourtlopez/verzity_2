@@ -47,9 +47,6 @@ class DetailViewController: BaseViewController {
         } else if type == "notificacion" {
             load_data();
         }
-
-       
-        
     }
     
     func septup_ux(){
@@ -288,11 +285,8 @@ class DetailViewController: BaseViewController {
     }
     
     @IBAction func on_click_phone(_ sender: Any) {
-        
         let busPhone = postulate_phone.text!
-        
         print(busPhone)
-        
         if let url = URL(string: "tel://\(busPhone)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)

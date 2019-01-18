@@ -71,7 +71,18 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     
     func load_notifications_student(){
         let array_parameter = [
-            "idPersona": self.usuario.Persona?.idPersona,
+            "desCorreo": usuario.Persona?.desCorreo,
+            "idPersona": usuario.Persona?.idPersona,
+            "idDireccion": usuario.Persona?.idDireccion,
+            "nbCompleto": usuario.Persona?.nbCompleto,
+            "desTelefono": usuario.Persona?.desTelefono,
+            "Dispositivos": [
+                [
+                    "cvDispositivo": usuario.Persona?.Dispositivos?.cvDispositivo,
+                    "cvFirebase": usuario.Persona?.Dispositivos?.cvFirebase,
+                    "idDispositivo": usuario.Persona?.Dispositivos?.idDispositivo
+                ]
+            ]
             ] as [String : Any]
      
         let parameter_json = JSON(array_parameter)
@@ -147,7 +158,6 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }else{
             cell.title_notification.font = UIFont.systemFont(ofSize: 14.0)
             cell.image_notification.image = UIImage(named: "ic_action_notifications")
-            
         }
         cell.description_notificaction.text = item["desMensaje"].stringValue
         
@@ -163,17 +173,20 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         var item = JSON(items[indexPath.section])
         let idNotificacion = item["idNotificacion"].intValue
         
-       
         print(item)
         
         if self.type == "student_notify"{
+            
+            ActrualizarStatusNotE(idNotificacion:idNotificacion)
+            
             print("Abrir examen")
             print(item["idDiscriminador"].intValue)
-            
+        
             let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
             vc.idEvaluacion = item["idDiscriminador"].intValue
-            vc.idEvaluacionPersona = item["idPersonaRecibe"].intValue
+            vc.idEvaluacionPersona = item["idPersonaEnvia"].intValue
             self.show(vc, sender: nil)
+            
 
         }else{
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
@@ -184,7 +197,19 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
  
     }
 
-
+    func ActrualizarStatusNotE(idNotificacion: Int){
+        let array_parameter = [
+            "idDispositivo": usuario.Persona?.Dispositivos?.idDispositivo,
+            "idNotificacion": idNotificacion,
+            ] as [String : Any]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.get(parameters: parameter_json_string!, method:"ActrualizarStatusNotE", doneFunction: Callback_ActrualizarStatusNotE)
+    }
+    
+    func Callback_ActrualizarStatusNotE(status: Int, response: AnyObject){
+        
+    }
 
 
 }

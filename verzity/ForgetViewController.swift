@@ -1,10 +1,4 @@
-//
-//  ForgetViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 19/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
+
 import UIKit
 import FloatableTextField
 import SwiftyJSON

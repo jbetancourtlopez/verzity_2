@@ -38,8 +38,6 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         load_data()
         setup_back_button()
         set_webview()
-        
-        
         self.web_view.delegate = self
         
         // Eventos
@@ -55,22 +53,13 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         web_view.frame.size = webView.sizeThatFits(CGSize.zero)
         
         var height = self.web_view.frame.height
-        print(height)
-        
         self.view_web_ct_height.constant = height
-//        self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height)) //self.view_web.frame.size.height
-//        self.webView.frame.size.height = 1
-//
-//        self.view_web.frame.size
     }
  
-    
-    
     func set_webview(){
         self.webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view_web.frame.size.width, height: self.view_web.frame.size.height)) //self.view_web.frame.size.height
         self.webView.frame.size.height = 1
         self.webView.frame.size = webView.sizeThatFits(CGSize.zero)
-        //self.view_web.addSubview(webView)
         
         let height = webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight")
         if let height = height {
@@ -80,7 +69,6 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 print("Height: \(heightFloat)")
             }
         }
-        
     }
     
     func setup_back_button(){
@@ -97,7 +85,7 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
            self.idEvaluacion = self.question["idEvaluacion"].intValue
         }
         
-        let array_parameter = ["idEvaluacion": self.idEvaluacion, "idPersona": idPersona] as [String : Any]
+        let array_parameter = ["idEvaluacion": self.idEvaluacion, "idPersona": idPersona, "idEvaluacionPersona": idEvaluacionPersona] as [String : Any]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "getDetalleEvaluacion", doneFunction: callback_load_data)

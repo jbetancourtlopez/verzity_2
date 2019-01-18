@@ -62,6 +62,21 @@ class MainStudentViewController: BaseViewController{
         let vc = storyboard?.instantiateViewController(withIdentifier: "FindUniversityViewControllerID") as! FindUniversityViewController
         vc.type_menu = "find_university_local"
         self.show(vc, sender: nil)
+        
+//        print("Abrir Modal")
+//        let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ModalNotificationViewControllerID") as! ModalNotificationViewController
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.delegate = self
+//
+//        // Datos a pasar al viewController
+////        customAlert.idNotificacion = idNotificacion
+//        customAlert.idDiscriminador = 0
+//        customAlert.desMensaje = "desMensaje"
+//        customAlert.desAsunto = "desAsunto"
+//
+//        self.present(customAlert, animated: true, completion: nil)
+        
     }
     
     @objc func on_click_becas(){
@@ -99,26 +114,47 @@ class MainStudentViewController: BaseViewController{
     
     
     @objc func methodOfReceivedNotification(notification: Notification){
-
+        
+        // Desenpaquetado de la notificación
         var userInfo = notification.userInfo
-        
         let datas = userInfo!["data"] as? NSDictionary
-        
         let msg = datas!["msg"] as! String
-        
-        let dataToConvert = msg.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
-        var encodedString : NSData = (msg as NSString).data(using: String.Encoding.utf8.rawValue)! as NSData
-
+        //let dataToConvert = msg.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
+        let encodedString : NSData = (msg as NSString).data(using: String.Encoding.utf8.rawValue)! as NSData
         let json = JSON(encodedString)
-        
-        var not = JSON(msg)
+        _ = JSON(msg)
      
-        var idNotificacion = json["idNotificacion"].intValue
+        let idNotificacion = json["idNotificacion"].intValue
+        let idPersonaRecibe = json["idPersonaRecibe"].intValue
+        let idDiscriminador = json["idDiscriminador"].intValue
+        let cvDiscriminador = json["cvDiscriminador"].stringValue
+        let desMensaje = json["desMensaje"].stringValue
+        let desAsunto = json["desAsunto"].stringValue
         
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
-        vc.idNotificacion = idNotificacion
-        vc.type = "notificacion"
-        self.show(vc, sender: nil)
+
+        if cvDiscriminador == "Cuestionarios" {
+            print("Abrir Modal")
+            let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ModalNotificationViewControllerID") as! ModalNotificationViewController
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.delegate = self
+            
+            // Datos a pasar al viewController
+            customAlert.idNotificacion = idNotificacion
+            customAlert.idPersonaRecibe = idPersonaRecibe
+            customAlert.idDiscriminador = idDiscriminador
+            customAlert.cvDiscriminador = cvDiscriminador
+            customAlert.desMensaje = desMensaje
+            customAlert.desAsunto = desAsunto
+        
+            self.present(customAlert, animated: true, completion: nil)
+            
+        } else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+            vc.idNotificacion = idNotificacion
+            vc.type = "notificacion"
+            self.show(vc, sender: nil)
+        }
     }
     
     @objc func blackScreenTapAction(sender: UITapGestureRecognizer) {
@@ -250,6 +286,22 @@ extension MainStudentViewController: SidebarViewDelegate {
            sigout()
         }
     }
-    
 }
 
+
+extension MainStudentViewController: ModalNotificationViewControllerDelegate{
+    func on_click_list() {
+        print("on_click_list MainStudentViewController")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
+        self.show(vc, sender: nil)
+    }
+    
+    
+    func on_click_answers(idDiscriminador: Int, idEvaluacionPersona: Int) {
+        print("on_click_answers MainStudentViewController")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
+        vc.idEvaluacion = idDiscriminador
+        vc.idEvaluacionPersona = idEvaluacionPersona
+        self.show(vc, sender: nil)
+    }
+}

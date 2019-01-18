@@ -157,7 +157,6 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
              header.title.text = "DE PAGA"
         }
         
-       
         header.backgroundColor = Colors.green_dark
         return header
     }
@@ -165,16 +164,13 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! QuestionTableViewCell
-        
         let list = JSON(sections[indexPath.section])
 
-        
         let item = JSON(list[indexPath.row])
         let estatus = JSON(item["Estatus"])
         let evaluaciones = JSON(item["Evaluaciones"])
         
         let idEstatus = estatus["idEstatus"].intValue
-        
         
         if (idEstatus == 7){
             cell.buton_start.setTitle("PRESENTAR", for: UIControlState.normal)

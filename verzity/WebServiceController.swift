@@ -890,8 +890,8 @@ class WebServiceController: AlamofireWebServiceController{
     }
     
     func sendRequest_fix_get_favoritos(parameters: String, extranjero: Bool, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
+        
         let url = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
-        //print(url)
         
         
         

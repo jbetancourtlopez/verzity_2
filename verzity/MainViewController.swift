@@ -9,6 +9,7 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     weak var delegate:SidebarViewDelegate?
     var blackScreen: UIView!
     
+    
     @IBOutlet var collectionView: UICollectionView!
     
     var webServiceController = WebServiceController()
@@ -16,6 +17,8 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     var menu_main = Menus.menu_main_university
     var have_paquete = 1
     var usuario = Usuario()
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,26 +35,45 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     }
     
     @objc func methodOfReceivedNotification(notification: Notification){
-        print("Notificacion recibida ")
-
+        
+        // Desenpaquetado de la notificación
         var userInfo = notification.userInfo
         let datas = userInfo!["data"] as? NSDictionary
         let msg = datas!["msg"] as! String
-
-        let dataToConvert = msg.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
-        var encodedString : NSData = (msg as NSString).data(using: String.Encoding.utf8.rawValue)! as NSData
-
+        //let dataToConvert = msg.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
+        let encodedString : NSData = (msg as NSString).data(using: String.Encoding.utf8.rawValue)! as NSData
         let json = JSON(encodedString)
-        var not = JSON(msg)
+        _ = JSON(msg)
+     
+        let idNotificacion = json["idNotificacion"].intValue
+        let idDiscriminador = json["idDiscriminador"].intValue
+        let cvDiscriminador = json["cvDiscriminador"].stringValue
+        let desMensaje = json["desMensaje"].stringValue
+        let desAsunto = json["desAsunto"].stringValue
+
+        if cvDiscriminador == "Cuestionarios" {
+            print("Abrir Modal")
+            let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ModalNotificationViewControllerID") as! ModalNotificationViewController
+            customAlert.providesPresentationContextTransitionStyle = true
+            customAlert.definesPresentationContext = true
+            customAlert.delegate = self
+            
+            // Datos a pasar al viewController
+            customAlert.idNotificacion = idNotificacion
+            customAlert.idDiscriminador = idDiscriminador
+            customAlert.cvDiscriminador = cvDiscriminador
+            customAlert.desMensaje = desMensaje
+            customAlert.desAsunto = desAsunto
         
-        var idNotificacion = json["idNotificacion"].intValue
-      
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
-        vc.idNotificacion = idNotificacion
-        vc.type = "notificacion"
-        self.show(vc, sender: nil)
+            self.present(customAlert, animated: true, completion: nil)
+            
+        } else{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
+            vc.idNotificacion = idNotificacion
+            vc.type = "notificacion"
+            self.show(vc, sender: nil)
+        }
     }
-    
     func validate_package(){
         
         var idPaquete = self.usuario.Persona?.Universidades?.VestasPaquetes?.idPaquete
@@ -234,4 +256,14 @@ extension MainViewController: SidebarViewDelegate {
         }
     }
     
+}
+
+extension MainViewController: ModalNotificationViewControllerDelegate{
+    func on_click_list() {
+        print("on_click_list MainStudentViewController")
+    }
+    
+    func on_click_answers(idDiscriminador: Int, idEvaluacionPersona: Int) {
+        print("on_click_answers MainStudentViewController")
+    }
 }

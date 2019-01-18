@@ -86,8 +86,6 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         
         if  type == "find_favorit" {
             
-
-            
             let array_parameter: [String: Any] = [
                 "idPersona": persona?.idPersona,
                 "desCorreo": persona?.desCorreo,
@@ -109,7 +107,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             
-            webServiceController.sendRequest_fix_get_favoritos(parameters: parameter_json_string!, extranjero: true, doneFunction: GetListGeneral)
+            webServiceController.sendRequest_fix_get_favoritos(parameters: parameter_json_string!, extranjero: self.extranjero, doneFunction: GetListGeneral)
 
             
         } else if type == "find_university" {
