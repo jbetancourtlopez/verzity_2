@@ -61,7 +61,7 @@ class DetailUniversityViewController: BaseViewController {
     var selected_postulate: String = ""
     
     var actionButton : ActionButton!
-
+    var usuario = Usuario()
     
     @IBOutlet var page_control: UIPageControl!
     @IBOutlet var image_slider: UIImageView!
@@ -69,6 +69,7 @@ class DetailUniversityViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         idUniversidad = idUniversidad as Int
         setup_ux()
         load_data()
@@ -85,6 +86,7 @@ class DetailUniversityViewController: BaseViewController {
             image_slider.isMultipleTouchEnabled = true
         }
     }
+    
     
     func load_data(){
         // Cargamos los datos
@@ -187,10 +189,6 @@ class DetailUniversityViewController: BaseViewController {
     
     @IBAction func on_click_postulate(_ sender: Any) {
         print("Postulado")
-        
-       
-        
-        
         let alert = UIAlertController(title: "Seleccione programa académico de interés.", message: nil, preferredStyle: .actionSheet)
 
         if (list_licenciaturas.count > 0){
@@ -369,7 +367,6 @@ class DetailUniversityViewController: BaseViewController {
         
         if  paquete_array.count > 0 {
             var paquete_json = JSON(paquete_array[0])
-            
             var paquete = JSON(paquete_json["Paquete"])
             debugPrint(paquete)
             
@@ -475,9 +472,14 @@ class DetailUniversityViewController: BaseViewController {
         }
         
         // Set Favorito
+        
+        print("Print Persona")
+        print(self.usuario)
+        
+        var idPersona = self.usuario.Persona?.idPersona
         let array_parameter = [
             "idUniversidad": idUniversidad!,
-            "idPersona": Defaults[.academic_idPersona]!
+            "idPersona":idPersona
         ]  as [String : Any]
         
         debugPrint(array_parameter)

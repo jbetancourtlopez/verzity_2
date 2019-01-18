@@ -1,11 +1,3 @@
-//
-//  WebServiceController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 21/06/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import SwiftyJSON
@@ -724,7 +716,11 @@ class WebServiceController: AlamofireWebServiceController{
     
     // Upload File
     func upload_file(imageData: Data?, parameters: [String : Any], doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        let strURL = "http://verzity.dwmedios.com/SITE/UniversidadView/UploadFoto"
+        //let strURL = "http://verzity.dwmedios.com/SITE/UniversidadView/UploadFoto"
+        let strURL = "\(Defaults[.desRutaMultimedia] ?? Config.desRutaMultimedia)UniversidadView/UploadFoto"
+        
+        
+        print("URL_FOTO: \(strURL)")
         
         let url = URL(string: strURL)
         var urlRequest = URLRequest(url: url!)
@@ -844,11 +840,8 @@ class WebServiceController: AlamofireWebServiceController{
     }
 
     func get(parameters: String, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
-        let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
-        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ActualizarCuentaUniversitario)"
-
-        print(url)
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
+        
         sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -866,13 +859,9 @@ class WebServiceController: AlamofireWebServiceController{
     }
 
     func sendRequest_fix(parameters: String, type: Int, method: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
-        //let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(method)"
-        //let url =  "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/\(method)"
-        //print(url)
+
         let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.ActualizarCuentaUniversitario)"
-
         
-
         sendRequest_fix(url:url, jsonObject: parameters, type:type ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -891,10 +880,8 @@ class WebServiceController: AlamofireWebServiceController{
     
     func sendRequest_fix_get_favoritos(parameters: String, extranjero: Bool, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         
-        let url = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
-        
-        
-        
+        let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)GetFavoritos"
+
         sendRequest_fix_get_favoritos(url:url, jsonObject: parameters, extranjero:extranjero ){ response, error in
             if(error == nil){
                 if let value = response {
@@ -910,12 +897,5 @@ class WebServiceController: AlamofireWebServiceController{
             }
         }
     }
-
-    // 3.11
-    //GetNivelesAcademicos
-    //GetProgramasAcademicos
-
-    
-
 }
 

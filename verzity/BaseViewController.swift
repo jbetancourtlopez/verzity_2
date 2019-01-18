@@ -616,6 +616,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         Defaults[.nbUsuarioFTP] = data["nbUsuarioFTP"].stringValue
         Defaults[.pdwContraseniaFTP] = data["pdwContraseniaFTP"].stringValue
         Defaults[.desCarpetaMultimediaFTP] = data["desCarpetaMultimediaFTP"].stringValue
+        Defaults[.desRutaTerminos] = data["desRutaTerminos"].stringValue
     }
     
 }
@@ -636,6 +637,9 @@ extension DefaultsKeys {
     static let nbUsuarioFTP = DefaultsKey<String?>("nbUsuarioFTP")
     static let pdwContraseniaFTP = DefaultsKey<String?>("pdwContraseniaFTP")
     static let desCarpetaMultimediaFTP = DefaultsKey<String?>("desCarpetaMultimediaFTP")
+    static let desRutaTerminos = DefaultsKey<String?>("desRutaTerminos")
+
+    
     
     // Dispositivo
     static let cvDispositivo = DefaultsKey<String?>("cvDispositivo")

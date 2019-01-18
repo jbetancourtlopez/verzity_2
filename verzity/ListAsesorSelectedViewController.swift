@@ -24,13 +24,14 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     // Init Paypal
     var payPalConfig = PayPalConfiguration()
     
-    var environment:String = PayPalEnvironmentNoNetwork {
+    // Sandbox: PayPalEnvironmentNoNetwork or PayPalEnvironmentSandbox
+    // Production: PayPalEnvironmentProduction
+    var environment:String = PayPalEnvironmentProduction {
         willSet(newEnvironment) {
             if (newEnvironment != environment) {
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)
             }
         }
-        
     }
     
     var acceptCreditCards: Bool = true {
@@ -196,10 +197,14 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     }
     
     func setup_paypal(){
+        
+        let desRutaTerminos = Defaults[.desRutaTerminos]
+
+        
         payPalConfig.acceptCreditCards = acceptCreditCards;
         payPalConfig.merchantName = "Verzity"
-        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.google.com")! as URL
-        payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.google.com")! as URL
+        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: desRutaTerminos!)! as URL
+        payPalConfig.merchantUserAgreementURL = NSURL(string: desRutaTerminos!)! as URL
         payPalConfig.languageOrLocale = NSLocale.preferredLanguages[0]
         payPalConfig.payPalShippingAddressOption = .payPal;
         PayPalMobile.preconnect(withEnvironment: environment)

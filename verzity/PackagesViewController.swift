@@ -2,6 +2,9 @@ import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
 
+import SystemConfiguration
+import SwiftyUserDefaults
+
 class PackagesViewController:BaseViewController, UITableViewDelegate, UITableViewDataSource, PayPalPaymentDelegate {
     
     @IBOutlet var tableView: UITableView!
@@ -17,7 +20,7 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     // Init Paypal
     var payPalConfig = PayPalConfiguration()
     
-    var environment:String = PayPalEnvironmentNoNetwork {
+    var environment:String = PayPalEnvironmentProduction {
         willSet(newEnvironment) {
             if (newEnvironment != environment) {
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)
@@ -333,10 +336,13 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     }
     
     func setup_paypal(){
+        
+        let desRutaTerminos = Defaults[.desRutaTerminos]
+        
         payPalConfig.acceptCreditCards = acceptCreditCards;
         payPalConfig.merchantName = "Verzity"
-        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: "https://www.google.com")! as URL
-        payPalConfig.merchantUserAgreementURL = NSURL(string: "https://www.google.com")! as URL
+        payPalConfig.merchantPrivacyPolicyURL = NSURL(string: desRutaTerminos!)! as URL
+        payPalConfig.merchantUserAgreementURL = NSURL(string: desRutaTerminos!)! as URL
         payPalConfig.languageOrLocale = NSLocale.preferredLanguages[0]
         payPalConfig.payPalShippingAddressOption = .payPal;
         PayPalMobile.preconnect(withEnvironment: environment)

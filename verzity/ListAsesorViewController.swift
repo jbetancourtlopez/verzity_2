@@ -3,6 +3,9 @@ import UIKit
 import SwiftyJSON
 import Kingfisher
 
+import SystemConfiguration
+import SwiftyUserDefaults
+
 class ListAsesorViewController: BaseViewController {
     
     // Inputs
@@ -31,7 +34,6 @@ class ListAsesorViewController: BaseViewController {
         if idVentaPaqueteAsesor! == 0{
             set_view()
         }
-        setup_ux()
         load_data()
         
         
@@ -48,7 +50,6 @@ class ListAsesorViewController: BaseViewController {
         view_green.backgroundColor = hexStringToUIColor(hex: "#3E8426")
         view_container.addSubview(view_green)
         
-        
         var view_center : UIView!
         view_center = UIView(frame: CGRect(x: 10, y: (self.view.frame.size.height/2) - 50, width: self.view.frame.size.width - 20, height: 100))
         view_center.backgroundColor = hexStringToUIColor(hex: "#FFFFFF") //UIColor.white.withAlphaComponent(1.0)
@@ -59,11 +60,7 @@ class ListAsesorViewController: BaseViewController {
         
         view_container.addSubview(view_center)
         
-        // Image png
-//        let image_icon: UIImageView!
-//        image_icon = UIImageView(frame: CGRect(x: (view_center.frame.width/2) - 20, y: view_center.frame.height - 90, width: 40, height: 40))
-//        image_icon.image = UIImage(named:"facebook")!
-//
+
         // Image gif
         let imageData = try? Data(contentsOf: Bundle.main.url(forResource: "emoji_sad", withExtension: "gif")!)
         let advTimeGif = UIImage.gifImageWithData(imageData!)
@@ -74,7 +71,7 @@ class ListAsesorViewController: BaseViewController {
         view_center.addSubview(imageLoading)
         
         let ups = UILabel(frame: CGRect(x: 0 , y: view_center.frame.height - 45, width: view_center.frame.width, height: 20))
-        ups.text = "Upss"
+        ups.text = "Upss."
         ups.textAlignment = .center
         ups.font = UIFont.boldSystemFont(ofSize: 17.0)
         ups.textColor = hexStringToUIColor(hex: "#388E3C")
@@ -92,13 +89,8 @@ class ListAsesorViewController: BaseViewController {
     }
     
     func load_data(){
-        
-        
-        print(usuario)
-        // Cargamos los datos
-       showGifIndicator(view: self.view)
+        showGifIndicator(view: self.view)
        
-        
          let array_parameter = [
             "desCorreo": usuario.Persona?.desCorreo,
             "Direcciones": [
@@ -134,6 +126,7 @@ class ListAsesorViewController: BaseViewController {
         var json = JSON(response)
         var data = JSON(json["Data"][0])
         hiddenGifIndicator(view: self.view)
+        
         if status == 1{
             skype.text = data["desSkype"].stringValue
             phone.text = data["desTelefono"].stringValue
@@ -144,29 +137,33 @@ class ListAsesorViewController: BaseViewController {
             set_photo_profile(url: data["pathFoto"].stringValue, image: photo)
             photo.layer.masksToBounds = true
             photo.layer.cornerRadius = 60
+            setup_ux()
+          
+        }else{
+        
+            set_view()
+            setup_ux()
         }
     }
     
     @IBAction func on_click_phone(_ sender: Any) {
         print("Phone")
-        openUrl(scheme: "tel://9809088798")
+        openUrl(scheme: "tel://\(phone.text)")
     }
     
     
     @IBAction func on_click_email(_ sender: Any) {
         print("Email")
-        open(scheme: "mailto:name@email.com")
+        open(scheme: "mailto:\(email.text)")
     }
     
     @IBAction func on_click_skype(_ sender: Any) {
         print("Skype")
-        open(scheme: "skype:asesor2@live.com")
+        open(scheme: "skype:\(skype.text)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
     }
     
     func setup_ux(){

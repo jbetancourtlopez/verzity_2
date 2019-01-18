@@ -117,6 +117,8 @@
 		92F9D19B21124F3900FD60EF /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19A21124F3900FD60EF /* MainTableViewController.swift */; };
 		92F9D19D2112DF5D00FD60EF /* FTPUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F9D19C2112DF5D00FD60EF /* FTPUpload.swift */; };
 		F18551EFF715F49E6402EE30 /* Pods_verzity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */; };
+		F70017AD21F248A5004F89C7 /* logo_verde_new.png in Resources */ = {isa = PBXBuildFile; fileRef = F70017AB21F248A4004F89C7 /* logo_verde_new.png */; };
+		F70017AE21F248A5004F89C7 /* logo_white_new.png in Resources */ = {isa = PBXBuildFile; fileRef = F70017AC21F248A5004F89C7 /* logo_white_new.png */; };
 		F7057EFE21C4D06100CB4E38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7057EFD21C4D06000CB4E38 /* MapKit.framework */; };
 		F7057F0021C4D81000CB4E38 /* DetailMapUniversityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */; };
 		F707C4A321B8E3E80025D384 /* ListAsesorEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */; };
@@ -251,6 +253,8 @@
 		94AAF412C3EE1E73DED73E1D /* Pods_verzity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_verzity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7F415ADE700C2A6FBF3D59 /* Pods-verzity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.debug.xcconfig"; sourceTree = "<group>"; };
 		F2C95AD50D32B5F047111F5E /* Pods-verzity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-verzity.release.xcconfig"; path = "Pods/Target Support Files/Pods-verzity/Pods-verzity.release.xcconfig"; sourceTree = "<group>"; };
+		F70017AB21F248A4004F89C7 /* logo_verde_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_verde_new.png; sourceTree = "<group>"; };
+		F70017AC21F248A5004F89C7 /* logo_white_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_white_new.png; sourceTree = "<group>"; };
 		F7057EFD21C4D06000CB4E38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F7057EFF21C4D81000CB4E38 /* DetailMapUniversityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapUniversityViewController.swift; sourceTree = "<group>"; };
 		F707C4A221B8E3E80025D384 /* ListAsesorEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAsesorEmptyViewController.swift; sourceTree = "<group>"; };
@@ -504,6 +508,8 @@
 				92682D2F20DB8EE600E6C4A8 /* ic_dots.png */,
 				92682D2B20DB8E1800E6C4A8 /* ic_menu.png */,
 				92226FD920F4371300ED30E0 /* ic_school_gray.png */,
+				F70017AB21F248A4004F89C7 /* logo_verde_new.png */,
+				F70017AC21F248A5004F89C7 /* logo_white_new.png */,
 				928C1C0C21142D4300B1E131 /* logo_verde.png */,
 				92A64B7320EE78AD00E96152 /* ic_telefono_gray.png */,
 				F7DAE45421EE55A50097EC5A /* emoji_sad.gif */,
@@ -618,6 +624,7 @@
 				92DD410A20EC218F0035EF4E /* PayPal.jpg in Resources */,
 				9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */,
 				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
+				F70017AD21F248A5004F89C7 /* logo_verde_new.png in Resources */,
 				92226FE920F5E03100ED30E0 /* ic_action_descripcion_gray.png in Resources */,
 				F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */,
 				9267015820DAB3D900E638A1 /* ic_telefono.png in Resources */,
@@ -637,6 +644,7 @@
 				92682D3020DB8EE600E6C4A8 /* ic_dots.png in Resources */,
 				92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */,
 				9267015320DA9AFC00E638A1 /* ic_user_gray.png in Resources */,
+				F70017AE21F248A5004F89C7 /* logo_white_new.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

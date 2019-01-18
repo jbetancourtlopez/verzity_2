@@ -104,13 +104,12 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         setup_ux()
         load_data()
         set_events()
         setup_slider()
         set_favorito()
-        
-        self.usuario = get_user()
         
         mapView.delegate = self
         mapView.mapType = MKMapType.standard
@@ -262,14 +261,24 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         print("have_direccion: \(direccion_isEmpty)")
         
         // Mapa
-        let myAnnotation: MKPointAnnotation = MKPointAnnotation()
-        myAnnotation.coordinate = CLLocationCoordinate2DMake(direcciones["dcLatitud"].doubleValue, direcciones["dcLongitud"].doubleValue)
         
         self.lat = direcciones["dcLatitud"].doubleValue
         self.lon = direcciones["dcLongitud"].doubleValue
         
-        mapView.addAnnotation(myAnnotation)
+        if direcciones["dcLatitud"].stringValue == "" ||  direcciones["dcLongitud"].stringValue == ""{
+            view_location_map.isHidden = true
+            view_location_map_ct_height.constant = 0
+        }else{
+            view_location_empty .isHidden = true
+            view_location_empty_ct_height.constant = 0
+            
+            let myAnnotation: MKPointAnnotation = MKPointAnnotation()
+            myAnnotation.coordinate = CLLocationCoordinate2DMake(direcciones["dcLatitud"].doubleValue, direcciones["dcLongitud"].doubleValue)
+            
+            mapView.addAnnotation(myAnnotation)
+        }
         
+        // Dirección
         label_address.text = generate_address(address: JSON(data["Direcciones"]))
         if  (label_address.text?.isEmpty)!{
             label_address.text = "Sin información para mostrar"

@@ -4,6 +4,11 @@ import CoreLocation
 import FBSDKLoginKit
 import UserNotifications
 
+import SystemConfiguration
+import SwiftyUserDefaults
+
+
+
 import Firebase
 import FirebaseMessaging
 
@@ -42,9 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print(error)
         }
+        let cvpaypal = Defaults[.cvPaypal]
         
+        print("cvpaypal: \(cvpaypal)")
+        
+        // Sanbox: AQAP2y1cMhZoAx7nPTZ5ge9Q9qRcuCOa-ruTbUvL8xcqtw0Y7hZ_pDs7HqK2cxmoT4mCYG6jiGc7WOmE
         // Paypal
-        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentProduction: "YOUR_CLIENT_ID_FOR_PRODUCTION", PayPalEnvironmentSandbox: "AQAP2y1cMhZoAx7nPTZ5ge9Q9qRcuCOa-ruTbUvL8xcqtw0Y7hZ_pDs7HqK2cxmoT4mCYG6jiGc7WOmE"])
+        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentProduction: cvpaypal, PayPalEnvironmentSandbox: ""])
         
         //Firebase
         FirebaseApp.configure()

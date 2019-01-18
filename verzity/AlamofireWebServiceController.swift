@@ -61,17 +61,17 @@ class AlamofireWebServiceController {
     }
     
     func sendRequest_fix_get_favoritos(url: String, jsonObject: String, extranjero:Bool, completionHandler: @escaping (Any?, Error?) -> () ){
-        let url_ws = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
+        //let url_ws = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
         
-        let isExtranjero = (extranjero ? "true" : "false")
+        let isExtranjero = (extranjero ? "false" : "true")
 
         let json_parameters: Parameters = ["json":jsonObject,
                                            "extranjero": isExtranjero]
 
         let headers = ["Content-Type": "application/x-www-form-urlencoded"]
-        print("Alamofire: \(url_ws)")
+        print("Alamofire: \(url)")
         debugPrint(json_parameters)
-        Alamofire.request(url_ws,
+        Alamofire.request(url,
                           method:HTTPMethod.post,
                           parameters: json_parameters,
                           encoding: URLEncoding(),
