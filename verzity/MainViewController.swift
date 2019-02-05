@@ -18,8 +18,6 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     var have_paquete = 1
     var usuario = Usuario()
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usuario = get_user()
@@ -214,14 +212,6 @@ extension MainViewController: SidebarViewDelegate {
             case "notifications":
                 print("notifications")
                 let vc = storyboard?.instantiateViewController(withIdentifier: "NotificationTabBarID") as! UITabBarController
-                self.show(vc, sender: nil)
-                
-        
-                break
-            case "profile_academic":
-                print("profile_academic")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-                vc.type = "profile_academic"
                 self.show(vc, sender: nil)
                 break
             case "sigout":

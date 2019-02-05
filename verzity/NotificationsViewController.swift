@@ -150,7 +150,9 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         hourRegistro = hourRegistro_array[0]
         
         let date = get_date_complete(date_complete_string: item["feRegistro"].stringValue)
-        cell.title_notification.text = item["desAsunto"].stringValue + " " + date
+        let day = get_day_of_week(today: feRegistro_array[0])
+
+        cell.title_notification.text = item["desAsunto"].stringValue + " - " + day + " " + date
         
         if status["desEstatus"].stringValue == "PENDIENTE"{
             cell.title_notification.font = UIFont.boldSystemFont(ofSize: 14.0)

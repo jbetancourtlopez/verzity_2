@@ -60,6 +60,8 @@ class SplashViewController: BaseViewController {
         //return
         if usuario.idUsuario > 0 {
             let idTipoPersona = usuario.Persona?.idTipoPersona
+            
+            
             if idTipoPersona == 1 || idTipoPersona == 0{
                 _ = self.navigationController?.popToRootViewController(animated: false)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

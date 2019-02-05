@@ -1,16 +1,7 @@
-//
-//  QrCouponViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 02/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
-
 
 class QrCouponViewController: BaseViewController {
 
@@ -19,23 +10,22 @@ class QrCouponViewController: BaseViewController {
     @IBOutlet var code_coupon: UILabel!
     @IBOutlet var image_qr: UIImageView!
     @IBOutlet var image_caratule: UIImageView!
-    
     @IBOutlet var view_code_qr: UIView!
     @IBOutlet var button_canjear: UIButton!
     @IBOutlet var coupon_description: UITextView!
     
     @IBOutlet var top_cont_coupon_validez: NSLayoutConstraint!
-    
     @IBOutlet var right_cont_view_head: NSLayoutConstraint!
     
     var idCupon: Int = 0
     var webServiceController = WebServiceController()
     var data: AnyObject!
-    
     var qrcodeImage: CIImage!
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         idCupon = idCupon as Int
        
         load_data(idCupon:idCupon)
@@ -44,7 +34,6 @@ class QrCouponViewController: BaseViewController {
     
     func load_data(idCupon:Int){
         showGifIndicator(view: self.view)
-
         let array_parameter = ["idCupon": idCupon]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
@@ -102,10 +91,10 @@ class QrCouponViewController: BaseViewController {
     
     @IBAction func on_click_canjear_cupon(_ sender: Any) {
         showGifIndicator(view: self.view)
-        
+        var idPersona = self.usuario.Persona?.idPersona
         let array_parameter = [
             "idCupon": idCupon,
-            "idPersona": Defaults[.academic_idPersona]
+            "idPersona": idPersona
             ] as [String : Any]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()

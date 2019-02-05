@@ -261,7 +261,7 @@ class WebServiceController: AlamofireWebServiceController{
     // BusquedaUniversidades
     func BusquedaUniversidades(parameters: String, doneFunction:@escaping (Int,_ response: AnyObject) -> ()){
         let url =  "\(Defaults[.desRutaWebServices] ?? Config.desRutaWebServices)\(Singleton.BusquedaUniversidades)"
-        sendRequest(url:url, requestMethod: "GET", jsonObject: parameters ){ response, error in
+        sendRequest(url:url, requestMethod: "POST", jsonObject: parameters ){ response, error in
             if(error == nil){
                 if let value = response {
                     let json = JSON(value)

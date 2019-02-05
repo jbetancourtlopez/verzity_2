@@ -30,24 +30,24 @@ struct Menus{
     static let list_prospectus = [
         [
             "name":"Videos",
-            "image":"ic_comprar_paquete",
+            "image":"ic_action_video",
             "type": "videos",
-             "color": "#ff7b25"
+             "color": "#ff0106"
         ],
         [
             "name":"Folletos digitales",
-            "image":"ic_mortarboard",
+            "image":"ic_action_folleto2",
             "type": "digital",
-            "color": "#1d47f1"
+            "color": "#388E3C"
         ]
     ]
     
     static let list_prospectus_folletos = [
         [
             "name":"Folletos digitales",
-            "image":"ic_mortarboard",
+            "image":"ic_action_folleto2",
             "type": "digital",
-            "color": "#1d47f1"
+            "color": "#388E3C"
         ]
     ]
     
@@ -139,12 +139,12 @@ struct Menus{
         ],
         [
             "name":"Ver Perfil universitario",
-            "image":"ic_action_ic_school.png",
+            "image":"user.png",
             "type": "student_profile"
         ],
         [
             "name":"Ver mi Asesor",
-            "image":"ic_action_ic_school.png",
+            "image":"ic_action_people_outline.png",
             "type": "student_asesor"
         ],
         [
@@ -174,7 +174,7 @@ struct Menus{
         ],
         [
             "name":"Ver Perfil representante",
-            "image":"ic_telefono.png",
+            "image":"user.png",
             "type": "profile_representative"
         ],
         [

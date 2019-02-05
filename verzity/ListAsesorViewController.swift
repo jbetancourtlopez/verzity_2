@@ -35,9 +35,12 @@ class ListAsesorViewController: BaseViewController {
             set_view()
         }
         load_data()
-        
-        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        load_data()
+    }
+
     
     func set_view(){
         
@@ -85,7 +88,6 @@ class ListAsesorViewController: BaseViewController {
         view_center.addSubview(text_ley)
         
         self.view.addSubview(view_container)
-        
     }
     
     func load_data(){
@@ -183,7 +185,7 @@ class ListAsesorViewController: BaseViewController {
         icon_phone.tintColor = hexStringToUIColor(hex: "#000000")
         
         icon_email.image = icon_email.image?.withRenderingMode(.alwaysTemplate)
-        icon_email.tintColor = hexStringToUIColor(hex: "#1d47f1")
+        icon_email.tintColor = hexStringToUIColor(hex: "#ff7b25")
         
         icon_skype.image = icon_skype.image?.withRenderingMode(.alwaysTemplate)
         icon_skype.tintColor = hexStringToUIColor(hex: "#12A5F4")

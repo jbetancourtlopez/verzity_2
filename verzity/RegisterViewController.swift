@@ -28,6 +28,7 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     @IBOutlet var phone_representative: FloatableTextField!
     
     @IBOutlet var accept_error: UILabel!
+    @IBOutlet weak var tyc: UILabel!
     
     // Contrains
     @IBOutlet var topContrainstLabelTerminos: NSLayoutConstraint!
@@ -49,13 +50,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
     let ftp_password = Defaults[.pdwContraseniaFTP]!
     let path_folder = Defaults[.desCarpetaMultimediaFTP]!
     
-    
-    
-    /*
-     "ftp.smarterasp.net"
-     "ftpVerzity"
-     "ftp.Verzity"
-    */
     
     let serverd = "ftp://ftp.smarterasp.net:21" //"http://208.118.63.76:21" ////"jossuebetancourt.com/" //"reservanty.com"
     let ftp_usernamed = "ftpVerzity" //"develop@jossuebetancourt.com" //"reservanty"
@@ -79,7 +73,18 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
         
         // Ftp
         ftp = FTPUpload(baseUrl: serverd, userName: ftp_usernamed, password: ftp_passwordd, directoryPath: "/")
+
+        //Evento TyC
+        let event_on_click_tyc:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_tyc))
+        tyc.isUserInteractionEnabled = true
+        tyc.addGestureRecognizer(event_on_click_tyc)
         
+    }
+
+    @objc func on_click_tyc(){
+        var link_tyc = Defaults[.desRutaTerminos]!
+        print("Abro TYC \(link_tyc)")
+        openUrl(scheme: link_tyc)
     }
     
     func setdata_facebook(){
@@ -258,7 +263,6 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.CrearCuentaAcceso(parameters: parameter_json_string!, doneFunction: CrearCuentaAcceso)
- 
         }
     }
     
@@ -272,64 +276,10 @@ class RegisterViewController: BaseViewController, FloatableTextFieldDelegate, UI
             var json = JSON(response)
             let data = JSON(json["Data"])
             
-            let personas = JSON(data["Personas"])
-            let universidades_list = personas["Universidades"].array
-            let universidades = JSON(universidades_list![0])
-            let paquete_list = JSON(universidades["VentasPaquetes"])
-            let paquete = JSON(paquete_list[0])
-            let dispositivos_array = personas["Dispositivos"].arrayValue
             
+            save_profile(data:data)
+            performSegue(withIdentifier: "showSplash_Register", sender: self)
             
-            setSettings(key: "profile_menu", value: "profile_university")
-            Defaults[.type_user] = 2
-            
-            //Dispostivo
-            
-            Defaults[.idDispositivo] = 0
-            if dispositivos_array.count > 0{
-                var dispositivo = JSON(dispositivos_array[0])
-                Defaults[.idDispositivo] = dispositivo["idDispositivo"].intValue
-            }
-            
-            //Paquete
-            Defaults[.package_idUniveridad] = paquete["idUniversidad"].intValue
-            Defaults[.package_idPaquete] = paquete["idPaquete"].intValue
-            
-            //Universidad
-            Defaults[.university_idUniveridad] = universidades["idUniversidad"].intValue
-            Defaults[.university_pathLogo] = universidades["pathLogo"].stringValue
-            Defaults[.university_nbUniversidad] = universidades["nbUniversidad"].stringValue
-            Defaults[.university_nbReprecentante] = universidades["nbReprecentante"].stringValue
-            Defaults[.university_desUniversidad] = universidades["desUniversidad"].stringValue
-            Defaults[.university_desSitioWeb] = universidades["desSitioWeb"].stringValue
-            Defaults[.university_desTelefono] = universidades["desTelefono"].stringValue
-            Defaults[.university_desCorreo] = universidades["desCorreo"].stringValue
-            Defaults[.university_idPersona] = universidades["idPersona"].intValue
-            
-        
-            // Representante
-            Defaults[.academic_idPersona] = personas["idPersona"].intValue
-            
-            Defaults[.academic_name] = personas["nbCompleto"].stringValue
-            Defaults[.academic_email] = personas["desCorreo"].stringValue
-            Defaults[.academic_phone] =  personas["desTelefono"].stringValue
-            Defaults[.academic_pathFoto] = personas["pathFoto"].stringValue
-            
-       
-            
-            //performSegue(withIdentifier: "showSplash", sender: self)
-            
-            
-            let vc = storyboard?.instantiateViewController(withIdentifier: "SplashViewControllerID") as! SplashViewController
-            self.show(vc, sender: nil)
- 
-            
-            /*
-            let alertController = UIAlertController(title: "Atención", message: "Se enviará la información para que sea verificada por el administrador, por favor espere el correo de confirmación del registro de la universidad.", preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
-            alertController.addAction(defaultAction)
-             present(alertController, animated: true, completion: nil)
-             */
             
             
         }else {

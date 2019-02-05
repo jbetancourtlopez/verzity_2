@@ -88,6 +88,7 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
     var idUniversidad: Int!
     var fgAplicaProspectusVideos = false
     var fgAplicaProspectusVideo = false
+    var urlFolletosDigitales = ""
     var data: JSON = []
     
     var swipeGesture  = UISwipeGestureRecognizer()
@@ -141,7 +142,7 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        print("Updating location")
+        //print("Updating location")
         
         let location = CLLocationCoordinate2D(latitude:self.lat, longitude:self.lon)
         let center = location
@@ -249,7 +250,10 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         print(data)
         self.data = data
         var direcciones = JSON(data["Direcciones"])
-        self.title = ""
+        
+        self.title = data["nbUniversidad"].stringValue
+        
+        self.urlFolletosDigitales = data["urlFolletosDigitales"].stringValue
         
         label_name1.text = data["nbUniversidad"].stringValue
         label_logo2.text = data["nbUniversidad"].stringValue
@@ -324,6 +328,9 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         
         print(paquete)
         
+        // Video
+        self.fgAplicaProspectusVideo = paquete["fgAplicaProspectusVideo"].boolValue
+        self.fgAplicaProspectusVideos = paquete["fgAplicaProspectusVideos"].boolValue
       
         let fgAplicaUbicacion = paquete["fgAplicaUbicacion"].boolValue
         if !fgAplicaUbicacion{
@@ -336,7 +343,6 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         }
         
        
-        
         let fgAplicaLogo = paquete["fgAplicaLogo"].boolValue
         if !fgAplicaLogo{
             print("No Aplica Logo")
@@ -570,27 +576,19 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         print("Postulado Metodo: \(name)")
         
         let idPersona = self.usuario.Persona?.idPersona
-        let have_name = Defaults[.academic_name] != ""
-        let have_email = Defaults[.academic_email] != ""
+
+        showGifIndicator(view: self.view)
+        let array_parameter = [
+            "idPostuladoUniversidad": 0,
+            "idUniversidad": idUniversidad,
+            "idPersona": idPersona,
+            "idLicenciatura": idLicenciatura
+            ] as [String : Any]
         
-        //if  (false){
-        if  (idPersona! >= 1 && have_name && have_email){
-            showGifIndicator(view: self.view)
-            let array_parameter = [
-                "idPostuladoUniversidad": 0,
-                "idUniversidad": idUniversidad,
-                "idPersona": idPersona,
-                "idLicenciatura": idLicenciatura
-                ] as [String : Any]
-            
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            webServiceController.PostularseUniversidad(parameters: parameter_json_string!, doneFunction: PostularseLicenciatura)
-        }else{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-            vc.is_postulate = 1
-            self.show(vc, sender: nil)
-        }
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.PostularseUniversidad(parameters: parameter_json_string!, doneFunction: PostularseLicenciatura)
+
     }
     
     func PostularseLicenciatura(status: Int, response: AnyObject){
@@ -672,6 +670,7 @@ class DetailUniversity3ViewController: BaseViewController, CLLocationManagerDele
         vc.type = "prospectus"
         vc.fgAplicaProspectusVideos = self.fgAplicaProspectusVideos
         vc.fgAplicaProspectusVideo = self.fgAplicaProspectusVideo
+        vc.urlFolletosDigitales = self.urlFolletosDigitales
         self.show(vc, sender: nil)
     }
     

@@ -191,11 +191,28 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
         var item = JSON(items[indexPath.section])
         let idNotificacion = item["idNotificacion"].intValue
         
+        ActrualizarStatusNotE(idNotificacion:idNotificacion)
+
+        
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewControllerID") as! DetailViewController
         vc.idNotificacion = idNotificacion
         vc.type = "notificacion"
         self.show(vc, sender: nil)
         
+        
+    }
+    
+    func ActrualizarStatusNotE(idNotificacion: Int){
+        let array_parameter = [
+            "idDispositivo": usuario.Persona?.Dispositivos?.idDispositivo,
+            "idNotificacion": idNotificacion,
+            ] as [String : Any]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.get(parameters: parameter_json_string!, method:"ActrualizarStatusNotE", doneFunction: Callback_ActrualizarStatusNotE)
+    }
+    
+    func Callback_ActrualizarStatusNotE(status: Int, response: AnyObject){
         
     }
 }

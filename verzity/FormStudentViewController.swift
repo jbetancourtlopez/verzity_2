@@ -10,10 +10,9 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     
     @IBOutlet var scrollView: UIScrollView!
 
-    // Image
+    // Inputs
     @IBOutlet var img_profile: UIImageView!
     @IBOutlet var import_image: UIButton!
-
     @IBOutlet var countryPickerView: UIPickerView!
     @IBOutlet var icon_country: UIImageView!
     @IBOutlet var name: FloatableTextField!
@@ -26,10 +25,10 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     @IBOutlet var email: FloatableTextField!
     @IBOutlet var password: FloatableTextField!
     @IBOutlet var password_confirm: FloatableTextField!
-    
     @IBOutlet var swich_accept: UISwitch!
     @IBOutlet var accept_error: UILabel!
     @IBOutlet var button_save: UIButton!
+    @IBOutlet weak var tyc: UILabel!
 
     //View
     @IBOutlet weak var view_cp: UIView!
@@ -38,7 +37,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     @IBOutlet weak var view_direccion: UIView!
     @IBOutlet weak var view_state: UIView!
     @IBOutlet weak var view_cp_ct_height: NSLayoutConstraint!
-    
     @IBOutlet weak var view_password: UIView!
     @IBOutlet weak var view_password_conf: UIView!
     
@@ -47,6 +45,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     @IBOutlet var municipio_contraint_height: NSLayoutConstraint!
     @IBOutlet var city_constraint_height: NSLayoutConstraint!
     @IBOutlet var state_constraint_height: NSLayoutConstraint!
+
     
     // Variables
     var webServiceController = WebServiceController()
@@ -54,6 +53,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var is_mexico = 1;
     var name_country = ""
     var type_view: String = "register"
+    var usuario = Usuario()
     
     // Datos obtenidos de facebook
     var facebook_url: String = ""
@@ -61,18 +61,19 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var facebook_email: String = ""
     var facebook_id: String = ""
     var is_facebook:Int = 0
-
     var name_image = ""
+
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         self.type_view = type_view as String
         setup_ux()
         setup_textfield()
         load_countries()
         
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
         
@@ -84,7 +85,19 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
             print("Entro Facebook")
             setdata_facebook()
         }
+
+        //Evento TyC
+        let event_on_click_tyc:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.on_click_tyc))
+        tyc.isUserInteractionEnabled = true
+        tyc.addGestureRecognizer(event_on_click_tyc)
+
     }
+
+    @objc func on_click_tyc(){
+        var link_tyc = Defaults[.desRutaTerminos]!
+        openUrl(scheme: link_tyc)
+    }
+    
     
     func setdata_facebook(){
 
@@ -106,12 +119,11 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
             if  (self.facebook_email.isEmpty){
                 email.isEnabled = true
             }
-    
         }
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(upload_photo), userInfo: nil, repeats: false)
     }
 
-    
+
     @objc func cpDidChange(_ textField: UITextField) {
         let cp = textField.text
         if (cp?.count)! >= 5{
@@ -196,7 +208,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     
     func callback_load_countries(status: Int, response: AnyObject){
         var json = JSON(response)
-        let selected_name_country = Defaults[.academic_nbPais]!
+        let selected_name_country = self.usuario.Persona?.Direcciones?.nbPais
         if status == 1{
             var countries_aux = json["Data"].arrayObject
             print(countries)
@@ -225,12 +237,12 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
-        is_mexico_setup(name_country: selected_name_country)
+        is_mexico_setup(name_country: selected_name_country!)
         hiddenGifIndicator(view: self.view)
     }
     
     @IBAction func on_click_continue(_ sender: Any) {
-        print("Continuar")
+        print("Continuar: Guardar Datos")
         if validate_form() == 0 {
             let array_parameter = [
                 "pwdContrasenia": password.text!,
@@ -278,7 +290,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         if status == 1{
             let data = JSON(json["Data"])
             save_profile(data:data)
-            performSegue(withIdentifier: "showSplash", sender: self)
+            performSegue(withIdentifier: "showSplash_formStudent", sender: self)
         }else{
             showMessage(title: response as! String, automatic: true)
         }
@@ -371,7 +383,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         email.floatableDelegate = self
         state.floatableDelegate = self
         
-        
         self.state.isEnabled = false
         self.municipio.isEnabled = false
         self.city.isEnabled = false
@@ -381,7 +392,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         self.city.textColor = hexStringToUIColor(hex: "#939393")
         
         // on_change_code_postal
-        cp.addTarget(self, action: #selector(ProfileAcademicViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
+        cp.addTarget(self, action: #selector(FormStudentViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
         

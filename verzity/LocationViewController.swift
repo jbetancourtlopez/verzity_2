@@ -29,10 +29,11 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
     }
     
     func setup_ux(){
-        self.title = "Ubicación"
+        self.title = "Buscar por ubicación"
         if !self.extanjero{
             navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "388E3C")
         }else {
+            
             navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "F7BF25")
         }
     }
@@ -71,7 +72,9 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
     
     func load_data_states(country:JSON){
         showGifIndicator(view: self.view)
-     
+        
+        self.country = country["nbPais"].stringValue
+        print(self.country)
         let parameter_json_string = country.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "GetEstados", doneFunction:callback_load_data_states)
         
@@ -117,14 +120,12 @@ class LocationViewController: BaseViewController,  UITableViewDelegate, UITableV
         var item = JSON(list_states[indexPath.row])
         
        
-            
-
-        
         print("find_state")
         let vc = storyboard?.instantiateViewController(withIdentifier: "ListUniversitiesViewControllerID") as! ListUniversitiesViewController
         vc.country = self.country
         vc.state = item["nbEstado"].stringValue
         vc.type = "find_state"
+        vc.extranjero = self.extanjero
         self.show(vc, sender: nil)
         
     }

@@ -23,10 +23,12 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
     
     var timer: Timer!
     var updateCounter: Int!
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.usuario = get_user()
+
         if self.type_menu == "find_university_extra"{
             self.extanjero = true
         }
@@ -55,24 +57,23 @@ class FindUniversityViewController: BaseViewController, UITableViewDelegate, UIT
 
     // Evento al hacer click sobre un Banner
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
-        
+        var idPersona = self.usuario.idPersona
         if(!self.is_register_visit){
             self.is_register_visit = true
             if items.count > 0 {
                 do {
-                    print("Count:\(updateCounter)")
-                    print("total: \(items.count)")
                     // Registramos la Visista
                     showGifIndicator(view: self.view)
                     var  banner_item = JSON(items[updateCounter - 1])
                     let array_parameter = [
                         "idBanner": banner_item["idBanner"].intValue,
-                        "idPersona": Defaults[.academic_idPersona]
+                        "idPersona": idPersona
                         
                         ] as [String : Any]
                     let parameter_json = JSON(array_parameter)
                     let parameter_json_string = parameter_json.rawString()
                     webServiceController.RegistrarVisitaBanners(parameters: parameter_json_string!, doneFunction: RegistrarVisitaBanners)
+               
                 } catch let error {
                     print(error.localizedDescription)
                 }

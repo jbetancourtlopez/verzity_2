@@ -61,7 +61,6 @@ class AlamofireWebServiceController {
     }
     
     func sendRequest_fix_get_favoritos(url: String, jsonObject: String, extranjero:Bool, completionHandler: @escaping (Any?, Error?) -> () ){
-        //let url_ws = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/GetFavoritos"
         
         let isExtranjero = (extranjero ? "false" : "true")
 

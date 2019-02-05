@@ -18,6 +18,7 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var idUniversidad: Int!
     var fgAplicaProspectusVideos: Bool!
     var fgAplicaProspectusVideo: Bool!
+    var urlFolletosDigitales: String!
     var usuario = Usuario()
     var paquete = Paquete()
     var extanjero = false
@@ -27,13 +28,13 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         type = String(type)
         setup_ux()
-        load_data()
         
+        print("Debug")
         self.usuario = get_user()
-        //print(usuario)
         
         self.paquete = get_paquete(usuario: self.usuario)
-        print(paquete)
+        
+        load_data()
        
         list_postulation.remove(at: 0)
         
@@ -81,10 +82,15 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if type == "prospectus"{
         
             list_prospectus = Menus.list_prospectus_folletos  as [AnyObject] as! [[String : String]]
-
+            
+            print("Debug")
+            print(self.fgAplicaProspectusVideo)
+            print(self.fgAplicaProspectusVideos)
             if  self.fgAplicaProspectusVideo || self.fgAplicaProspectusVideos{
+                
                 list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
             }
+            
         }else if type == "academics"{
             showGifIndicator(view: self.view)
             let array_parameter = ["": ""]
@@ -146,9 +152,9 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
         
         if type == "prospectus"{
-            list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
+            //list_prospectus = Menus.list_prospectus  as [AnyObject] as! [[String : String]]
             // Name
-            cell.name.text  = list_prospectus[indexPath.section]["name"]
+            cell.name.text  = self.list_prospectus[indexPath.section]["name"]
             
             // Image
             cell.icon.image = UIImage(named: list_prospectus[indexPath.section]["image"]!)
@@ -197,7 +203,14 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 break
             case "digital":
                 print("Digital")
-                openUrl(scheme: "http://www.google.com")
+                print(urlFolletosDigitales)
+                
+                if self.urlFolletosDigitales.isEmpty{
+                    showMessage(title: StringsLabel.error_folletos, automatic: true)
+                }else{
+                   openUrl(scheme: urlFolletosDigitales)
+                }
+                
                 break
             default:
                 break

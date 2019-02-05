@@ -30,16 +30,18 @@ class DetailBecasViewController: BaseViewController {
     @IBOutlet var btn_file: UIButton!
     
     var webServiceController = WebServiceController()
-    
+    var usuario = Usuario()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         detail = detail as AnyObject
+        self.usuario = get_user()
+
         set_data();
         setup_ux()
     }
     
     func setup_ux(){
-    
         let image_visitar_web  = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
         let image_file_download  = UIImage(named: "ic_action_remove_red_eye")?.withRenderingMode(.alwaysTemplate)
     
@@ -48,7 +50,6 @@ class DetailBecasViewController: BaseViewController {
         
         btn_file.setImage(image_file_download, for: .normal)
         btn_file.tintColor = Colors.gray
-    
     }
     
     @IBAction func on_click_university(_ sender: Any) {
@@ -60,18 +61,7 @@ class DetailBecasViewController: BaseViewController {
     }
     
     @IBAction func on_click_file(_ sender: Any) {
-        /*
-        var detail = JSON(self.detail)
-        var file_path = detail["desRutaArchivo"].stringValue
-        file_path = file_path.replacingOccurrences(of: "~", with: "")
-        file_path = file_path.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(Defaults[.desRutaMultimedia]!)\(file_path)"
-        
-        if  !file_path.isEmpty{
-            openUrl(scheme: url)
-        }
-        */
-        
+
         print("PDF")
         var detail = JSON(self.detail)
         var file_path = detail["desRutaArchivo"].stringValue
@@ -87,29 +77,18 @@ class DetailBecasViewController: BaseViewController {
     }
     
     @IBAction func on_click_postulate(_ sender: Any) {
-        let idPersona = Defaults[.academic_idPersona]!
+        let idPersona = self.usuario.Persona?.idPersona
+        showGifIndicator(view: self.view)
         
-        let have_name = Defaults[.academic_name] != ""
-        let have_email = Defaults[.academic_email] != ""
+        var detail = JSON(self.detail)
+        let array_parameter = [
+            "idPersona": idPersona,
+            "idBeca": detail["idBeca"].intValue
+            ] as [String : Any]
         
-        if  (idPersona > 0 && have_name && have_email){
-            showGifIndicator(view: self.view)
-            
-            var detail = JSON(self.detail)
-            let array_parameter = [
-                "idPersona": idPersona,
-                "idBeca": detail["idBeca"].intValue
-                ] as [String : Any]
-            
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            webServiceController.PostularseBeca(parameters: parameter_json_string!, doneFunction: PostularseBeca)
-            
-        }else{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-             vc.is_postulate = 1
-            self.show(vc, sender: nil)
-        }
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.PostularseBeca(parameters: parameter_json_string!, doneFunction: PostularseBeca)
     }
     
     func PostularseBeca(status: Int, response: AnyObject){
@@ -121,7 +100,6 @@ class DetailBecasViewController: BaseViewController {
         }else{
             showMessage(title: response as! String, automatic: true)
         }
-       
     }
     
     func set_data(){
@@ -142,16 +120,12 @@ class DetailBecasViewController: BaseViewController {
         detail_description.translatesAutoresizingMaskIntoConstraints = true
         detail_description.sizeToFit()
         detail_description.isScrollEnabled = false
- 
-        
-
         
         /*
         let amountOfLinesToBeShown:CGFloat = 6
         let maxHeight:CGFloat = detail_description.font!.lineHeight * amountOfLinesToBeShown
         detail_description.sizeThatFits(CGSize(width: detail_description.frame.size.width, height:maxHeight))
          */
-        
         
         if  !file_path.isEmpty{
              detail_file.text = "Ver documento adjunto"

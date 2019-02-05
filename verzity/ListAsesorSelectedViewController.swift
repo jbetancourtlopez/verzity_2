@@ -197,10 +197,8 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     }
     
     func setup_paypal(){
-        
         let desRutaTerminos = Defaults[.desRutaTerminos]
 
-        
         payPalConfig.acceptCreditCards = acceptCreditCards;
         payPalConfig.merchantName = "Verzity"
         payPalConfig.merchantPrivacyPolicyURL = NSURL(string: desRutaTerminos!)! as URL

@@ -38,7 +38,7 @@ class StringsLabel{
 
     // Errores
     static let error_conexion = "Ocurrio un error al establecer contacto con el servidor. Favor de verificar su conexión a internet"
-    
+    static let error_folletos = "La universidad no cuenta con folletos digitales"
     // Defaul Valores
     static let no_university_name = "dw medios"
     static let no_address = "No se encontró dirección"

@@ -61,11 +61,9 @@ class DetailBuyViewController: BaseViewController {
                 date_top.text = get_date_complete(date_complete_string: (paquete_asesor?.feVenta)! )
                 vigency.text = get_date_complete(date_complete_string: (paquete_asesor?.feVigencia)!)
                 
-                
                 name.text = data["desPaquete"].stringValue
                 price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
                 
-            
             }else{
                 
                 let paquete = usuario.Persona?.Universidades?.VestasPaquetes
@@ -75,11 +73,7 @@ class DetailBuyViewController: BaseViewController {
                 
                 name.text = paquete?.Paquete?.nbPaquete  //data["nbPaquete"].stringValue
                 price.text = String(format: "$ %.02f MXN", data["dcCosto"].doubleValue)
-                
             }
-            
-            
-            
            
         } else{
             
@@ -96,7 +90,6 @@ class DetailBuyViewController: BaseViewController {
             }else{
                 var json = JSON(info)
                 var data = JSON(json["Data"])
-                Defaults[.package_idPaquete] = data["idPaquete"].intValue
                 date_top.text = get_date_complete(date_complete_string: data["feVenta"].stringValue)
                 vigency.text = get_date_complete(date_complete_string: data["feVigencia"].stringValue)
                 var paquete = JSON(data["Paquete"])

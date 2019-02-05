@@ -489,13 +489,10 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
 extension PackagesViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
         if  is_summary == 0{
-            if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
-                self.show(vc, sender: nil)
-            }else{
-                let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-                self.show(vc, sender: nil)
-            }
+//            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+//            self.show(vc, sender: nil)
+            _ = self.navigationController?.popViewController(animated: false)
+
         }
     }
     

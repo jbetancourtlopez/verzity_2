@@ -16,7 +16,6 @@ struct Config{
     static var desRutaWebServices = "http://verzity.dwmedios.com/WSPruebas/service/UNICONEKT.asmx/"
     static var desRutaMultimedia = "http://verzity.dwmedios.com/SITE/"
    
-    //static var cvFirebase = "Fix"
     
 }
 

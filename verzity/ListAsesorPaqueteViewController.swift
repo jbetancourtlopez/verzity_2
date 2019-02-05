@@ -18,8 +18,6 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
         super.viewDidLoad()
         setup_ux()
         
-        
-        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
         if #available(iOS 10.0, *) {
@@ -209,21 +207,12 @@ class ListAsesorPaqueteViewController:BaseViewController, UITableViewDelegate, U
             }
         }
         
-       
     }
 }
 
 extension ListAsesorPaqueteViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
-        if  is_summary == 0{
-            if  (Defaults[.university_idUniveridad]! <= 0 || Defaults[.university_desTelefono] == "" ||  Defaults[.university_desUniversidad] == ""){
-                let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
-                self.show(vc, sender: nil)
-                
-            }else{
-                let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-                self.show(vc, sender: nil)
-            }
-        }
+        //let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
+        //self.show(vc, sender: nil)
     }
 }

@@ -16,6 +16,7 @@ class DetailFinanciamientoViewController: BaseViewController {
 
     var detail: AnyObject!
     var webServiceController = WebServiceController()
+    var usuario = Usuario()
     
     //UIControls
     @IBOutlet var image_caratule: UIImageView!
@@ -23,19 +24,15 @@ class DetailFinanciamientoViewController: BaseViewController {
     @IBOutlet var financing_descripction: UITextView!
     @IBOutlet var label_web: UILabel!
     @IBOutlet var icon_web: UIImageView!
-    
     @IBOutlet var label_university: UILabel!
     @IBOutlet var icon_university: UIImageView!
     @IBOutlet var button_university: UIButton!
-    
     @IBOutlet var icon_file: UIImageView!
     @IBOutlet var label_file: UILabel!
     @IBOutlet var button_file: UIButton!
-    
     @IBOutlet var button_request: UIButton!
     
-    // COntrains
-    
+    // Contrains
     @IBOutlet var top_contrain_button_university: NSLayoutConstraint!
     @IBOutlet var top_contraint_label_university: NSLayoutConstraint!
     @IBOutlet var top_contraint_icon_university: NSLayoutConstraint!
@@ -45,10 +42,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         super.viewDidLoad()
         septup_ux()
         detail = detail as AnyObject
-       
-        debugPrint(detail)
         set_data();
-
     }
     
     
@@ -82,7 +76,7 @@ class DetailFinanciamientoViewController: BaseViewController {
         if  !file_path.isEmpty{
              label_file.text = "Ver documento adjunto"
         }else{
-             label_file.text = "No se encontró archivo adjunto"
+            label_file.text = "No se encontró archivo adjunto"
             label_file.isHidden = true
             icon_file.isHidden = true
             button_file.isHidden = true
@@ -141,34 +135,20 @@ class DetailFinanciamientoViewController: BaseViewController {
    
     @IBAction func on_clic_request(_ sender: Any) {
         
-        let idPersona = Defaults[.academic_idPersona]!
-        
+        showGifIndicator(view: self.view)
+        let idPersona = self.usuario.idPersona
         var detail = JSON(self.detail)
         let idFinanciamiento = detail["idFinanciamiento"].stringValue
         
+        // FIX - Armar los parametros
+        let array_parameter = [
+            "idPersona": idPersona,
+            "idFinanciamiento": idFinanciamiento
+            ] as [String : Any]
         
-        let have_name = Defaults[.academic_name] != ""
-        let have_email = Defaults[.academic_email] != ""
-        //if(false){
-        if  (idPersona > 0 && have_name && have_email){
-            showGifIndicator(view: self.view)
-            
-            // FIX - Armar los parametros
-            let array_parameter = [
-                "idPersona": idPersona,
-                "idFinanciamiento": idFinanciamiento
-                ] as [String : Any]
-            
-            debugPrint(array_parameter)
-            let parameter_json = JSON(array_parameter)
-            let parameter_json_string = parameter_json.rawString()
-            webServiceController.SolicitarFinanciamientos(parameters: parameter_json_string!, doneFunction: SolicitarFinanciamientos)
-            
-        }else{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-            vc.is_postulate = 1
-            self.show(vc, sender: nil)
-        }
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.SolicitarFinanciamientos(parameters: parameter_json_string!, doneFunction: SolicitarFinanciamientos)
     }
     
     
@@ -197,17 +177,6 @@ class DetailFinanciamientoViewController: BaseViewController {
     }
     
     @IBAction func on_click_file(_ sender: Any) {
-        
-        /*
-        var detail = JSON(self.detail)
-        var file_path = detail["desRutaArchivo"].stringValue
-        file_path = file_path.replacingOccurrences(of: "~", with: "")
-        file_path = file_path.replacingOccurrences(of: "\\", with: "")
-        let url =  "\(String(describing: Defaults[.desRutaMultimedia]))\(file_path)"
-        
-        if  !file_path.isEmpty{
-            openUrl(scheme: url)
-        }*/
         
         print("PDF")
         var detail = JSON(self.detail)

@@ -26,10 +26,11 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         super.viewDidLoad()
         self.usuario = get_user()
         type = String(type)
+        setup_ux()
         self.list_licensature = list_licensature as [Any]
         setup_table()
         setup_search_bar()
-        setup_ux()
+        
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -66,7 +67,7 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         } else if type == "find_university" {
             self.title = "Universidades"
         } else if type == "find_state"{
-            self.title = "Universidades"
+            self.title = "Universidades en \(self.state)"
         }
         
         self.navigationItem.leftBarButtonItem?.title = ""
@@ -110,7 +111,8 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
             webServiceController.sendRequest_fix_get_favoritos(parameters: parameter_json_string!, extranjero: self.extranjero, doneFunction: GetListGeneral)
 
             
-        } else if type == "find_university" {
+        }
+        else if type == "find_university" {
             
             var array_parameter:[String: Any] = ["extranjero": self.extranjero, "nbPais": usuario.Persona?.Direcciones?.nbPais]
             
@@ -124,22 +126,24 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
                     "Licenciaturas": list_licensature,
                     "extranjero": self.extranjero,
                     "nbPais": usuario.Persona?.Direcciones?.nbPais
-                    ]
+                ]
             }
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.BusquedaUniversidades(parameters: parameter_json_string!, doneFunction: GetListGeneral)
         
-        } else if type == "find_state"{
-   
-            var array_parameter:[String: Any] = [
+        }
+        else if type == "find_state"{
+            
+            //self.extranjero
+            
+            let array_parameter_find_state = [
                 "nombreEstado": self.state,
                 "nbPais": self.country,
-                "extranjero": self.extranjero,
-                "nbPais": usuario.Persona?.Direcciones?.nbPais
-            ]
+                "extranjero": false,
+                ] as [String : Any]
             
-            let parameter_json = JSON(array_parameter)
+            let parameter_json = JSON(array_parameter_find_state)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.get(parameters: parameter_json_string!, method:"BusquedaUniversidades", doneFunction: GetListGeneral)
         }

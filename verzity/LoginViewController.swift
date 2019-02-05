@@ -87,7 +87,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     let keyExistsEmail = self.dict["email"] != nil
                     let keyExistsName = self.dict["name"] != nil
                     
-                    
                     self.facebook_id = self.dict["id"] as! String
                     self.facebook_url = url
                     self.is_click_facebook = 1
@@ -105,22 +104,16 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                     if (keyExistsEmail && keyExistsName){
                         self.facebook_email = email
                         self.facebook_name = name
-                        
                         self.login_facebook()
                     }
                     else{
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileAcademicViewControllerID") as! ProfileAcademicViewController
-//                        vc.facebook_name = name
-//                        vc.facebook_email = email
-//
-//                        vc.facebook_id = self.facebook_id
-//                        vc.facebook_url = self.facebook_url
-//                        vc.is_facebook = 1
-//
-//
-                        
-                        //self.show(vc, sender: nil)
-                        
+                        var vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
+                        vc.facebook_name = name
+                        vc.facebook_email = email
+                        vc.facebook_id = self.facebook_id
+                        vc.facebook_url = self.facebook_url
+                        vc.is_facebook = 1
+                        self.show(vc, sender: nil)
                     }
                 }
             })
@@ -149,10 +142,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         
             let parameter_json = JSON(parameters)
             let parameter_json_string = parameter_json.rawString()
-            webServiceController.get(parameters: parameter_json_string!, method: Singleton.IngresarApp, doneFunction: callback_on_click_login)
-
-            //webServiceController.IngresarAppUniversidad(parameters: parameter_json_string!, doneFunction: callback_on_click_login)
-        
+            webServiceController.get(parameters: parameter_json_string!, method: "IngresarAppFacebook", doneFunction: callback_on_click_login)
     }
     
     // Registros
@@ -209,7 +199,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         }else{
             if  is_click_facebook == 1{
                 print("Registro Login Incorrecto")
-
 
                 var vc = self.storyboard?.instantiateViewController(withIdentifier: "FormStudentViewControllerID") as! FormStudentViewController
                 vc.facebook_name = self.facebook_name

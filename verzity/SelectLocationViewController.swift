@@ -1,11 +1,3 @@
-//
-//  SelectLocationViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 16/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import MapKit
 import SwiftyUserDefaults
@@ -14,7 +6,7 @@ protocol SelectLocationViewControllerDelegate: class {
     func ok_save_location(latitud: Double, longitud: Double, address: String)
 }
 
-class SelectLocationViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate {
+class SelectLocationViewController: BaseViewController, UISearchBarDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var location_label: UILabel!
     @IBOutlet var mapView: MKMapView!
@@ -28,9 +20,11 @@ class SelectLocationViewController: UIViewController, UISearchBarDelegate, CLLoc
     var searchBarController : UISearchController!
     let geocoder = CLGeocoder()
     var adress = ""
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         
         locationManager.delegate = self as CLLocationManagerDelegate
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -41,7 +35,12 @@ class SelectLocationViewController: UIViewController, UISearchBarDelegate, CLLoc
         let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(action(gestureRecognizer:)))
         mapView.addGestureRecognizer(tapGesture)
         
-        set_pin(newLocation: CLLocation(latitude: Defaults[.add_uni_dcLatitud]!, longitude: Defaults[.add_uni_dcLongitud]!))
+        let lat = self.usuario.Persona?.Direcciones?.dcLatitud
+        let lon = self.usuario.Persona?.Direcciones?.dcLongitud
+        var lat_d = Double(lat!)
+        var lon_d = Double(lon!)
+        
+        set_pin(newLocation: CLLocation(latitude: lat_d!, longitude: lon_d!))
  
     }
     

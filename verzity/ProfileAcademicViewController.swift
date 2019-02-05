@@ -33,8 +33,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     var name_image = ""
     var usuario = Usuario()
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usuario = get_user()
@@ -49,7 +47,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         registerForKeyboardNotifications(scrollView: scrollView)
         setGestureRecognizerHiddenKeyboard()
 
-        self.title = "Perfil universitario"
+        if type == "profile_representative"{
+            self.title = "Perfil representante"
+        } else{
+            self.title = "Perfil universitario"
+        }
+        
         get_data_profile()
        
     }

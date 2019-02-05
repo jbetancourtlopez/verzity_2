@@ -434,13 +434,15 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         
         let personas_json = JSON(data["Personas"])
         let dispositivos_json = JSON(personas_json["Dispositivos"])
+        let catTiposPersonas_json = JSON(personas_json["CatTiposPersonas"])
         let direccion_json = JSON(personas_json["Direcciones"])
         let vestasPaquetesAsesores_json = JSON(personas_json["VentasPaquetesAsesores"])
         let universidades_json = JSON(personas_json["Universidades"]).arrayValue
      
         let direccion = Direcciones()
         direccion.idDireccion = direccion_json["idDireccion"].intValue
-        direccion.desDireccion = direccion_json["nbMunicipio"].stringValue
+        
+        direccion.desDireccion = direccion_json["desDireccion"].stringValue
         direccion.numCodigoPostal = direccion_json["numCodigoPostal"].stringValue
         direccion.nbPais = direccion_json["nbPais"].stringValue
         direccion.nbEstado = direccion_json["nbEstado"].stringValue
@@ -457,70 +459,81 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
 
         
         let vestasPaquetesAsesores = VestasPaquetesAsesores()
-        vestasPaquetesAsesores.idVentaPaqueteAsesor = vestasPaquetesAsesores_json[0]["idVentaPaqueteAsesor"].intValue
-        vestasPaquetesAsesores.idPaqueteAsesor = vestasPaquetesAsesores_json[0]["idPaqueteAsesor"].intValue
-        vestasPaquetesAsesores.idPersona = vestasPaquetesAsesores_json[0]["idPersona"].intValue
-        vestasPaquetesAsesores.idPersonaAsesor = vestasPaquetesAsesores_json[0]["idPersonaAsesor"].intValue
-        vestasPaquetesAsesores.feVenta = vestasPaquetesAsesores_json[0]["feVenta"].stringValue
-        vestasPaquetesAsesores.feVigencia = vestasPaquetesAsesores_json[0]["feVigencia"].stringValue
-        vestasPaquetesAsesores.fgPaqueteActual = vestasPaquetesAsesores_json[0]["fgPaqueteActual"].stringValue
-        vestasPaquetesAsesores.numReferenciaPaypal = vestasPaquetesAsesores_json[0]["numReferenciaPayPal"].stringValue
-        vestasPaquetesAsesores.numLiberados = vestasPaquetesAsesores_json[0]["numLiberados"].stringValue
-        vestasPaquetesAsesores.numUsados = vestasPaquetesAsesores_json[0]["numUsados"].stringValue
-        
+        if  vestasPaquetesAsesores_json != JSON.null{
+            
+            vestasPaquetesAsesores.idVentaPaqueteAsesor = vestasPaquetesAsesores_json[0]["idVentaPaqueteAsesor"].intValue
+            vestasPaquetesAsesores.idPaqueteAsesor = vestasPaquetesAsesores_json[0]["idPaqueteAsesor"].intValue
+            vestasPaquetesAsesores.idPersona = vestasPaquetesAsesores_json[0]["idPersona"].intValue
+            vestasPaquetesAsesores.idPersonaAsesor = vestasPaquetesAsesores_json[0]["idPersonaAsesor"].intValue
+            vestasPaquetesAsesores.feVenta = vestasPaquetesAsesores_json[0]["feVenta"].stringValue
+            vestasPaquetesAsesores.feVigencia = vestasPaquetesAsesores_json[0]["feVigencia"].stringValue
+            vestasPaquetesAsesores.fgPaqueteActual = vestasPaquetesAsesores_json[0]["fgPaqueteActual"].stringValue
+            vestasPaquetesAsesores.numReferenciaPaypal = vestasPaquetesAsesores_json[0]["numReferenciaPayPal"].stringValue
+            vestasPaquetesAsesores.numLiberados = vestasPaquetesAsesores_json[0]["numLiberados"].stringValue
+            vestasPaquetesAsesores.numUsados = vestasPaquetesAsesores_json[0]["numUsados"].stringValue
+            
+        }
+    
         
         let universidades = Universidades()
         if  personas_json["idTipoPersona"].intValue == 2 {
             
             let direccion_universidad_json = JSON(universidades_json[0]["Direcciones"])
-            let ventasPaquetes_json = JSON(universidades_json[0]["VentasPaquetes"]).arrayValue
-            let paquete_json = JSON(ventasPaquetes_json[0]["Paquete"])
-            
             
             let direccion_universidad = Direcciones()
             direccion_universidad.idDireccion = direccion_universidad_json["idDireccion"].intValue
-            direccion_universidad.desDireccion = direccion_universidad_json["nbMunicipio"].stringValue
+            direccion_universidad.desDireccion = direccion_universidad_json["desDireccion"].stringValue
             direccion_universidad.numCodigoPostal = direccion_universidad_json["numCodigoPostal"].stringValue
             direccion_universidad.nbPais = direccion_universidad_json["nbPais"].stringValue
             direccion_universidad.nbEstado = direccion_universidad_json["nbEstado"].stringValue
-            direccion_universidad.nbMunicipio = direccion_universidad_json[].stringValue
+            direccion_universidad.nbMunicipio = direccion_universidad_json["nbMunicipio"].stringValue
             direccion_universidad.nbCiudad = direccion_universidad_json["nbCiudad"].stringValue
             direccion_universidad.dcLatitud = direccion_universidad_json["dcLatitud"].stringValue
             direccion_universidad.dcLongitud = direccion_universidad_json["dcLongitud"].stringValue
             
-            let paquete = Paquete()
-            paquete.idPaquete = paquete_json["idPaquete"].intValue
-            paquete.idEstatus = paquete_json["idEstatus"].intValue
-            paquete.cvPaquete = paquete_json["cvPaquete"].stringValue
-            paquete.nbPaquete = paquete_json["nbPaquete"].stringValue
-            paquete.desPaquete = paquete_json["desPaquete"].stringValue
-            paquete.dcDiasVigencia = paquete_json["dcDiasVigencia"].stringValue
-            paquete.fgAplicaBecas = paquete_json["fgAplicaBecas"].stringValue
-            paquete.fgAplicaFinanciamiento = paquete_json["fgAplicaFinanciamiento"].stringValue
-            paquete.fgAplicaPostulacion = paquete_json["fgAplicaPostulacion"].stringValue
-            paquete.fgAplicaProspectus = paquete_json["fgProspectus"].stringValue
-            paquete.fgAplicaLogo = paquete_json["fgAplicaLogo"].stringValue
-            paquete.fgAplicaDireccion = paquete_json["fgAplicaDireccion"].stringValue
-            paquete.fgAplicaFavoritos = paquete_json["fgAplicaFavoritos"].stringValue
-            paquete.fgAplicaUbicacion = paquete_json["fgAplicaUbicacion"].stringValue
-            paquete.fgAplicaRedes = paquete_json["fgAplicaRedes"].stringValue
-            paquete.fgAplicaProspectusVideo = paquete_json["fgAplicaProspectusVideo"].stringValue
-            paquete.fgAplicaProspectusVideos = paquete_json["fgAplicaProspectusVideos"].stringValue
-            paquete.fgAplicaAplicaImagenes = paquete_json["fgAplicaImagenes"].stringValue
-            paquete.fgAplicaContacto = paquete_json["fgAplicaContacto"].stringValue
-            paquete.fgAplicaDescripcion = paquete_json["fgAplicaDescripcion"].stringValue
-            
+            let ventasPaquetes_array = JSON(universidades_json[0]["VentasPaquetes"]).arrayValue
             let ventasPaquetes = VestasPaquetes()
-            ventasPaquetes.idVentasPaquetes = ventasPaquetes_json[0]["fgPaqueteActual"].intValue
-            ventasPaquetes.idUniversidad = ventasPaquetes_json[0]["idUniversidad"].intValue
-            ventasPaquetes.idPaquete = ventasPaquetes_json[0]["idPaquete"].intValue
-            ventasPaquetes.feVenta = ventasPaquetes_json[0]["feVenta"].stringValue
-            ventasPaquetes.feVigencia = ventasPaquetes_json[0]["feVigencia"].stringValue
-            ventasPaquetes.fgPaqueteActual = ventasPaquetes_json[0]["fgPaqueteActual"].stringValue
-            ventasPaquetes.fgRecurrente = ventasPaquetes_json[0]["fgRecurrente"].stringValue
-            ventasPaquetes.numReferenciaPaypal = ventasPaquetes_json[0]["numReferenciaPayPal"].stringValue
-            ventasPaquetes.Paquete = paquete
+            let paquete = Paquete()
             
+            // Valido si tiene un paquete vendido
+            if ventasPaquetes_array.count > 0{
+                let ventasPaquetes_json = JSON(ventasPaquetes_array[0])
+                
+                // Valido si tiene un paquete
+                if ventasPaquetes_json["Paquete"] != JSON.null{
+                    let paquete_json = JSON(ventasPaquetes_json["Paquete"])
+                    paquete.idPaquete = paquete_json["idPaquete"].intValue
+                    paquete.idEstatus = paquete_json["idEstatus"].intValue
+                    paquete.cvPaquete = paquete_json["cvPaquete"].stringValue
+                    paquete.nbPaquete = paquete_json["nbPaquete"].stringValue
+                    paquete.desPaquete = paquete_json["desPaquete"].stringValue
+                    paquete.dcDiasVigencia = paquete_json["dcDiasVigencia"].stringValue
+                    paquete.fgAplicaBecas = paquete_json["fgAplicaBecas"].stringValue
+                    paquete.fgAplicaFinanciamiento = paquete_json["fgAplicaFinanciamiento"].stringValue
+                    paquete.fgAplicaPostulacion = paquete_json["fgAplicaPostulacion"].stringValue
+                    paquete.fgAplicaProspectus = paquete_json["fgProspectus"].stringValue
+                    paquete.fgAplicaLogo = paquete_json["fgAplicaLogo"].stringValue
+                    paquete.fgAplicaDireccion = paquete_json["fgAplicaDireccion"].stringValue
+                    paquete.fgAplicaFavoritos = paquete_json["fgAplicaFavoritos"].stringValue
+                    paquete.fgAplicaUbicacion = paquete_json["fgAplicaUbicacion"].stringValue
+                    paquete.fgAplicaRedes = paquete_json["fgAplicaRedes"].stringValue
+                    paquete.fgAplicaProspectusVideo = paquete_json["fgAplicaProspectusVideo"].stringValue
+                    paquete.fgAplicaProspectusVideos = paquete_json["fgAplicaProspectusVideos"].stringValue
+                    paquete.fgAplicaAplicaImagenes = paquete_json["fgAplicaImagenes"].stringValue
+                    paquete.fgAplicaContacto = paquete_json["fgAplicaContacto"].stringValue
+                    paquete.fgAplicaDescripcion = paquete_json["fgAplicaDescripcion"].stringValue
+                }
+                
+                ventasPaquetes.idVentasPaquetes = ventasPaquetes_json["fgPaqueteActual"].intValue
+                ventasPaquetes.idUniversidad = ventasPaquetes_json["idUniversidad"].intValue
+                ventasPaquetes.idPaquete = ventasPaquetes_json["idPaquete"].intValue
+                ventasPaquetes.feVenta = ventasPaquetes_json["feVenta"].stringValue
+                ventasPaquetes.feVigencia = ventasPaquetes_json["feVigencia"].stringValue
+                ventasPaquetes.fgPaqueteActual = ventasPaquetes_json["fgPaqueteActual"].stringValue
+                ventasPaquetes.fgRecurrente = ventasPaquetes_json["fgRecurrente"].stringValue
+                ventasPaquetes.numReferenciaPaypal = ventasPaquetes_json["numReferenciaPayPal"].stringValue
+            }
+            ventasPaquetes.Paquete = paquete
             
             universidades.idUniversidad = universidades_json[0]["idUniversidad"].intValue
             universidades.idEstatus = universidades_json[0]["idUniversidad"].intValue
@@ -544,9 +557,19 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         }
         
         let persona = Persona()
+        
+        // Valido de donde viene el Tipo de Persona
+        var idTipoPersona = 0;
+        if catTiposPersonas_json != JSON.null{
+            idTipoPersona = catTiposPersonas_json["idTipoPersona"].intValue
+        }else{
+            idTipoPersona = personas_json["idTipoPersona"].intValue
+        }
+        
+        
         persona.idPersona = personas_json["idPersona"].intValue
         persona.idDireccion = personas_json["idDireccion"].intValue
-        persona.idTipoPersona = personas_json["idTipoPersona"].intValue
+        persona.idTipoPersona = idTipoPersona
         persona.nbCompleto = personas_json["nbCompleto"].stringValue
         persona.desTelefono = personas_json["desTelefono"].stringValue
         persona.desCorreo = personas_json["desCorreo"].stringValue

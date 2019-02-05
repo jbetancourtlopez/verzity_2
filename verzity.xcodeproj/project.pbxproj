@@ -49,7 +49,6 @@
 		9267011920D8462400E638A1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267011820D8462400E638A1 /* LoginViewController.swift */; };
 		9267011C20D8462400E638A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9267011A20D8462400E638A1 /* Main.storyboard */; };
 		9267011F20D8462400E638A1 /* verzity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9267011D20D8462400E638A1 /* verzity.xcdatamodeld */; };
-		9267012120D8462600E638A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9267012020D8462600E638A1 /* Assets.xcassets */; };
 		9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9267012220D8462600E638A1 /* LaunchScreen.storyboard */; };
 		9267013720D849C900E638A1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267013620D849C900E638A1 /* BaseViewController.swift */; };
 		9267013D20D84A8C00E638A1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267013C20D84A8C00E638A1 /* Config.swift */; };
@@ -128,6 +127,7 @@
 		F7A7B2F321A8C5BA0055F6F7 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */; };
 		F7A7B2F521A9162A0055F6F7 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */; };
 		F7DAE45521EE55A70097EC5A /* emoji_sad.gif in Resources */ = {isa = PBXBuildFile; fileRef = F7DAE45421EE55A50097EC5A /* emoji_sad.gif */; };
+		F7E36DF92207F61900A93A29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E36DF82207F61400A93A29 /* Assets.xcassets */; };
 		F7FAC91621AD712400C0201B /* QuestionResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */; };
 		F7FAC91821AE401E00C0201B /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91721AE401E00C0201B /* TabBarViewController.swift */; };
 		F7FAC91A21AE407900C0201B /* TabBecaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FAC91921AE407900C0201B /* TabBecaViewController.swift */; };
@@ -178,7 +178,6 @@
 		9267011820D8462400E638A1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9267011B20D8462400E638A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9267011E20D8462400E638A1 /* verzity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = verzity.xcdatamodel; sourceTree = "<group>"; };
-		9267012020D8462600E638A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9267012320D8462600E638A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9267012520D8462600E638A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9267013620D849C900E638A1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +263,7 @@
 		F7A7B2F221A8C5BA0055F6F7 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		F7A7B2F421A9162A0055F6F7 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		F7DAE45421EE55A50097EC5A /* emoji_sad.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emoji_sad.gif; sourceTree = "<group>"; };
+		F7E36DF82207F61400A93A29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7FAC91521AD712400C0201B /* QuestionResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionResultViewController.swift; sourceTree = "<group>"; };
 		F7FAC91721AE401E00C0201B /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F7FAC91921AE407900C0201B /* TabBecaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBecaViewController.swift; sourceTree = "<group>"; };
@@ -388,9 +388,9 @@
 				9267012E20D8468D00E638A1 /* viewControllers */,
 				9267011620D8462400E638A1 /* AppDelegate.swift */,
 				9267011A20D8462400E638A1 /* Main.storyboard */,
-				9267012020D8462600E638A1 /* Assets.xcassets */,
 				9267012220D8462600E638A1 /* LaunchScreen.storyboard */,
 				9267012520D8462600E638A1 /* Info.plist */,
+				F7E36DF82207F61400A93A29 /* Assets.xcassets */,
 				92B6A3D320F957BF00987258 /* GoogleService-Info.plist */,
 				9267011D20D8462400E638A1 /* verzity.xcdatamodeld */,
 				92E544C620DAD10F0062A9CA /* CheckboxButton.swift */,
@@ -623,7 +623,6 @@
 				928C1C0D21142D4300B1E131 /* logo_verde.png in Resources */,
 				92DD410A20EC218F0035EF4E /* PayPal.jpg in Resources */,
 				9267012420D8462600E638A1 /* LaunchScreen.storyboard in Resources */,
-				9267012120D8462600E638A1 /* Assets.xcassets in Resources */,
 				F70017AD21F248A5004F89C7 /* logo_verde_new.png in Resources */,
 				92226FE920F5E03100ED30E0 /* ic_action_descripcion_gray.png in Resources */,
 				F72F61EF21B09AC80092BFAD /* ic_action_mail_gray.png in Resources */,
@@ -644,6 +643,7 @@
 				92682D3020DB8EE600E6C4A8 /* ic_dots.png in Resources */,
 				92226FEB20F5E07900ED30E0 /* ic_action_web_gray.png in Resources */,
 				9267015320DA9AFC00E638A1 /* ic_user_gray.png in Resources */,
+				F7E36DF92207F61900A93A29 /* Assets.xcassets in Resources */,
 				F70017AE21F248A5004F89C7 /* logo_white_new.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
