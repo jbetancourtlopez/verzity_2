@@ -134,13 +134,10 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         
         }
         else if type == "find_state"{
-            
-            //self.extranjero
-            
+                        
             let array_parameter_find_state = [
                 "nombreEstado": self.state,
                 "nbPais": self.country,
-                "extranjero": false,
                 ] as [String : Any]
             
             let parameter_json = JSON(array_parameter_find_state)

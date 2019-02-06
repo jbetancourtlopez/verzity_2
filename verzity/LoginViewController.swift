@@ -124,7 +124,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             showGifIndicator(view: self.view)
                var parameters = [
                     "cvFacebook": self.facebook_id,
-                    "pwdContrasenia": "",
                     "Personas": [
                         "Dispositivos": [
                             [
@@ -134,7 +133,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
                             ]
                         ],
                         "idDireccion": 0,
-                        "idPersona": 0
+                        "idPersona": 0,
+                        "nbCompleto": self.facebook_name
                     ],
                     "nbUsuario": self.facebook_email,
                     "idUsuario": 0
@@ -213,8 +213,7 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             }
         }
     }
-    
-    
+
     
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ForgetViewControllerID") as! ForgetViewController
@@ -227,7 +226,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
     func setup_ux(){
         email.floatableDelegate = self
         password.floatableDelegate = self
-        
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController!.navigationBar.topItem!.title = ""
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false

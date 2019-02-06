@@ -561,7 +561,14 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         // Valido de donde viene el Tipo de Persona
         var idTipoPersona = 0;
         if catTiposPersonas_json != JSON.null{
-            idTipoPersona = catTiposPersonas_json["idTipoPersona"].intValue
+            
+            let nbTipoPersona = catTiposPersonas_json["nbTipoPersona"].stringValue
+            if (nbTipoPersona == "UNIVERSIDAD"){
+                idTipoPersona = 2
+            }else{
+                idTipoPersona = 1
+            }
+            
         }else{
             idTipoPersona = personas_json["idTipoPersona"].intValue
         }

@@ -52,9 +52,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         } else{
             self.title = "Perfil universitario"
         }
-        
         get_data_profile()
-       
     }
 
    
@@ -91,7 +89,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                         ]
                     ]
                 ] as [String : Any]
-                
             }
         }
     }
@@ -148,13 +145,13 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         }
         countryPickerView.reloadAllComponents()
         // Establesco el Pais Seleccionado
-         //"México"
         for i in 0 ..< countries.count{
             var item_country_json = JSON(countries[i])
             let name_country = item_country_json["nbPais"].stringValue
-            self.name_country = name_country
+            
             let isEqual = (selected_name_country == name_country)
             if isEqual {
+                self.name_country = name_country
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
@@ -215,6 +212,12 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         print("Continuar")
         
         if validate_form() == 0 {
+            
+            if self.name_image == ""{
+                self.name_image = (self.usuario.Persona?.pathFoto)!
+            }
+            
+            
             let array_parameter = [
                 "desCorreo": email_profile.text!,
                 "Direcciones": [
@@ -236,6 +239,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
 
             let parameter_json = JSON(array_parameter)
             let parameter_json_string = parameter_json.rawString()
+            print(parameter_json_string)
             webServiceController.EditarPerfil(parameters: parameter_json_string!, doneFunction: EditarPerfil)
         }
     }
@@ -260,6 +264,7 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
                     direccion.nbEstado = direcciones["nbEstado"].stringValue
                     direccion.desDireccion = direcciones["desDireccion"].stringValue
                     
+                    
                     usuario_db.Persona?.pathFoto = self.name_image
                     usuario_db.Persona?.nbCompleto = data["nbCompleto"].stringValue
                     usuario_db.Persona?.desCorreo = data["desCorreo"].stringValue
@@ -281,13 +286,16 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
     }
     
     func get_data_profile(){
+        
+        print(usuario)
+        
         name_profile.text = usuario.Persona?.nbCompleto
         phone_profile.text = usuario.Persona?.desTelefono
         email_profile.text = usuario.Persona?.desCorreo
         
         // Direcciones
         
-        print(usuario.Persona?.Direcciones)
+        
         
         cp_profile.text = usuario.Persona?.Direcciones?.numCodigoPostal
         city_profile.text = usuario.Persona?.Direcciones?.nbCiudad
@@ -299,7 +307,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         set_photo_profile(url: (usuario.Persona?.pathFoto)!, image: img_profile)
         
         if (self.type == "profile_representative"){
-        //if (true){
             cp_profile.isHidden = true
             state_profile.isHidden = true
             municipio_profile.isHidden = true
@@ -310,7 +317,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
             
             countryPickerView.isHidden = true
             description_profile.isHidden = true
-            
         }
     }
     

@@ -40,6 +40,7 @@ class DetailFinanciamientoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         septup_ux()
         detail = detail as AnyObject
         set_data();
@@ -136,7 +137,7 @@ class DetailFinanciamientoViewController: BaseViewController {
     @IBAction func on_clic_request(_ sender: Any) {
         
         showGifIndicator(view: self.view)
-        let idPersona = self.usuario.idPersona
+        let idPersona = self.usuario.Persona?.idPersona
         var detail = JSON(self.detail)
         let idFinanciamiento = detail["idFinanciamiento"].stringValue
         

@@ -3,9 +3,6 @@ import FloatableTextField
 import SwiftyJSON
 import SwiftyUserDefaults
 
-// (file:///Users/jossuebetancourt/Library/Developer/CoreSimulator/Devices/6E39B2FD-5A27-4C9A-B4AC-D9C07A128C2A/data/Containers/Data/Application/AD092B87-9D82-4420-8147-10916767CBA8/Documents/default.realm)
-
-
 class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, FloatableTextFieldDelegate{
     
     @IBOutlet var scrollView: UIScrollView!
@@ -63,9 +60,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     var is_facebook:Int = 0
     var name_image = ""
 
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usuario = get_user()
@@ -135,49 +129,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    @objc func emailDidChange(_ textField: UITextField) {
-      
-        if !FormValidate.isEmptyTextField(textField: email){
-            if !FormValidate.validateEmail(email.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) == false {
-                print("Email Valido")
-                //showGifIndicator(view: self.view)
-                let array_parameter = [
-                    "desCorreo": email.text!,
-                    "Dispositivos": [
-                        [
-                        "cvDispositivo": "",
-                        "cvFirebase": "",
-                        ]
-                    ]
-                ] as [String : Any]
-
-                let parameter_json = JSON(array_parameter)
-                let parameter_json_string = parameter_json.rawString()
-                //webServiceController.verificarCuentaUniversitario(parameters: parameter_json_string!, doneFunction: verificarCuentaUniversitario)
-            }
-        }
-    }
-    
-    func verificarCuentaUniversitario(status: Int, response: AnyObject){
-        hiddenGifIndicator(view: self.view)
-        var json = JSON(response)
-        print("Respuesta")
-        debugPrint(json)
-        if status == 1{
-            print("Abro modal")
-            open_modal(info: json["Data"])
-        }
-    }
-    
-    func open_modal(info:JSON){
-        let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "RetryAccountViewControllerID") as! RetryAccountViewController
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.delegate = self as! RetryAccountViewControllerDelegate
-        customAlert.info = info as AnyObject
-        self.present(customAlert, animated: true, completion: nil)
-    }
-    
     func BuscarCodigoPostal(status: Int, response: AnyObject){
         var json = JSON(response)
         debugPrint(json)
@@ -208,7 +159,8 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
     
     func callback_load_countries(status: Int, response: AnyObject){
         var json = JSON(response)
-        let selected_name_country = self.usuario.Persona?.Direcciones?.nbPais
+        
+        let selected_name_country = "México" //self.usuario.Persona?.Direcciones?.nbPais
         if status == 1{
             var countries_aux = json["Data"].arrayObject
             print(countries)
@@ -237,7 +189,7 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
-        is_mexico_setup(name_country: selected_name_country!)
+        is_mexico_setup(name_country: selected_name_country)
         hiddenGifIndicator(view: self.view)
     }
     
@@ -296,50 +248,15 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         }
         hiddenGifIndicator(view: self.view)
     }
-    
-    @objc func go_home(){
-        if self.type_view == "register" {
-            _ = self.navigationController?.popToRootViewController(animated: false)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Navigation_StudentViewController") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        } else if self.type_view == "edit"{
-            _ = navigationController?.popViewController(animated: true)
-        }
-        
-    }
-    
-    func get_data_profile(){
-        name.text = Defaults[.academic_name]
-        phone.text = Defaults[.academic_phone]
-        email.text = Defaults[.academic_email]
-        
-        // Direcciones
-        cp.text = Defaults[.academic_cp]
-        city.text = Defaults[.academic_city]
-        municipio.text = Defaults[.academic_municipio]
-        state.text = Defaults[.academic_state]
-        address.text = Defaults[.academic_description]
-
-        
-        set_photo_profile(url: Defaults[.academic_pathFoto]!, image: img_profile)
-        
-
-
-    }
-    
+  
     func is_mexico_setup(name_country: String){
-        
         if  name_country != "México" {
-            
             // Hidden View
             view_cp.isHidden = true
             view_municipio.isHidden = true
             view_ciudad.isHidden = true
             view_state.isHidden = true
-
             is_mexico = 0
-            
             cp.text = ""
             state.text = ""
             municipio.text = ""
@@ -350,7 +267,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
             view_municipio.isHidden = false
             view_ciudad.isHidden = false
             view_state.isHidden = false
-            
             is_mexico = 1
         }
     }
@@ -396,7 +312,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
         
-        email.addTarget(self, action: #selector(ProfileAcademicViewController.emailDidChange(_:)), for: UIControlEvents.editingChanged)
 
     }
     
@@ -536,7 +451,6 @@ class FormStudentViewController: BaseViewController, UIPickerViewDataSource, UIP
         }else{
             accept_error.isHidden = true
         }
-        
         
         return count_error
     }

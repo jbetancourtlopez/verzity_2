@@ -2526,7 +2526,7 @@
             <objects>
                 <viewController storyboardIdentifier="DetailUniversityViewControllerID" id="g8J-T2-5B3" customClass="DetailUniversityViewController" customModule="verzity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jb9-s3-i8t">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1020"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wbI-ef-HxG">
@@ -4402,7 +4402,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tSF-5D-yfM">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_verde_new.png" translatesAutoresizingMaskIntoConstraints="NO" id="nxo-q1-aCc">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_verde.png" translatesAutoresizingMaskIntoConstraints="NO" id="nxo-q1-aCc">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                             </imageView>
                                         </subviews>
@@ -5138,46 +5138,7 @@
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.24314" green="0.51765000000000005" blue="0.14902000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <font key="NSFont" size="17" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops>
-                                                                            <textTab alignment="left" location="28">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="56">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="84">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="112">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="140">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="168">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="196">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="224">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="252">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="280">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="308">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                            <textTab alignment="left" location="336">
-                                                                                <options/>
-                                                                            </textTab>
-                                                                        </tabStops>
-                                                                    </paragraphStyle>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                     <integer key="NSUnderline" value="1"/>
                                                                     <color key="NSUnderlineColor" red="0.24314" green="0.51765000000000005" blue="0.14902000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </attributes>
@@ -9340,13 +9301,12 @@
         <image name="ic_visitar_web" width="48" height="48"/>
         <image name="instagram" width="72" height="72"/>
         <image name="logo_verde.png" width="228" height="228"/>
-        <image name="logo_verde_new.png" width="1772" height="1772"/>
         <image name="logo_white" width="76" height="76"/>
         <image name="modalllll" width="160" height="133"/>
         <image name="transit_enterexit" width="36" height="36"/>
         <image name="twitter" width="89.475730895996094" height="89.475730895996094"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PQl-r5-m7e"/>
+        <segue reference="toW-DE-Edc"/>
     </inferredMetricsTieBreakers>
 </document>
