@@ -85,7 +85,20 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
            self.idEvaluacion = self.question["idEvaluacion"].intValue
         }
         
-        let array_parameter = ["idEvaluacion": self.idEvaluacion, "idPersona": idPersona, "idEvaluacionPersona": idEvaluacionPersona] as [String : Any]
+        self.idEvaluacionPersona = self.question["idEvaluacionPersona"].intValue
+        var estatus = JSON(self.question["Estatus"])
+        
+        
+        let array_parameter = [
+            "idEvaluacion": self.idEvaluacion,
+            "idPersona": idPersona,
+            "idEvaluacionPersona": idEvaluacionPersona,
+            "idEstatus": self.question["idEstatus"].intValue,
+            "Estatus": ["desEstatus" : estatus["desEstatus"].stringValue]
+        ] as [String : Any]
+        
+        print(array_parameter)
+        
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "getDetalleEvaluacion", doneFunction: callback_load_data)
@@ -103,18 +116,25 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.idEvaluacionPersona = data["idEvaluacionPersona"].intValue
             progress_view.setProgress(0.0, animated: true)
             
-            for i in 0 ..< items.count{
-                var question = JSON(self.items[i])
-                if question["isResuelto"].boolValue {
-                    self.selected_question = self.selected_question + 1
+            print("items.count")
+            print(items.count)
+            
+            if items.count == 0{
+                _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
+                showMessage(title: "La evaluación no cuenta con preguntas asignadas", automatic: true)
+            }else{
+                
+                for i in 0 ..< items.count{
+                    var question = JSON(self.items[i])
+                    if question["isResuelto"].boolValue {
+                        self.selected_question = self.selected_question + 1
+                    }
                 }
+                set_data_question()
             }
-          
-            set_data_question()
         }else{
             print("Cuestionario")
             _ = self.navigationController?.popViewController(animated: false)
-
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
             self.show(vc, sender: nil)
         }
@@ -133,10 +153,7 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         print("Terminar")
         
         let yesAction = UIAlertAction(title: "Aceptar", style: .default) { (action) -> Void in
-            
-            print("SI")
             _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
-
         }
         
         let cancelAction = UIAlertAction(title: "Cancelar", style: .default) { (action) -> Void in
@@ -259,8 +276,12 @@ class QuizViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 }
 
 extension QuizViewController: QuestionResultViewControllerDelegate{
-    func closeButtonTapped() {
-        print("Close Button")
+    func closeButtonTapped(is_error: Int) {
+       
+        if  is_error == 1{
+            showMessage(title: "Ha ocu", automatic: true)
+        }
+        
        // let vc = self.storyboard?.instantiateViewController(withIdentifier: "QuestionViewControllerID") as! QuestionViewController
        // self.show(vc, sender: nil)
         _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)

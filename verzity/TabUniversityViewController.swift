@@ -6,7 +6,6 @@ import SwiftyUserDefaults
 class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Inputs
-    
     @IBOutlet var tableView: UITableView!
     @IBOutlet var segment: UISegmentedControl!
     
@@ -58,7 +57,6 @@ class TabUniversityViewController: BaseViewController, UITableViewDelegate, UITa
     @IBAction func on_click_segment(_ sender: Any) {
         print("click")
         let index = segment.selectedSegmentIndex
-    
         self.segment_selected = index
         load_data()
     }

@@ -3,7 +3,6 @@ import SwiftyJSON
 import Kingfisher
 import SwiftyUserDefaults
 
-
 protocol DetailBuyViewControllerDelegate: class {
     func okButtonTapped(is_summary:Int)
 }
@@ -22,10 +21,8 @@ class DetailBuyViewController: BaseViewController {
     var info: AnyObject!
     var is_summary = 0
     var is_paquete_asesor = 0
-    
     var delegate: DetailBuyViewControllerDelegate?
     let alertViewGrayColor = UIColor(red: 224.0/255.0, green: 224.0/255.0, blue: 224.0/255.0, alpha: 1)
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,7 +9,6 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
     weak var delegate:SidebarViewDelegate?
     var blackScreen: UIView!
     
-    
     @IBOutlet var collectionView: UICollectionView!
     
     var webServiceController = WebServiceController()
@@ -72,9 +71,13 @@ class MainViewController: BaseViewController, UICollectionViewDataSource, UIColl
             self.show(vc, sender: nil)
         }
     }
+    
     func validate_package(){
+        print("validate_package")
+        print(usuario)
         
         var idPaquete = self.usuario.Persona?.Universidades?.VestasPaquetes?.idPaquete
+        print(idPaquete)
         if  idPaquete == 0{
             let vc = storyboard?.instantiateViewController(withIdentifier: "PackagesViewControllerID") as! PackagesViewController
             self.show(vc, sender: nil)

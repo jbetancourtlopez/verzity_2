@@ -35,10 +35,19 @@ class SelectLocationViewController: BaseViewController, UISearchBarDelegate, CLL
         let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(action(gestureRecognizer:)))
         mapView.addGestureRecognizer(tapGesture)
         
-        let lat = self.usuario.Persona?.Direcciones?.dcLatitud
-        let lon = self.usuario.Persona?.Direcciones?.dcLongitud
-        var lat_d = Double(lat!)
-        var lon_d = Double(lon!)
+        var lat = self.usuario.Persona?.Universidades?.Direcciones?.dcLatitud
+        var lon = self.usuario.Persona?.Universidades?.Direcciones?.dcLongitud
+        
+        if lat == "" {
+            lat = "0.0"
+        }
+        
+        if lon == "" {
+            lon = "0.0"
+        }
+        
+        let lat_d = Double(lat!)
+        let lon_d = Double(lon!)
         
         set_pin(newLocation: CLLocation(latitude: lat_d!, longitude: lon_d!))
  

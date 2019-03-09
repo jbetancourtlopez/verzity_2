@@ -28,6 +28,12 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         setup_ux()
         load_data(type:type)
         
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        
+        view.addGestureRecognizer(tap)
+      
+        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
         if #available(iOS 10.0, *) {
@@ -37,6 +43,11 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         self.refreshControl = refreshControl
        
+    }
+    
+    override func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     @objc func handleRefresh() {
@@ -161,6 +172,18 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.filtered_array = self.filtered
         self.tableView.reloadData()
     }
+    
+//    func searchBarSearchButtonClicked(searchBar: UISearchBar)
+//    {
+//        //searchActive = false;
+//        self.searchBar.endEditing(true)
+//        searchBar.resignFirstResponder()
+//    }
+//
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // hides the keyboard.
+    }
+   
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {

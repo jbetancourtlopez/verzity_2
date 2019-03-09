@@ -497,10 +497,14 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
             
             // Valido si tiene un paquete vendido
             if ventasPaquetes_array.count > 0{
+                print("ventasPaquetes_array")
                 let ventasPaquetes_json = JSON(ventasPaquetes_array[0])
-                
+               
                 // Valido si tiene un paquete
                 if ventasPaquetes_json["Paquete"] != JSON.null{
+                    
+                    print("ventasPaquetes_json")
+                    
                     let paquete_json = JSON(ventasPaquetes_json["Paquete"])
                     paquete.idPaquete = paquete_json["idPaquete"].intValue
                     paquete.idEstatus = paquete_json["idEstatus"].intValue
@@ -533,6 +537,8 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
                 ventasPaquetes.fgRecurrente = ventasPaquetes_json["fgRecurrente"].stringValue
                 ventasPaquetes.numReferenciaPaypal = ventasPaquetes_json["numReferenciaPayPal"].stringValue
             }
+            print("test")
+            print(paquete)
             ventasPaquetes.Paquete = paquete
             
             universidades.idUniversidad = universidades_json[0]["idUniversidad"].intValue

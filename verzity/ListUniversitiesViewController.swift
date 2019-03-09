@@ -31,6 +31,8 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_table()
         setup_search_bar()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -189,6 +191,9 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         self.tableView.reloadData()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // hides the keyboard.
+    }
     
     //Table View. -------------------
     

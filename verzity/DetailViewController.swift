@@ -137,7 +137,7 @@ class DetailViewController: BaseViewController {
         postulate_date.text = day + " " + date
         
         // Titulo
-        postulate_name_postulate.text = "Nueva Postulacion"
+        postulate_name_postulate.text = "Nueva Postulación"
         
         // Datos de la Persona
         postulate_name.text = persona["nbCompleto"].stringValue

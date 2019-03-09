@@ -1,11 +1,3 @@
-//
-//  FirstFormViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 10/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import FloatableTextField
 import SwiftyJSON
@@ -20,8 +12,11 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     @IBOutlet var first_phone: FloatableTextField!
     @IBOutlet var first_email: FloatableTextField!
     
+    var usuario = Usuario()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         setup_textfield()
         set_data()
         
@@ -43,8 +38,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
             first_name_university.setState(.DEFAULT, with: "")
         }
         
-     
-        
         //Descripcion
         if FormValidate.isEmptyTextField(textField: first_description){
             first_description.setState(.FAILED, with: StringsLabel.required)
@@ -64,7 +57,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
             }else{
                 first_web.setState(.DEFAULT, with: "")
             }
-            
         }
         
         //Telefono
@@ -92,7 +84,6 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
                 first_email.setState(.DEFAULT, with: "")
             }
         }
-        
         return count_error
     }
     
@@ -105,11 +96,13 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
     }
     
     func set_data(){
-        first_name_university.text = Defaults[.university_nbUniversidad]
-        first_description.text = Defaults[.university_desUniversidad]
-        first_web.text = Defaults[.university_desSitioWeb]
-        first_phone.text = Defaults[.university_desTelefono]
-        first_email.text = Defaults[.university_desCorreo]
+        var univ = Universidades()
+        univ = (self.usuario.Persona?.Universidades)!
+        first_name_university.text = univ.nbUniversidad
+        first_description.text = univ.desUniversidad
+        first_web.text = univ.desSitioWeb
+        first_phone.text = univ.desTelefono
+        first_email.text = univ.desCorreo
     }
     
     @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -129,6 +122,4 @@ class FirstFormViewController: BaseViewController, FloatableTextFieldDelegate {
                 return true
         }
     }
-    
-
 }

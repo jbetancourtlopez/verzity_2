@@ -50,11 +50,21 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
         showGifIndicator(view: self.view)
         
         var evaluacion = JSON(self.question["Evaluaciones"])
+        var Estatus = JSON(self.question["Estatus"])
+        
+        print(self.question)
         
         let array_parameter = [
-            "idPersona": usuario.Persona?.idPersona,
-            "idEvaluacion":evaluacion["idEvaluacion"].intValue
+            "idPersona": self.question["idPersona"].intValue,
+            "idEvaluacionPersona": self.question["idEvaluacionPersona"].intValue,
+            "idEvaluacion":evaluacion["idEvaluacion"].intValue,
+            "idEstatus": Estatus["idEstatus"].intValue,
+            "Estatus": [
+                "desEstatus": Estatus["desEstatus"].stringValue ],
             ] as [String : Any]
+        
+        print(array_parameter)
+        
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
         webServiceController.get(parameters: parameter_json_string!, method: "getResultado", doneFunction: callback_load_data)
@@ -62,7 +72,8 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
     
     func callback_load_data(status: Int, response: AnyObject){
         var json = JSON(response)
-        //print(json)
+        print(json)
+        hiddenGifIndicator(view: self.view)
         if status == 1{
             var data = JSON(json["Data"])
             title_question.text = data["nombreEvaluacion"].stringValue
@@ -72,8 +83,14 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
             let html2 = html1.replacingOccurrences(of:"\n", with: "")
             let html_v2 = "<div style=\"text-align:center !important; margin: 0 auto !important;\">\(html2)</div>"
             self.web_view.loadHTMLString(html_v2, baseURL: nil)
+        }else{
+            delegate?.closeButtonTapped(is_error: 1)
+            self.dismiss(animated: true, completion: nil)
+            _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
+
+           
         }
-        hiddenGifIndicator(view: self.view)
+       
     }
     
     func setupView() {
@@ -91,7 +108,7 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
     }
 
     @IBAction func on_click_close(_ sender: Any) {
-        delegate?.closeButtonTapped()
+        delegate?.closeButtonTapped(is_error: 0)
         
         _ = self.navigationController?.popViewController(animated: false)  //popToRootViewController(animated: false)
         self.dismiss(animated: true, completion: nil)
@@ -100,5 +117,5 @@ class QuestionResultViewController: BaseViewController, UIWebViewDelegate {
 }
 
 protocol QuestionResultViewControllerDelegate: class {
-    func closeButtonTapped()
+    func closeButtonTapped(is_error: Int)
 }

@@ -12,3 +12,8 @@ class CustomSwich : UISwitch {
     var section: Int = 0
     var row: Int = 0
 }
+
+class CustomButon : UIButton {
+    var section: Int = 0
+    var row: Int = 0
+}

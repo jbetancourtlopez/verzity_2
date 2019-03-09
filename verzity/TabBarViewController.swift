@@ -18,8 +18,4 @@ class TabBarViewController: UITabBarController {
         
         self.viewControllers = [univ1, univ2, univ3]
     }
-    
-
-
-
 }

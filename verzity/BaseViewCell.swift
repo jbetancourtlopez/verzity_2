@@ -121,7 +121,7 @@ class QuestionTableViewCell: UITableViewCell{
     @IBOutlet var photo_question: UIImageView!
     @IBOutlet var title: UILabel!
     @IBOutlet var status: UILabel!
-    @IBOutlet var buton_start: UIButton!
+    @IBOutlet var buton_start: CustomButon!
         
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,18 +1,8 @@
-//
-//  SecondFormViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 10/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import FloatableTextField
 import SwiftyJSON
 import SwiftyUserDefaults
 import MapKit
-
-
 
 class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate, FloatableTextFieldDelegate {
 
@@ -40,11 +30,11 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     var longitud: Double = 0.0
     
     let geocoder = CLGeocoder()
-    
-    
+    var usuario = Usuario()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.usuario = get_user()
         setup_ux()
         setup_textfield()
         load_countries()
@@ -55,10 +45,7 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         
         registerForKeyboardNotifications(scrollView: scrollView)
         setGestureRecognizerHiddenKeyboard()
-
     }
-    
-    
     
     @IBAction func on_click_map(_ sender: Any) {
         let selectLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectLocationViewControllerID") as! SelectLocationViewController
@@ -67,7 +54,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         selectLocationViewController.definesPresentationContext = true
         selectLocationViewController.selectLocationViewControllerDelegate = self
         self.present(selectLocationViewController, animated: true, completion: nil)
-    
     }
     
     
@@ -85,7 +71,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         icon_location.tintColor = Colors.gray
          */
         
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKey))
         self.view.addGestureRecognizer(tap)
     }
@@ -101,7 +86,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
         
         // on_change_code_postal
         second_cp.addTarget(self, action: #selector(SecondFormViewController.cpDidChange(_:)), for: UIControlEvents.editingChanged)
-        
     }
     
     func load_countries(){
@@ -115,7 +99,7 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     
     func GetPaises(status: Int, response: AnyObject){
         var json = JSON(response)
-        let selected_name_country = Defaults[.add_uni_nbPais]!
+        let selected_name_country = self.usuario.Persona?.Universidades?.Direcciones?.nbPais
         if status == 1{
             var countries_aux = json["Data"].arrayObject
             print(countries)
@@ -132,18 +116,20 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
             showMessage(title: response as! String, automatic: true)
         }
         countryPickerView.reloadAllComponents()
+        
         // Establesco el Pais Seleccionado
         for i in 0 ..< countries.count{
             var item_country_json = JSON(countries[i])
             let name_country = item_country_json["nbPais"].stringValue
-            self.name_country = name_country
+            
             let isEqual = (selected_name_country == name_country)
             if isEqual {
+                self.name_country = name_country
                 countryPickerView.selectRow(i, inComponent:0, animated:true)
             }
         }
         
-        is_mexico_setup(name_country: selected_name_country)
+        is_mexico_setup(name_country: selected_name_country!)
         hiddenGifIndicator(view: self.view)
     }
     
@@ -201,7 +187,6 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
             second_location.setState(.DEFAULT, with: "")
         }
        
-        
         return count_error
     }
     
@@ -221,11 +206,9 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
         var item_country_json = JSON(countries[row])
         self.name_country = item_country_json["nbPais"].stringValue
         is_mexico_setup(name_country: self.name_country)
-       
     }
     
     func is_mexico_setup(name_country: String){
@@ -254,24 +237,34 @@ class SecondFormViewController: BaseViewController, UIPickerViewDataSource, UIPi
     
     
     func set_data(){
-        second_cp.text = Defaults[.add_uni_numCodigoPostal]
-        second_state.text = Defaults[.add_uni_nbEstado]
-        second_municipio.text = Defaults[.add_uni_nbMunicipio]
-        second_city.text = Defaults[.add_uni_nbCiudad]
-        second_description.text = Defaults[.add_uni_desDireccion]
         
-        print(Defaults[.add_uni_dcLatitud])
+        print(self.usuario)
         
-        print(Defaults[.add_uni_desDireccion])
+        var univ = Universidades()
+        univ = (self.usuario.Persona?.Universidades)!
         
-        print(Defaults[.add_uni_nbPais]!)
+        second_cp.text = univ.Direcciones?.numCodigoPostal
+        second_state.text = univ.Direcciones?.nbEstado
+        second_municipio.text = univ.Direcciones?.nbMunicipio
+        second_city.text = univ.Direcciones?.nbCiudad
+        second_description.text = univ.Direcciones?.desDireccion
         
-       
-        self.latitud = Defaults[.add_uni_dcLatitud]!
-        self.longitud = Defaults[.add_uni_dcLongitud]!
+        var lat = univ.Direcciones!.dcLatitud
+        var lon = univ.Direcciones!.dcLongitud
+        
+        if lat == "" {
+            lat = "0.0"
+        }
+        
+        if lon == "" {
+            lon = "0.0"
+        }
+        
+        self.latitud = Double(lat)!
+        self.longitud = Double(lon)!
         
         // Genero la location_text
-        geocoderLocation(newLocation: CLLocation(latitude: Defaults[.add_uni_dcLatitud]!, longitude: Defaults[.add_uni_dcLongitud]!))
+        geocoderLocation(newLocation: CLLocation(latitude: self.latitud, longitude: self.longitud))
     }
     
     @objc(textField:shouldChangeCharactersIn:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

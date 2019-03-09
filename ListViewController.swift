@@ -34,6 +34,9 @@ class ListViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         self.paquete = get_paquete(usuario: self.usuario)
         
+        print(self.usuario)
+        
+        
         load_data()
        
         list_postulation.remove(at: 0)

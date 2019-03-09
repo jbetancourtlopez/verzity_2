@@ -1,11 +1,3 @@
-//
-//  ProfileUniversityViewController.swift
-//  verzity
-//
-//  Created by Jossue Betancourt on 09/07/18.
-//  Copyright © 2018 Jossue Betancourt. All rights reserved.
-//
-
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
@@ -24,9 +16,11 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     var data_form = NSMutableDictionary()
     var webServiceController = WebServiceController()
     var present_count = 0
+    var usuario = Usuario()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usuario = get_user()
         update_button()
         setup_ux()
         set_data()
@@ -36,13 +30,10 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     
     override func viewWillAppear(_ animated: Bool) {
         update_button()
-        
     }
 
     func setup_back_button(){
         let image = UIImage(named: "back")?.withRenderingMode(.alwaysOriginal)
-        
-        
         let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_back))
         
         let button = UIButton(type: .system)
@@ -50,10 +41,8 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         button.setTitle("Inicio", for: .normal)
         button.sizeToFit()
         button.addTarget(self, action: #selector(on_click_back), for: .touchUpInside)
-
         
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(customView: button)
-        
         self.navigationItem.leftBarButtonItem = button_back
     }
 
@@ -65,7 +54,9 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
 
     func set_data(){
-        set_photo_profile(url: Defaults[.university_pathLogo]!, image: img_profile)
+        let url_photo = self.usuario.Persona?.pathFoto
+        self.name_image = (self.usuario.Persona?.pathFoto)!
+        set_photo_profile(url: url_photo!, image: img_profile)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -178,23 +169,26 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
     
     func save_data(){
+        
+        
         print(self.name_image)
         debugPrint(data_form)
         print("Guardar Datos")
+        print(self.usuario)
         showGifIndicator(view: self.view)
         
         let array_parameter = [
             "desCorreo": data_form["first_email"]!,
             "desUniversidad": data_form["first_description"]!,
-            "idUniversidad": Defaults[.university_idUniveridad]!,
-            "idDireccion": Defaults[.add_uni_idDireccion]!,
+            "idUniversidad": self.usuario.Persona?.Universidades?.idUniversidad,
+            "idDireccion": self.usuario.Persona?.Universidades?.Direcciones?.idDireccion,
             "pathLogo": self.name_image,
             "Direcciones": [
                 "nbCiudad": data_form["second_city"],
                 "numCodigoPostal": data_form["second_cp"],
                 "desDireccion": data_form["second_description"],
                 "nbEstado": data_form["second_state"],
-                "idDireccion": Defaults[.add_uni_idDireccion]!,
+                "idDireccion": self.usuario.Persona?.Universidades?.idDireccion,
                 "nbMunicipio": data_form["second_municipio"],
                 "nbPais": data_form["second_pais"],
                 "dcLatitud": data_form["latitud"] ,
@@ -219,49 +213,55 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
         print(json)
         if status == 1{
              showMessage(title: json["Mensaje"].stringValue, automatic: true)
-            // Guardo en Session los datos que devuelve
             
             var data = JSON(json["Data"])
             var direccion = JSON(data["Direcciones"])
+            
+            if let usuario_db = realm.objects(Usuario.self).first{
+                try! realm.write {
+                    
+                    // Direccion Universidad
+                    var direccion_model = Direcciones()
+                    direccion_model.idDireccion = direccion["idDireccion"].intValue
+                    direccion_model.desDireccion = direccion["desDireccion"].stringValue
+                    direccion_model.numCodigoPostal = direccion["numCodigoPostal"].stringValue
+                    direccion_model.nbPais = direccion["nbPais"].stringValue
+                    direccion_model.nbEstado = direccion["nbEstado"].stringValue
+                    direccion_model.nbMunicipio = direccion["nbMunicipio"].stringValue
+                    direccion_model.nbCiudad = direccion["nbCiudad"].stringValue
+                    direccion_model.dcLatitud = direccion["dcLatitud"].stringValue
+                    direccion_model.dcLongitud = direccion["dcLongitud"].stringValue
+                    
+                    //Universidad
+                    var universidad = Universidades()
+                    universidad.pathLogo = self.name_image
+                    universidad.idUniversidad = data["idUniversidad"].intValue
+                    universidad.pathLogo =  data["pathLogo"].stringValue
+                    universidad.nbUniversidad =  data["nbUniversidad"].stringValue
+                    universidad.nbReprecentante =  data["nbReprecentante"].stringValue
+                    universidad.desUniversidad =  data["desUniversidad"].stringValue
+                    universidad.desSitioWeb = data["desSitioWeb"].stringValue
+                    universidad.desTelefono =  data["desTelefono"].stringValue
+                    universidad.desCorreo =  data["desCorreo"].stringValue
+                    universidad.idPersona = (self.usuario.Persona?.idPersona)!
+                    universidad.Direcciones = direccion_model
+                    universidad.VestasPaquetes = self.usuario.Persona?.Universidades?.VestasPaquetes
+                    
+                    usuario_db.Persona?.Universidades = universidad
+                
+                }
+            }
            
-            Defaults[.university_pathLogo] = self.name_image
-            
-            //Universidad
-            Defaults[.university_idUniveridad] = data["idUniversidad"].intValue
-            Defaults[.university_pathLogo] =  data["pathLogo"].stringValue
-            Defaults[.university_nbUniversidad] =  data["nbUniversidad"].stringValue
-            Defaults[.university_nbReprecentante] =  data["nbReprecentante"].stringValue
-            Defaults[.university_desUniversidad] =  data["desUniversidad"].stringValue
-            Defaults[.university_desSitioWeb] = data["desSitioWeb"].stringValue
-            Defaults[.university_desTelefono] =  data["desTelefono"].stringValue
-            Defaults[.university_desCorreo] =  data["desCorreo"].stringValue
-            Defaults[.university_idPersona] = data["idPersona"].intValue
-            
-            
-            // Direccion Universidad
-            Defaults[.add_uni_idUniversidad] = direccion["idDireccion"].intValue
-            Defaults[.add_uni_desDireccion] = direccion["desDireccion"].stringValue
-            Defaults[.add_uni_numCodigoPostal] = direccion["numCodigoPostal"].stringValue
-            Defaults[.add_uni_nbPais] = direccion["nbPais"].stringValue
-            Defaults[.add_uni_nbEstado] = direccion["nbEstado"].stringValue
-            Defaults[.add_uni_nbMunicipio] = direccion["nbMunicipio"].stringValue
-            Defaults[.add_uni_nbCiudad] = direccion["nbCiudad"].stringValue
-            Defaults[.add_uni_dcLatitud] = direccion["dcLatitud"].doubleValue
-            Defaults[.add_uni_dcLongitud] = direccion["dcLongitud"].doubleValue
-            
             Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(go_home), userInfo: nil, repeats: false)
 
             
         }else {
             showMessage(title: response as! String, automatic: true)
         }
-        
     }
     
-    
     @objc func go_home(){
-        let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-        self.show(vc, sender: nil)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     

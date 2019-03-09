@@ -18,17 +18,14 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
     var list_sections: [String] = []
     var usuario: Usuario = Usuario()
     var tipo:Int = 0
-     var refreshControl = UIRefreshControl()
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.delegate = self
         tableView.dataSource = self
-        
         usuario = get_user()
 
-        
         tableView.estimatedRowHeight = 60
         setup_ux()
         load_data()
@@ -55,7 +52,7 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
         let array_parameter = ["idUniversidad":idUniversidad]
         let parameter_json = JSON(array_parameter)
         let parameter_json_string = parameter_json.rawString()
-        webServiceController.sendRequest_fix(parameters: parameter_json_string!, type:self.tipo, method:"GetPostulados", doneFunction: GetList)
+        webServiceController.fix_get_postulados(parameters: parameter_json_string!, type:self.tipo, method:"GetPostulados", doneFunction: GetList)
     }
     
     func GetList(status: Int, response: AnyObject){
@@ -119,8 +116,6 @@ class PostuladoViewController: BaseViewController, UITableViewDelegate, UITableV
                 list_postulate.append(list_financing)
                 list_sections.append("Financiamientos")
             }
-            
-            
             
         }
         tableView.reloadData()

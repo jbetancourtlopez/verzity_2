@@ -23,6 +23,8 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         setup_ux()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
@@ -92,6 +94,9 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         build_data()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // hides the keyboard.
+    }
     func build_data(){
         
         let sear = self.search.lowercased()
@@ -172,6 +177,8 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         let idEstatus = estatus["idEstatus"].intValue
         
+        print(item)
+        
         if (idEstatus == 7){
             cell.buton_start.setTitle("PRESENTAR", for: UIControlState.normal)
             cell.buton_start.backgroundColor = hexStringToUIColor(hex: "ff9d00")
@@ -188,16 +195,21 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         cell.buton_start.addTarget(self, action: #selector(self.on_click_start), for:.touchUpInside)
         cell.buton_start.tag = indexPath.row
+        cell.buton_start.section = indexPath.section
+        
         return cell
     }
     
-    @objc func on_click_start(sender: UIButton){
+    @objc func on_click_start(sender: CustomButon){
         let index = sender.tag
-    
-        let item = JSON(self.items[index])
+        let list = JSON(sections[sender.section])
+        let item = JSON(list[index])
         let estatus = JSON(item["Estatus"])
         
         let idEstatus = estatus["idEstatus"].intValue
+        
+        print(sender.section)
+        print(item)
         
         if idEstatus != 9{
             let vc = storyboard?.instantiateViewController(withIdentifier: "QuizViewControllerID") as! QuizViewController
@@ -205,7 +217,7 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
             self.show(vc, sender: nil)
         }else{
             print("Abrir Modal")
-            
+
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "QuestionResultViewControllerID") as! QuestionResultViewController
             customAlert.providesPresentationContextTransitionStyle = true
             customAlert.definesPresentationContext = true
@@ -217,7 +229,7 @@ class QuestionViewController: BaseViewController, UITableViewDelegate, UITableVi
 }
 
 extension QuestionViewController: QuestionResultViewControllerDelegate{
-    func closeButtonTapped() {
+    func closeButtonTapped(is_error: Int) {
         print("Close Button")
     }
 }

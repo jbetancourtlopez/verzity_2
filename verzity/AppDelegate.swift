@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Sanbox: AQAP2y1cMhZoAx7nPTZ5ge9Q9qRcuCOa-ruTbUvL8xcqtw0Y7hZ_pDs7HqK2cxmoT4mCYG6jiGc7WOmE
         // Paypal
-        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentProduction: cvpaypal, PayPalEnvironmentSandbox: ""])
+        PayPalMobile .initializeWithClientIds(forEnvironments: [PayPalEnvironmentProduction: cvpaypal, PayPalEnvironmentSandbox: "AQAP2y1cMhZoAx7nPTZ5ge9Q9qRcuCOa-ruTbUvL8xcqtw0Y7hZ_pDs7HqK2cxmoT4mCYG6jiGc7WOmE"])
         
         //Firebase
         FirebaseApp.configure()

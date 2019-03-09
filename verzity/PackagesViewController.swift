@@ -1,7 +1,6 @@
 import UIKit
 import SwiftyJSON
 import SwiftyUserDefaults
-
 import SystemConfiguration
 import SwiftyUserDefaults
 
@@ -19,8 +18,9 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
 
     // Init Paypal
     var payPalConfig = PayPalConfiguration()
-    
-    var environment:String = PayPalEnvironmentProduction {
+    //PayPalEnvironmentSandbox o PayPalEnvironmentNoNetwork
+    //PayPalEnvironmentProduction
+    var environment:String = PayPalEnvironmentNoNetwork {
         willSet(newEnvironment) {
             if (newEnvironment != environment) {
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)
@@ -40,6 +40,8 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usuario = get_user()
+        
+        print(usuario)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -81,8 +83,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
     
     func setup_back_button(){
         let image = UIImage(named: "back")?.withRenderingMode(.alwaysOriginal)
-        
-        
         let button_back = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(on_click_back))
         
         let button = UIButton(type: .system)
@@ -391,20 +391,52 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
          hiddenGifIndicator(view: self.view)
         let json = JSON(response)
         if status == 1{
-            var data = JSON(json["Data"])
+            
             print("Guardando Paquete")
+            
+            var ventasPaquetes_json = JSON(json["Data"])
+            var paquete_json = JSON(ventasPaquetes_json["Paquete"])
+            
             
             if let usuario_db = realm.objects(Usuario.self).first{
                 try! realm.write {
                     let ventasPaquetes = VestasPaquetes()
-                    ventasPaquetes.idPaquete = data["idPaquete"].intValue
-                    ventasPaquetes.feVenta = data["feVenta"].stringValue
-                    ventasPaquetes.feVigencia = data["feVigencia"].stringValue
+                    let paquete = Paquete()
+                    
+                    paquete.idPaquete = paquete_json["idPaquete"].intValue
+                    paquete.idEstatus = paquete_json["idEstatus"].intValue
+                    paquete.cvPaquete = paquete_json["cvPaquete"].stringValue
+                    paquete.nbPaquete = paquete_json["nbPaquete"].stringValue
+                    paquete.desPaquete = paquete_json["desPaquete"].stringValue
+                    paquete.dcDiasVigencia = paquete_json["dcDiasVigencia"].stringValue
+                    paquete.fgAplicaBecas = paquete_json["fgAplicaBecas"].stringValue
+                    paquete.fgAplicaFinanciamiento = paquete_json["fgAplicaFinanciamiento"].stringValue
+                    paquete.fgAplicaPostulacion = paquete_json["fgAplicaPostulacion"].stringValue
+                    paquete.fgAplicaProspectus = paquete_json["fgProspectus"].stringValue
+                    paquete.fgAplicaLogo = paquete_json["fgAplicaLogo"].stringValue
+                    paquete.fgAplicaDireccion = paquete_json["fgAplicaDireccion"].stringValue
+                    paquete.fgAplicaFavoritos = paquete_json["fgAplicaFavoritos"].stringValue
+                    paquete.fgAplicaUbicacion = paquete_json["fgAplicaUbicacion"].stringValue
+                    paquete.fgAplicaRedes = paquete_json["fgAplicaRedes"].stringValue
+                    paquete.fgAplicaProspectusVideo = paquete_json["fgAplicaProspectusVideo"].stringValue
+                    paquete.fgAplicaProspectusVideos = paquete_json["fgAplicaProspectusVideos"].stringValue
+                    paquete.fgAplicaAplicaImagenes = paquete_json["fgAplicaImagenes"].stringValue
+                    paquete.fgAplicaContacto = paquete_json["fgAplicaContacto"].stringValue
+                    paquete.fgAplicaDescripcion = paquete_json["fgAplicaDescripcion"].stringValue
+                    
+                    ventasPaquetes.idVentasPaquetes = ventasPaquetes_json["fgPaqueteActual"].intValue
+                    ventasPaquetes.idUniversidad = ventasPaquetes_json["idUniversidad"].intValue
+                    ventasPaquetes.idPaquete = ventasPaquetes_json["idPaquete"].intValue
+                    ventasPaquetes.feVenta = ventasPaquetes_json["feVenta"].stringValue
+                    ventasPaquetes.feVigencia = ventasPaquetes_json["feVigencia"].stringValue
+                    ventasPaquetes.fgPaqueteActual = ventasPaquetes_json["fgPaqueteActual"].stringValue
+                    ventasPaquetes.fgRecurrente = ventasPaquetes_json["fgRecurrente"].stringValue
+                    ventasPaquetes.numReferenciaPaypal = ventasPaquetes_json["numReferenciaPayPal"].stringValue
+                    
+                    ventasPaquetes.Paquete = paquete
                     usuario_db.Persona?.Universidades?.VestasPaquetes = ventasPaquetes
                 }
             }
-            
-            
             
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = json as AnyObject
@@ -426,7 +458,6 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
             let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "DetailBuyViewControllerID") as! DetailBuyViewController
             customAlert.info = package as AnyObject
             customAlert.is_summary = 1
-            
             customAlert.providesPresentationContextTransitionStyle = true
             customAlert.definesPresentationContext = true
             customAlert.delegate = self
@@ -488,13 +519,16 @@ class PackagesViewController:BaseViewController, UITableViewDelegate, UITableVie
 
 extension PackagesViewController: DetailBuyViewControllerDelegate {
     func okButtonTapped(is_summary:Int) {
-        if  is_summary == 0{
-//            let vc = storyboard?.instantiateViewController(withIdentifier: "Main") as! MainViewController
-//            self.show(vc, sender: nil)
-            _ = self.navigationController?.popViewController(animated: false)
-
+        
+        print(self.have_package)
+        
+        if self.have_package == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "ProfileUniversityViewControllerID") as! ProfileUniversityViewController
+            self.show(vc, sender: nil)
+        }else{
+            if  is_summary == 0{
+                _ = self.navigationController?.popViewController(animated: false)
+            }
         }
     }
-    
-
 }

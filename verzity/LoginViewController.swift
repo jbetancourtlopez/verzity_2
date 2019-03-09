@@ -194,6 +194,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         if status == 1{
             var json = JSON(response)
             let data = JSON(json["Data"])
+            
+            print(data)
             save_profile(data:data)
             performSegue(withIdentifier: "showSplash", sender: self)
         }else{
@@ -214,7 +216,6 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
         }
     }
 
-    
     @objc func on_click_forget(sender:UITapGestureRecognizer) {
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "ForgetViewControllerID") as! ForgetViewController
         customAlert.providesPresentationContextTransitionStyle = true
