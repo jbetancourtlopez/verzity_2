@@ -60,7 +60,28 @@ class BaseViewController: UIViewController, UITextFieldDelegate{
         arg.sizeToFit()
         arg.isScrollEnabled = false
      }
-
+    
+    func set_image_without_placeholder(url:String, image: UIImageView){
+        // Formateo la Imagen
+        var url_image = url
+        url_image = url_image.replacingOccurrences(of: "~", with: "")
+        url_image = url_image.replacingOccurrences(of: "\\", with: "")
+        
+        let desRutaMultimedia = Defaults[.desRutaMultimedia]!
+        var desCarpetaMultimedia = Defaults[.desCarpetaMultimediaFTP]!
+        
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "~", with: "")
+        desCarpetaMultimedia = desCarpetaMultimedia.replacingOccurrences(of: "\\", with: "")
+        
+        let url =  "\(desRutaMultimedia)\(url_image)"
+        print("Image Url: \(url)")
+        let URL = Foundation.URL(string: url)
+        
+        
+        // Coloco la Imagen
+        image.kf.setImage(with: URL)
+    }
+    
     func set_photo_profile(url:String, image: UIImageView){
         // Formateo la Imagen
         var url_image = url

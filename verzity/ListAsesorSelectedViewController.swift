@@ -26,7 +26,7 @@ class ListAsesorSelectedViewController: BaseViewController, UITableViewDelegate,
     
     // Sandbox: PayPalEnvironmentNoNetwork or PayPalEnvironmentSandbox
     // Production: PayPalEnvironmentProduction
-    var environment:String = PayPalEnvironmentProduction {
+    var environment:String = PayPalEnvironmentSandbox {
         willSet(newEnvironment) {
             if (newEnvironment != environment) {
                 PayPalMobile.preconnect(withEnvironment: newEnvironment)

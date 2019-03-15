@@ -21,6 +21,7 @@ class QrCouponViewController: BaseViewController {
     var webServiceController = WebServiceController()
     var data: AnyObject!
     var qrcodeImage: CIImage!
+    var actionButton : ActionButton!
     var usuario = Usuario()
     
     override func viewDidLoad() {
@@ -86,8 +87,29 @@ class QrCouponViewController: BaseViewController {
     
     func setup_ux(){
         view_code_qr.isHidden = true
+        
+        
+        actionButton = ActionButton(attachedToView: self.view, items: [])
+        actionButton.backgroundColor = UIColor(red: 127.0/255.0, green: 3.0/255.0, blue:5.0/255.0, alpha: 1)
+        actionButton.action = { item in self.self.on_click_change() }
+        actionButton.setImage(UIImage(named:"ic_action_cupon"), forState: UIControlState())
     }
     
+    func on_click_change(){
+        
+       
+        
+        showGifIndicator(view: self.view)
+        let idPersona = self.usuario.Persona?.idPersona
+        let array_parameter = [
+            "idCupon": idCupon,
+            "idPersona": idPersona
+            ] as [String : Any]
+        let parameter_json = JSON(array_parameter)
+        let parameter_json_string = parameter_json.rawString()
+        webServiceController.CanjearCupon(parameters: parameter_json_string!, doneFunction: CanjearCupon)
+        
+    }
     
     @IBAction func on_click_canjear_cupon(_ sender: Any) {
         showGifIndicator(view: self.view)
@@ -106,7 +128,12 @@ class QrCouponViewController: BaseViewController {
         let json = JSON(response)
         debugPrint(json)
         if status == 1{
-            button_canjear.isHidden = true
+            //button_canjear.isHidden = true
+            actionButton.backgroundColor = UIColor(red: 127.0/255.0, green: 3.0/255.0, blue:5.0/255.0, alpha: 0)
+            actionButton.setImage(nil, forState: UIControlState())
+            actionButton.action = { item in print("Nada") }
+
+            
             view_code_qr.isHidden = false
             generate_qr(qr: code_coupon.text!)
             

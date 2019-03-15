@@ -185,6 +185,8 @@ class LoginViewController: BaseViewController, FloatableTextFieldDelegate {
             let parameter_json = JSON(parameters)
             let parameter_json_string = parameter_json.rawString()
             webServiceController.get(parameters: parameter_json_string!, method: Singleton.IngresarApp, doneFunction: callback_on_click_login)
+       
+        
         }
     }
     

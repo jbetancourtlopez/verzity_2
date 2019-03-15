@@ -10,6 +10,7 @@ class DetailViewController: BaseViewController {
     var webServiceController = WebServiceController()
     
     @IBOutlet var postulate_image: UIImageView!
+    @IBOutlet var background_image: UIImageView!
     @IBOutlet var postulate_image_name: UILabel!
     
     @IBOutlet var postulate_phone: UILabel!
@@ -66,6 +67,8 @@ class DetailViewController: BaseViewController {
         self.postulate_image.cornerRadius = 60
         
         
+        
+        
         let image = UIImage(named: "ic_visitar_web")?.withRenderingMode(.alwaysTemplate)
         button_phone.setImage(image, for: .normal)
         button_phone.tintColor = Colors.gray
@@ -95,7 +98,6 @@ class DetailViewController: BaseViewController {
         if status == 1{
             self.detail = JSON(json["Data"]) as AnyObject
             set_data()
-          
         }else{
             // Mensaje de Error
             showMessage(title: response as! String, automatic: true)
@@ -105,6 +107,7 @@ class DetailViewController: BaseViewController {
     
     func set_data(){
         var data_json = JSON(self.detail)
+        print(data_json)
         var persona = JSON(data_json["persona"])
         var licenciatura = JSON(data_json["licenciatura"])
         var beca = JSON(data_json["beca"])
@@ -115,16 +118,16 @@ class DetailViewController: BaseViewController {
         
         if !licenciatura.isEmpty{
             let nbLicenciatura = licenciatura["nbLicenciatura"].stringValue
-            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al programa académico " + nbLicenciatura
+            postulate_description_text = persona["nbCompleto"].stringValue + " se ha postulado al programa académico " + nbLicenciatura
         } else if !beca.isEmpty{
-            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado a la beca " + beca["nbBeca"].stringValue
+            postulate_description_text = persona["nbCompleto"].stringValue + " se ha postulado a la beca " + beca["nbBeca"].stringValue
         } else if !financiamiento.isEmpty {
-            postulate_description_text = persona["nbCompleto"].stringValue + " Se ha postulado al financiamiento " + financiamiento["nbFinanciamiento"].stringValue
+            postulate_description_text = persona["nbCompleto"].stringValue + " se ha postulado al financiamiento " + financiamiento["nbFinanciamiento"].stringValue
         }
         
         postulate_description.text = postulate_description_text
         
-    postulate_description.translatesAutoresizingMaskIntoConstraints = true
+        postulate_description.translatesAutoresizingMaskIntoConstraints = true
         postulate_description.sizeToFit()
         postulate_description.isScrollEnabled = false
         
@@ -183,6 +186,9 @@ class DetailViewController: BaseViewController {
     func set_data_postulado(){
         debugPrint(self.detail)
         
+
+        
+        
         var data_json = JSON(self.detail)
         var persona = JSON(data_json["person"])
         var type = JSON(data_json["type"])
@@ -200,28 +206,33 @@ class DetailViewController: BaseViewController {
         // Titulo
         var postulate_name_text = ""
         var type_text = ""
+        var description_postulate = ""
         
         if  type_name == "licenciatura" {
-            type_text = " Se ha postulado al programa académico "
+            type_text = " se ha postulado al programa académico "
             postulate_name_text = type["nbLicenciatura"].stringValue
+            description_postulate = ""
+        
         } else if  type_name == "beca" {
-            type_text = " Se ha postulado a al beca "
+            type_text = " se ha postulado a la beca "
             postulate_name_text = type["nbBeca"].stringValue
+            description_postulate = type["desBeca"].stringValue
         } else if  type_name == "financiamiento" {
-            type_text = " Se ha postulado al financiamiento "
+            type_text = " se ha postulado al financiamiento "
             postulate_name_text = type["nbFinanciamiento"].stringValue
+            description_postulate = type["desFinancimiento"].stringValue
         }
         
         let postulate_description_text = persona["nbCompleto"].stringValue + type_text + postulate_name_text
         
         self.title = persona["nbCompleto"].stringValue
-        
-        
-        // Descripcion
         postulate_name_postulate.text = postulate_description_text
         
+        // Descripcion
+        postulate_description.text = description_postulate
+        
         // Datos de la Persona
-        postulate_description.text = ""
+        
         postulate_name.text = persona["nbCompleto"].stringValue
         postulate_image_name.text = persona["nbCompleto"].stringValue
         postulate_email.text = persona["desCorreo"].stringValue
@@ -257,7 +268,13 @@ class DetailViewController: BaseViewController {
         
         postulate_location.text = text_location
         
+        //Imagen Background pathImagen
+        if type["pathImagen"].stringValue != nil && type["pathImagen"].stringValue != "" {
+            self.background_image.addBlurEffect()
+        }
         
+        set_image_without_placeholder(url: type["pathImagen"].stringValue, image: background_image)
+
         // Imagen
         set_photo_profile(url: persona["pathFoto"].stringValue, image: postulate_image)
     }
@@ -295,8 +312,17 @@ class DetailViewController: BaseViewController {
             }
         }
     }
-    
-    
-
-
+}
+extension UIImageView
+{
+    func addBlurEffect()
+    {
+       
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
+        self.addSubview(blurEffectView)
+    }
 }

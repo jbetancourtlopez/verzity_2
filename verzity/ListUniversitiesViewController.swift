@@ -31,9 +31,6 @@ class ListUniversitiesViewController: BaseViewController, UITableViewDelegate, U
         setup_table()
         setup_search_bar()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:  #selector(handleRefresh), for: UIControlEvents.valueChanged)
         if #available(iOS 10.0, *) {

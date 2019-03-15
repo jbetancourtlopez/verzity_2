@@ -16,7 +16,6 @@ class ListAsesorViewController: BaseViewController {
     @IBOutlet var email: UILabel!
     @IBOutlet var skype: UILabel!
     
-    
     @IBOutlet weak var icon_skype: UIImageView!
     @IBOutlet weak var icon_email: UIImageView!
     @IBOutlet weak var icon_phone: UIImageView!
@@ -25,33 +24,53 @@ class ListAsesorViewController: BaseViewController {
     var actionButton : ActionButton!
     var webServiceController = WebServiceController()
     var usuario = Usuario()
+    var have_asesor = true
+    var idVentaPaqueteAsesor = 0
+    var view_container_ = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usuario = get_user()
+        print("holaaaa0")
         
-        var idVentaPaqueteAsesor = self.usuario.Persona?.VestasPaquetesAsesores!.idVentaPaqueteAsesor
+        self.idVentaPaqueteAsesor = (self.usuario.Persona?.VestasPaquetesAsesores!.idVentaPaqueteAsesor)!
         
-        if idVentaPaqueteAsesor! == 0{
+        if self.idVentaPaqueteAsesor == 0{
             set_view()
+            have_asesor = false
+            
         }
-        load_data()
+        setup_ux()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         load_data()
-    }
+        
+        self.idVentaPaqueteAsesor = (self.usuario.Persona?.VestasPaquetesAsesores!.idVentaPaqueteAsesor)!
+        
+        if self.idVentaPaqueteAsesor != 0 && !self.have_asesor{
+            print("Nuevo Asesor")
+            print("Start remove sibview")
+            if let viewWithTag = self.view.viewWithTag(100) {
+                viewWithTag.removeFromSuperview()
+            }else{
+                print("No!")
+            }
 
+        }
+    }
     
     func set_view(){
         
-        var view_container : UIView!
-        view_container = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
-        view_container.backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
+        view_container_ = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        view_container_.backgroundColor = hexStringToUIColor(hex: "#FFFFFF")
+        view_container_.tag = 100
         
         var view_green : UIView!
         view_green = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height/2))
         view_green.backgroundColor = hexStringToUIColor(hex: "#3E8426")
-        view_container.addSubview(view_green)
+        view_container_.addSubview(view_green)
         
         var view_center : UIView!
         view_center = UIView(frame: CGRect(x: 10, y: (self.view.frame.size.height/2) - 50, width: self.view.frame.size.width - 20, height: 100))
@@ -61,9 +80,8 @@ class ListAsesorViewController: BaseViewController {
         view_center.layer.borderWidth = 2
         view_center.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
         
-        view_container.addSubview(view_center)
+        view_container_.addSubview(view_center)
         
-
         // Image gif
         let imageData = try? Data(contentsOf: Bundle.main.url(forResource: "emoji_sad", withExtension: "gif")!)
         let advTimeGif = UIImage.gifImageWithData(imageData!)
@@ -87,7 +105,9 @@ class ListAsesorViewController: BaseViewController {
         text_ley.textColor = hexStringToUIColor(hex: "#388E3C")
         view_center.addSubview(text_ley)
         
-        self.view.addSubview(view_container)
+        self.view.addSubview(view_container_)
+        
+        
     }
     
     func load_data(){
@@ -135,16 +155,9 @@ class ListAsesorViewController: BaseViewController {
             email.text = data["desCorreo"].stringValue
             name.text = data["nbCompleto"].stringValue
             description_asesor.text = data["desPersona"].stringValue
-            
             set_photo_profile(url: data["pathFoto"].stringValue, image: photo)
             photo.layer.masksToBounds = true
             photo.layer.cornerRadius = 60
-            setup_ux()
-          
-        }else{
-        
-            set_view()
-            setup_ux()
         }
     }
     
@@ -152,7 +165,6 @@ class ListAsesorViewController: BaseViewController {
         print("Phone")
         openUrl(scheme: "tel://\(phone.text)")
     }
-    
     
     @IBAction func on_click_email(_ sender: Any) {
         print("Email")
@@ -162,10 +174,6 @@ class ListAsesorViewController: BaseViewController {
     @IBAction func on_click_skype(_ sender: Any) {
         print("Skype")
         open(scheme: "skype:\(skype.text)")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     func setup_ux(){
@@ -196,6 +204,7 @@ class ListAsesorViewController: BaseViewController {
         print("Paquetes Asesor")
         let vc = storyboard?.instantiateViewController(withIdentifier: "ListAsesorPaqueteViewControllerID") as! ListAsesorPaqueteViewController
         self.show(vc, sender: nil)
+        
     }
     
     

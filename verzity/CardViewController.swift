@@ -30,7 +30,6 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        
         view.addGestureRecognizer(tap)
       
         
@@ -50,6 +49,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         view.endEditing(true)
     }
     
+   
     @objc func handleRefresh() {
         load_data(type:type)
         tableView.reloadData()
@@ -59,7 +59,7 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func setup_ui(){
         tableView.delegate = self
         tableView.dataSource = self
-        searchBar.delegate = self
+        searchBar.delegate = self        
     }
     
     func setup_ux(){
@@ -122,7 +122,8 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     // Search Bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("Buscando")
+        //print("Buscando")
+      
         
         self.filtered.removeAllObjects()
         for item in items {
@@ -173,17 +174,29 @@ class CardViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
-//    func searchBarSearchButtonClicked(searchBar: UISearchBar)
-//    {
-//        //searchActive = false;
-//        self.searchBar.endEditing(true)
-//        searchBar.resignFirstResponder()
-//    }
-//
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // hides the keyboard.
     }
-   
+    
+    func searchBarCancelButtonClicked(_searchBar: UISearchBar) {
+        print("Cancelar1")
+        searchBar.text = nil
+        searchBar.setShowsCancelButton(false, animated: true)
+        
+        // Remove focus from the search bar.
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("Cancelar3")
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        print("Cancelar3")
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
     
     //Table View. -------------------
     func numberOfSections(in tableView: UITableView) -> Int {

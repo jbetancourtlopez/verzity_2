@@ -54,9 +54,21 @@ class ProfileUniversityViewController: BaseViewController, UINavigationControlle
     }
 
     func set_data(){
-        let url_photo = self.usuario.Persona?.pathFoto
-        self.name_image = (self.usuario.Persona?.pathFoto)!
-        set_photo_profile(url: url_photo!, image: img_profile)
+        
+        print(self.usuario)
+        
+        var url_photo = ""
+        
+        if self.usuario.Persona?.idTipoPersona == 2{
+            url_photo = (self.usuario.Persona?.Universidades?.pathLogo)!
+            self.name_image = (self.usuario.Persona?.Universidades?.pathLogo)!
+        }else{
+            url_photo = (self.usuario.Persona?.pathFoto)!
+            self.name_image = (self.usuario.Persona?.pathFoto)!
+        }
+        
+       
+        set_photo_profile(url: url_photo, image: img_profile)
     }
     
     override func viewDidAppear(_ animated: Bool) {

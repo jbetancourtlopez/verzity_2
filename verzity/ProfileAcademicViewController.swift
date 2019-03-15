@@ -295,8 +295,6 @@ class ProfileAcademicViewController: BaseViewController, UIPickerViewDataSource,
         
         // Direcciones
         
-        
-        
         cp_profile.text = usuario.Persona?.Direcciones?.numCodigoPostal
         city_profile.text = usuario.Persona?.Direcciones?.nbCiudad
         municipio_profile.text = usuario.Persona?.Direcciones?.nbMunicipio
